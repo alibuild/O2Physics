@@ -71,7 +71,7 @@ struct qaK0sTrackingEfficiency {
         auto reconegtrack = v0.negTrack_as<aod::FullTracks>();
         auto recopostrack = v0.posTrack_as<aod::FullTracks>();
 
-        if (TMath::Abs(v0.yK0Short()) < rapidity) {   
+        if (TMath::Abs(v0.yK0Short()) < rapidity) {
           registry.fill(HIST("Test/h_R"), v0.v0radius());
           registry.fill(HIST("Test/h_pT"), v0.pt());
           registry.fill(HIST("Test/h_mass"), v0.mK0Short());
@@ -85,8 +85,8 @@ struct qaK0sTrackingEfficiency {
               posIBNhits++;
             }
           }
-          bool negHasIB = (bool) negIBNhits;
-          bool posHasIB = (bool) posIBNhits;
+          bool negHasIB = (bool)negIBNhits;
+          bool posHasIB = (bool)posIBNhits;
           registry.fill(HIST("Test/h_negStatus"), negHasIB);
           registry.fill(HIST("Test/h_posStatus"), posHasIB);
           registry.fill(HIST("Test/h_negIBhits"), negIBNhits);
@@ -102,6 +102,5 @@ struct qaK0sTrackingEfficiency {
 WorkflowSpec defineDataProcessing(ConfigContext const& cfgc)
 {
   return WorkflowSpec{
-    adaptAnalysisTask<qaK0sTrackingEfficiency>(cfgc)
-  };
+    adaptAnalysisTask<qaK0sTrackingEfficiency>(cfgc)};
 }

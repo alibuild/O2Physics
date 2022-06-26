@@ -220,11 +220,11 @@ struct LFNucleiBATask {
           histos.fill(HIST("tracks/helium/h2TOFmass2HeliumVsPt"), massTOF * massTOF - fMassHelium * fMassHelium, track.pt());
       }
       if constexpr (IsMC) {
-	  track.pdgCode();
-	  track.isPhysicalPrimary();
-	  track.producedByGenerator();
-	  //std::cout<<"track PDG================>"<<track.pdgCode()<<std::endl;
-	}
+        track.pdgCode();
+        track.isPhysicalPrimary();
+        track.producedByGenerator();
+        //std::cout<<"track PDG================>"<<track.pdgCode()<<std::endl;
+      }
     }
   }
 

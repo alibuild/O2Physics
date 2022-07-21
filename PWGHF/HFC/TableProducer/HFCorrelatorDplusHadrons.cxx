@@ -31,7 +31,8 @@ using namespace o2::constants::math;
 /// Returns deltaPhi value in range [-pi/2., 3.*pi/2], typically used for
 /// correlation studies
 
-double getDeltaPhi(double phiD, double phiHadron) {
+double getDeltaPhi(double phiD, double phiHadron)
+{
   return RecoDecay::constrainAngle(phiHadron - phiD,
                                    -o2::constants::math::PI / 2.);
 }
@@ -39,11 +40,11 @@ double getDeltaPhi(double phiD, double phiHadron) {
 /// definition of variables for Dplus hadron pairs (in data-like, MC-reco and
 /// MC-kine tasks)
 const int npTBinsMassAndEfficiency =
-    o2::analysis::hf_cuts_dplus_topikpi::npTBins;
+  o2::analysis::hf_cuts_dplus_topikpi::npTBins;
 const double efficiencyDmesonDefault[npTBinsMassAndEfficiency] = {};
 auto efficiencyDmeson_v =
-    std::vector<double>{efficiencyDmesonDefault,
-                        efficiencyDmesonDefault + npTBinsMassAndEfficiency};
+  std::vector<double>{efficiencyDmesonDefault,
+                      efficiencyDmesonDefault + npTBinsMassAndEfficiency};
 
 // histogram binning definition
 const int massAxisBins = 350;
@@ -60,7 +61,7 @@ const double ptDAxisMin = 0.;
 const double ptDAxisMax = 36.;
 
 using MCParticlesPlus3Prong =
-    soa::Join<aod::McParticles, aod::HfCandProng3MCGen>;
+  soa::Join<aod::McParticles, aod::HfCandProng3MCGen>;
 
 /// Dplus-Hadron correlation pair builder - for real data and data-like analysis
 /// (i.e. reco-level w/o matching request via MC truth)
@@ -69,84 +70,84 @@ struct HfCorrelatorDplusHadrons {
   Produces<aod::DplusHadronRecoInfo> entryDplusHadronRecoInfo;
 
   HistogramRegistry registry{
-      "registry",
-      {{"hPtCand",
-        "Dplus,Hadron candidates;candidate #it{p}_{T} (GeV/#it{c});entries",
-        {HistType::kTH1F, {{ptDAxisBins, ptDAxisMin, ptDAxisMax}}}},
-       {"hPtProng0",
-        "Dplus,Hadron candidates;prong 0 #it{p}_{T} (GeV/#it{c});entries",
-        {HistType::kTH1F, {{ptDAxisBins, ptDAxisMin, ptDAxisMax}}}},
-       {"hPtProng1",
-        "Dplus,Hadron candidates;prong 1 #it{p}_{T} (GeV/#it{c});entries",
-        {HistType::kTH1F, {{ptDAxisBins, ptDAxisMin, ptDAxisMax}}}},
-       {"hPtProng2",
-        "Dplus,Hadron candidates;prong 2 #it{p}_{T} (GeV/#it{c});entries",
-        {HistType::kTH1F, {{ptDAxisBins, ptDAxisMin, ptDAxisMax}}}},
-       {"hSelectionStatus",
-        "Dplus,Hadron candidates;selection status;entries",
-        {HistType::kTH1F, {{4, -0.5, 3.5}}}},
-       {"hEta",
-        "Dplus,Hadron candidates;candidate #it{#eta};entries",
-        {HistType::kTH1F, {{yAxisBins, yAxisMin, yAxisMax}}}},
-       {"hPhi",
-        "Dplus,Hadron candidates;candidate #it{#varphi};entries",
-        {HistType::kTH1F, {{phiAxisBins, phiAxisMin, phiAxisMax}}}},
-       {"hY",
-        "Dplus,Hadron candidates;candidate #it{#y};entries",
-        {HistType::kTH1F, {{yAxisBins, yAxisMin, yAxisMax}}}},
-       {"hPtCandMCRec",
-        "Dplus,Hadron candidates - MC reco;candidate #it{p}_{T} "
-        "(GeV/#it{c});entries",
-        {HistType::kTH1F, {{ptDAxisBins, ptDAxisMin, ptDAxisMax}}}},
-       {"hPtProng0MCRec",
-        "Dplus,Hadron candidates - MC reco;prong 0 #it{p}_{T} "
-        "(GeV/#it{c});entries",
-        {HistType::kTH1F, {{ptDAxisBins, ptDAxisMin, ptDAxisMax}}}},
-       {"hPtProng1MCRec",
-        "Dplus,Hadron candidates - MC reco;prong 1 #it{p}_{T} "
-        "(GeV/#it{c});entries",
-        {HistType::kTH1F, {{ptDAxisBins, ptDAxisMin, ptDAxisMax}}}},
-       {"hPtProng2MCRec",
-        "Dplus,Hadron candidates - MC reco;prong 2 #it{p}_{T} "
-        "(GeV/#it{c});entries",
-        {HistType::kTH1F, {{ptDAxisBins, ptDAxisMin, ptDAxisMax}}}},
-       {"hSelectionStatusMCRec",
-        "Dplus,Hadron candidates - MC reco;selection status;entries",
-        {HistType::kTH1F, {{4, -0.5, 3.5}}}},
-       {"hEtaMCRec",
-        "Dplus,Hadron candidates - MC reco;candidate #it{#eta};entries",
-        {HistType::kTH1F, {{yAxisBins, yAxisMin, yAxisMax}}}},
-       {"hPhiMCRec",
-        "Dplus,Hadron candidates - MC reco;candidate #it{#varphi};entries",
-        {HistType::kTH1F, {{phiAxisBins, phiAxisMin, phiAxisMax}}}},
-       {"hYMCRec",
-        "Dplus,Hadron candidates - MC reco;candidate #it{#y};entries",
-        {HistType::kTH1F, {{yAxisBins, yAxisMin, yAxisMax}}}},
-       {"hMCEvtCount",
-        "Event counter - MC gen;;entries",
-        {HistType::kTH1F, {{1, -0.5, 0.5}}}},
-       {"hPtCandMCGen",
-        "Dplus,Hadron particles - MC gen;particle #it{p}_{T} "
-        "(GeV/#it{c});entries",
-        {HistType::kTH1F, {{ptDAxisBins, ptDAxisMin, ptDAxisMax}}}},
-       {"hEtaMCGen",
-        "Dplus,Hadron particles - MC gen;particle #it{#eta};entries",
-        {HistType::kTH1F, {{yAxisBins, yAxisMin, yAxisMax}}}},
-       {"hPhiMCGen",
-        "Dplus,Hadron particles - MC gen;particle #it{#varphi};entries",
-        {HistType::kTH1F, {{phiAxisBins, 0., 2. * o2::constants::math::PI}}}},
-       {"hYMCGen",
-        "Dplus,Hadron candidates - MC gen;candidate #it{#y};entries",
-        {HistType::kTH1F, {{yAxisBins, yAxisMin, yAxisMax}}}},
-       {"hcountDplusHadronPerEvent",
-        "Dplus,Hadron particles - MC gen;Number per event;entries",
-        {HistType::kTH1F, {{20, 0., 20.}}}},
-       {"hMultiplicityPreSelection",
-        "multiplicity prior to selection;multiplicity;entries",
-        {HistType::kTH1F, {{10000, 0., 10000.}}}},
-       {"hMultiplicity",
-        "multiplicity;multiplicity;entries",
-        {HistType::kTH1F, {{10000, 0., 10000.}}}}}};
+    "registry",
+    {{"hPtCand",
+      "Dplus,Hadron candidates;candidate #it{p}_{T} (GeV/#it{c});entries",
+      {HistType::kTH1F, {{ptDAxisBins, ptDAxisMin, ptDAxisMax}}}},
+     {"hPtProng0",
+      "Dplus,Hadron candidates;prong 0 #it{p}_{T} (GeV/#it{c});entries",
+      {HistType::kTH1F, {{ptDAxisBins, ptDAxisMin, ptDAxisMax}}}},
+     {"hPtProng1",
+      "Dplus,Hadron candidates;prong 1 #it{p}_{T} (GeV/#it{c});entries",
+      {HistType::kTH1F, {{ptDAxisBins, ptDAxisMin, ptDAxisMax}}}},
+     {"hPtProng2",
+      "Dplus,Hadron candidates;prong 2 #it{p}_{T} (GeV/#it{c});entries",
+      {HistType::kTH1F, {{ptDAxisBins, ptDAxisMin, ptDAxisMax}}}},
+     {"hSelectionStatus",
+      "Dplus,Hadron candidates;selection status;entries",
+      {HistType::kTH1F, {{4, -0.5, 3.5}}}},
+     {"hEta",
+      "Dplus,Hadron candidates;candidate #it{#eta};entries",
+      {HistType::kTH1F, {{yAxisBins, yAxisMin, yAxisMax}}}},
+     {"hPhi",
+      "Dplus,Hadron candidates;candidate #it{#varphi};entries",
+      {HistType::kTH1F, {{phiAxisBins, phiAxisMin, phiAxisMax}}}},
+     {"hY",
+      "Dplus,Hadron candidates;candidate #it{#y};entries",
+      {HistType::kTH1F, {{yAxisBins, yAxisMin, yAxisMax}}}},
+     {"hPtCandMCRec",
+      "Dplus,Hadron candidates - MC reco;candidate #it{p}_{T} "
+      "(GeV/#it{c});entries",
+      {HistType::kTH1F, {{ptDAxisBins, ptDAxisMin, ptDAxisMax}}}},
+     {"hPtProng0MCRec",
+      "Dplus,Hadron candidates - MC reco;prong 0 #it{p}_{T} "
+      "(GeV/#it{c});entries",
+      {HistType::kTH1F, {{ptDAxisBins, ptDAxisMin, ptDAxisMax}}}},
+     {"hPtProng1MCRec",
+      "Dplus,Hadron candidates - MC reco;prong 1 #it{p}_{T} "
+      "(GeV/#it{c});entries",
+      {HistType::kTH1F, {{ptDAxisBins, ptDAxisMin, ptDAxisMax}}}},
+     {"hPtProng2MCRec",
+      "Dplus,Hadron candidates - MC reco;prong 2 #it{p}_{T} "
+      "(GeV/#it{c});entries",
+      {HistType::kTH1F, {{ptDAxisBins, ptDAxisMin, ptDAxisMax}}}},
+     {"hSelectionStatusMCRec",
+      "Dplus,Hadron candidates - MC reco;selection status;entries",
+      {HistType::kTH1F, {{4, -0.5, 3.5}}}},
+     {"hEtaMCRec",
+      "Dplus,Hadron candidates - MC reco;candidate #it{#eta};entries",
+      {HistType::kTH1F, {{yAxisBins, yAxisMin, yAxisMax}}}},
+     {"hPhiMCRec",
+      "Dplus,Hadron candidates - MC reco;candidate #it{#varphi};entries",
+      {HistType::kTH1F, {{phiAxisBins, phiAxisMin, phiAxisMax}}}},
+     {"hYMCRec",
+      "Dplus,Hadron candidates - MC reco;candidate #it{#y};entries",
+      {HistType::kTH1F, {{yAxisBins, yAxisMin, yAxisMax}}}},
+     {"hMCEvtCount",
+      "Event counter - MC gen;;entries",
+      {HistType::kTH1F, {{1, -0.5, 0.5}}}},
+     {"hPtCandMCGen",
+      "Dplus,Hadron particles - MC gen;particle #it{p}_{T} "
+      "(GeV/#it{c});entries",
+      {HistType::kTH1F, {{ptDAxisBins, ptDAxisMin, ptDAxisMax}}}},
+     {"hEtaMCGen",
+      "Dplus,Hadron particles - MC gen;particle #it{#eta};entries",
+      {HistType::kTH1F, {{yAxisBins, yAxisMin, yAxisMax}}}},
+     {"hPhiMCGen",
+      "Dplus,Hadron particles - MC gen;particle #it{#varphi};entries",
+      {HistType::kTH1F, {{phiAxisBins, 0., 2. * o2::constants::math::PI}}}},
+     {"hYMCGen",
+      "Dplus,Hadron candidates - MC gen;candidate #it{#y};entries",
+      {HistType::kTH1F, {{yAxisBins, yAxisMin, yAxisMax}}}},
+     {"hcountDplusHadronPerEvent",
+      "Dplus,Hadron particles - MC gen;Number per event;entries",
+      {HistType::kTH1F, {{20, 0., 20.}}}},
+     {"hMultiplicityPreSelection",
+      "multiplicity prior to selection;multiplicity;entries",
+      {HistType::kTH1F, {{10000, 0., 10000.}}}},
+     {"hMultiplicity",
+      "multiplicity;multiplicity;entries",
+      {HistType::kTH1F, {{10000, 0., 10000.}}}}}};
 
   Configurable<int> selectionFlagDplus{"selectionFlagDplus", 1,
                                        "Selection Flag for Dplus"};
@@ -159,19 +160,20 @@ struct HfCorrelatorDplusHadrons {
   Configurable<double> cutPtTrackMin{"cutPtTrackMin", -1., "min. track pT"};
   Configurable<double> cutPtCandMax{"cutPtCandMax", -1., "max. cand. pT"};
   Configurable<std::vector<double>> bins{
-      "ptBinsForMassAndEfficiency",
-      std::vector<double>{o2::analysis::hf_cuts_dplus_topikpi::pTBins_v},
-      "pT bin limits for candidate mass plots and efficiency"};
+    "ptBinsForMassAndEfficiency",
+    std::vector<double>{o2::analysis::hf_cuts_dplus_topikpi::pTBins_v},
+    "pT bin limits for candidate mass plots and efficiency"};
   Configurable<std::vector<double>> efficiencyDmeson{
-      "efficiencyDmeson", std::vector<double>{efficiencyDmeson_v},
-      "Efficiency values for Dplus meson"};
+    "efficiencyDmeson", std::vector<double>{efficiencyDmeson_v},
+    "Efficiency values for Dplus meson"};
   Configurable<int> flagApplyEfficiency{
-      "efficiencyFlagD", 1, "Flag for applying D-meson efficiency weights"};
+    "efficiencyFlagD", 1, "Flag for applying D-meson efficiency weights"};
   Configurable<double> multMin{"multMin", 0., "minimum multiplicity accepted"};
   Configurable<double> multMax{"multMax", 10000.,
                                "maximum multiplicity accepted"};
 
-  void init(o2::framework::InitContext &) {
+  void init(o2::framework::InitContext&)
+  {
     auto vbins = (std::vector<double>)bins;
     registry.add("hMassDplus_2D",
                  "Dplus candidates;inv. mass (K^{-}#pi^{+}#pi^{+}) "
@@ -206,19 +208,19 @@ struct HfCorrelatorDplusHadrons {
   }
 
   Partition<soa::Join<aod::HfCandProng3, aod::HFSelDplusToPiKPiCandidate>>
-      selectedDPlusCandidates =
-          aod::hf_selcandidate_dplus::isSelDplusToPiKPi >= selectionFlagDplus;
+    selectedDPlusCandidates =
+      aod::hf_selcandidate_dplus::isSelDplusToPiKPi >= selectionFlagDplus;
 
   /// Dplus-hadron correlation pair builder - for real data and data-like
   /// analysis (i.e. reco-level w/o matching request via MC truth)
   void processData(
-      aod::Collision const &collision,
-      soa::Join<aod::Tracks, aod::TracksDCA> &tracks,
-      soa::Join<aod::HfCandProng3, aod::HFSelDplusToPiKPiCandidate> const
-          &candidates) {
+    aod::Collision const& collision,
+    soa::Join<aod::Tracks, aod::TracksDCA>& tracks,
+    soa::Join<aod::HfCandProng3, aod::HFSelDplusToPiKPiCandidate> const& candidates)
+  {
     int nTracks = 0;
     if (collision.numContrib() > 1) {
-      for (const auto &track : tracks) {
+      for (const auto& track : tracks) {
         if (std::abs(track.eta()) > cutTrackEtaMax) {
           continue;
         }
@@ -236,7 +238,7 @@ struct HfCorrelatorDplusHadrons {
     }
     registry.fill(HIST("hMultiplicity"), nTracks);
 
-    for (auto &candidate1 : selectedDPlusCandidates) {
+    for (auto& candidate1 : selectedDPlusCandidates) {
       if (cutYCandMax >= 0. && std::abs(YDPlus(candidate1)) > cutYCandMax) {
         continue;
       }
@@ -253,8 +255,8 @@ struct HfCorrelatorDplusHadrons {
       double efficiencyWeight = 1.;
       if (flagApplyEfficiency) {
         efficiencyWeight =
-            1. /
-            efficiencyDmeson->at(o2::analysis::findBin(bins, candidate1.pt()));
+          1. /
+          efficiencyDmeson->at(o2::analysis::findBin(bins, candidate1.pt()));
       }
       // fill invariant mass plots and generic info from all Dplus candidates
       registry.fill(HIST("hMassDplus_2D"), InvMassDPlus(candidate1),
@@ -273,7 +275,7 @@ struct HfCorrelatorDplusHadrons {
       // Dplus-Hadron correlation dedicated section
       // if the candidate is a Dplus, search for Hadrons and evaluate
       // correlations
-      for (const auto &track : tracks) {
+      for (const auto& track : tracks) {
         if (std::abs(track.eta()) > cutTrackEtaMax) {
           continue;
         }
@@ -305,17 +307,18 @@ struct HfCorrelatorDplusHadrons {
   /// are studied)
   Partition<soa::Join<aod::HfCandProng3, aod::HFSelDplusToPiKPiCandidate,
                       aod::HfCandProng3MCRec>>
-      recoFlagDPlusCandidates =
-          aod::hf_selcandidate_dplus::isSelDplusToPiKPi > 0;
+    recoFlagDPlusCandidates =
+      aod::hf_selcandidate_dplus::isSelDplusToPiKPi > 0;
 
   void
-  processMcRec(aod::Collision const &collision,
-               soa::Join<aod::Tracks, aod::TracksDCA> &tracks,
-               soa::Join<aod::HfCandProng3, aod::HFSelDplusToPiKPiCandidate,
-                         aod::HfCandProng3MCRec> const &candidates) {
+    processMcRec(aod::Collision const& collision,
+                 soa::Join<aod::Tracks, aod::TracksDCA>& tracks,
+                 soa::Join<aod::HfCandProng3, aod::HFSelDplusToPiKPiCandidate,
+                           aod::HfCandProng3MCRec> const& candidates)
+  {
     int nTracks = 0;
     if (collision.numContrib() > 1) {
-      for (const auto &track : tracks) {
+      for (const auto& track : tracks) {
         if (std::abs(track.eta()) > cutTrackEtaMax) {
           continue;
         }
@@ -334,7 +337,7 @@ struct HfCorrelatorDplusHadrons {
 
     // MC reco level
     bool flagDplusSignal = false;
-    for (auto &candidate1 : recoFlagDPlusCandidates) {
+    for (auto& candidate1 : recoFlagDPlusCandidates) {
       // check decay channel flag for candidate1
       if (!(candidate1.hfflag() & 1 << DecayType::DPlusToPiKPi)) {
         continue;
@@ -351,8 +354,8 @@ struct HfCorrelatorDplusHadrons {
       double efficiencyWeight = 1.;
       if (flagApplyEfficiency) {
         efficiencyWeight =
-            1. /
-            efficiencyDmeson->at(o2::analysis::findBin(bins, candidate1.pt()));
+          1. /
+          efficiencyDmeson->at(o2::analysis::findBin(bins, candidate1.pt()));
       }
 
       if (std::abs(candidate1.flagMCMatchRec()) ==
@@ -384,8 +387,8 @@ struct HfCorrelatorDplusHadrons {
       // if the candidate is selected as Dplus, search for Hadron and evaluate
       // correlations
       flagDplusSignal =
-          candidate1.flagMCMatchRec() == 1 << DecayType::DPlusToPiKPi;
-      for (const auto &track : tracks) {
+        candidate1.flagMCMatchRec() == 1 << DecayType::DPlusToPiKPi;
+      for (const auto& track : tracks) {
         if (std::abs(track.eta()) > cutTrackEtaMax) {
           continue;
         }
@@ -416,20 +419,21 @@ struct HfCorrelatorDplusHadrons {
                  true);
   /// Dplus-Hadron correlation pair builder - for MC gen-level analysis (no
   /// filter/selection, only true signal)
-  void processMcGen(aod::McCollision const &mccollision,
-                    MCParticlesPlus3Prong const &particlesMC) {
+  void processMcGen(aod::McCollision const& mccollision,
+                    MCParticlesPlus3Prong const& particlesMC)
+  {
     int counterDplusHadron = 0;
     registry.fill(HIST("hMCEvtCount"), 0);
     // MC gen level
-    for (auto &particle1 : particlesMC) {
+    for (auto& particle1 : particlesMC) {
       // check if the particle is Dplus  (for general plot filling and
       // selection, so both cases are fine) - NOTE: decay channel is not probed!
       if (std::abs(particle1.pdgCode()) != pdg::Code::kDPlus) {
         continue;
       }
       double yD =
-          RecoDecay::Y(array{particle1.px(), particle1.py(), particle1.pz()},
-                       RecoDecay::getMassPDG(particle1.pdgCode()));
+        RecoDecay::Y(array{particle1.px(), particle1.py(), particle1.pz()},
+                     RecoDecay::getMassPDG(particle1.pdgCode()));
       if (cutYCandMax >= 0. && std::abs(yD) > cutYCandMax) {
         continue;
       }
@@ -450,9 +454,9 @@ struct HfCorrelatorDplusHadrons {
         continue;
       }
       registry.fill(
-          HIST("hcountDplustriggersMCGen"), 0,
-          particle1.pt()); // to count trigger Dplus for normalisation)
-      for (auto &particle2 : particlesMC) {
+        HIST("hcountDplustriggersMCGen"), 0,
+        particle1.pt()); // to count trigger Dplus for normalisation)
+      for (auto& particle2 : particlesMC) {
         if (std::abs(particle2.eta()) > cutTrackEtaMax) {
           continue;
         }
@@ -479,6 +483,7 @@ struct HfCorrelatorDplusHadrons {
                  false);
 };
 
-WorkflowSpec defineDataProcessing(ConfigContext const &cfgc) {
+WorkflowSpec defineDataProcessing(ConfigContext const& cfgc)
+{
   return WorkflowSpec{adaptAnalysisTask<HfCorrelatorDplusHadrons>(cfgc)};
 }

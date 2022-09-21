@@ -26,8 +26,8 @@ using namespace o2::analysis;
 using namespace o2::framework;
 using namespace o2::aod::hf_cand_prong2;
 using namespace o2::aod::hf_cand_prong3;
-using namespace o2::aod::hf_cand_b0;	// from HFSecondaryVertex.h
-using namespace o2::analysis::hf_cuts_b0_todpi;	// from HFSelectorCuts.h
+using namespace o2::aod::hf_cand_b0;            // from HFSecondaryVertex.h
+using namespace o2::analysis::hf_cuts_b0_todpi; // from HFSelectorCuts.h
 using namespace o2::framework::expressions;
 
 void customize(std::vector<o2::framework::ConfigParamSpec>& workflowOptions)

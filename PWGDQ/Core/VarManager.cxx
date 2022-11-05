@@ -146,25 +146,23 @@ float VarManager::GetTPCPostCalibMap(float pin, float eta, int particle_type, TS
   }
 }
 //__________________________________________________________________
-TString VarManager::GetRunPeriod(float runNumber){
-    int runlist_22f[2] = { 520259, 520473 };
-    int runlist_22m[2] = { 523393, 523397 };
+TString VarManager::GetRunPeriod(float runNumber)
+{
+  int runlist_22f[2] = {520259, 520473};
+  int runlist_22m[2] = {523393, 523397};
 
-    if (runNumber >= runlist_22f[0] && runNumber <= runlist_22f[1]){
-      TString runperiod = "LHC22f_pass1";
-      return runperiod;
-    }
-    else if (runNumber >= runlist_22m[0] && runNumber <= runlist_22m[1]){
-      TString runperiod = "LHC22m_pass1_subset";
-      return runperiod;
-    }
-    else{
-      TString runperiod = "none";
-      //LOGF(info, "can't find run period for run %.0d", runNumber);
-      return runperiod;
-    }
-
-  };
+  if (runNumber >= runlist_22f[0] && runNumber <= runlist_22f[1]) {
+    TString runperiod = "LHC22f_pass1";
+    return runperiod;
+  } else if (runNumber >= runlist_22m[0] && runNumber <= runlist_22m[1]) {
+    TString runperiod = "LHC22m_pass1_subset";
+    return runperiod;
+  } else {
+    TString runperiod = "none";
+    //LOGF(info, "can't find run period for run %.0d", runNumber);
+    return runperiod;
+  }
+};
 //__________________________________________________________________
 void VarManager::SetDefaultVarNames()
 {

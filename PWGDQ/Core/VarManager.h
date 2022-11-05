@@ -818,9 +818,9 @@ void VarManager::FillTrack(T const& track, float* values)
       values[kTPCnSigmaPrRandomizedDelta] = values[kTPCnSigmaPr] * randomX;
     }
     if (fgUsedVars[kTPCnSigmaEl_Corr] || fgUsedVars[kTPCnSigmaPi_Corr] || fgUsedVars[kTPCnSigmaPr_Corr]) {
-      values[kTPCnSigmaEl_Corr]=values[kTPCnSigmaEl]-GetTPCPostCalibMap(values[kPin],values[kEta],0,GetRunPeriod(values[kRunNo]));
-      values[kTPCnSigmaPi_Corr]=values[kTPCnSigmaPi]-GetTPCPostCalibMap(values[kPin],values[kEta],1,GetRunPeriod(values[kRunNo]));
-      values[kTPCnSigmaPr_Corr]=values[kTPCnSigmaPr]-GetTPCPostCalibMap(values[kPin],values[kEta],2,GetRunPeriod(values[kRunNo]));
+      values[kTPCnSigmaEl_Corr] = values[kTPCnSigmaEl] - GetTPCPostCalibMap(values[kPin], values[kEta], 0, GetRunPeriod(values[kRunNo]));
+      values[kTPCnSigmaPi_Corr] = values[kTPCnSigmaPi] - GetTPCPostCalibMap(values[kPin], values[kEta], 1, GetRunPeriod(values[kRunNo]));
+      values[kTPCnSigmaPr_Corr] = values[kTPCnSigmaPr] - GetTPCPostCalibMap(values[kPin], values[kEta], 2, GetRunPeriod(values[kRunNo]));
     }
   }
 

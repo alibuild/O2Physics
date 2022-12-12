@@ -40,7 +40,7 @@ using MyTracks = soa::Join<aod::FullTracks, aod::TracksExtra, aod::pidTOFbeta,
                            aod::TOFSignal, aod::TracksDCA>;
 using MyCollision = MyCollisions::iterator;
 using MyTrack = MyTracks::iterator;
-}
+} // namespace o2::aod
 
 struct KaonPidTask {
   std::shared_ptr<PidONNXModel> pidModel; // creates a shared pointer to a new instance 'pidmodel'.

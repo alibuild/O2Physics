@@ -347,7 +347,7 @@ struct JetTriggerQA {
       if (isEvtSelectedGamma) {
         hSelectedGammaPtEta->Fill(clusterPt, cluster.eta());
         hSelectedGammaPtPhi->Fill(clusterPt, cluster.phi());
-     }
+      }
     } // for clusters
 
     if (maxClusterPt > 0) {
@@ -377,7 +377,7 @@ struct JetTriggerQA {
           hSelectedJetRMaxPtClusterMaxPt->Fill(jetR, jetPt, maxClusterPt);
         }
       } // if maxClusterPt
-    } // for maxJet
+    }   // for maxJet
   }   // process
 };
 WorkflowSpec defineDataProcessing(ConfigContext const& cfgc)

@@ -65,7 +65,7 @@ DECLARE_SOA_COLUMN(JetChHighPt, hasJetChHighPt, bool); //! high-pT charged jet
 
 // full jets
 DECLARE_SOA_COLUMN(JetFullHighPt, hasJetFullHighPt, bool); //! high-pT full jet
-DECLARE_SOA_COLUMN(GammaHighPt, hasGammaHighPt, bool); //! high-pT photon
+DECLARE_SOA_COLUMN(GammaHighPt, hasGammaHighPt, bool);     //! high-pT photon
 
 // strangeness (lf)
 DECLARE_SOA_COLUMN(Omega, hasOmega, bool);             //! at leat 1 Omega

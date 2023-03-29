@@ -610,7 +610,7 @@ struct TableMaker {
         fHistMan->AddHistClass(classStr.Data());
       }
 
-      //fill the THn histograms
+      // fill the THn histograms
       if (fConfigIsOnlyforMaps) {
         if (classStr.Contains("PostCalibElectron")) {
           dqhistograms::DefineHistograms(fHistMan, objArray->At(iclass)->GetName(), "track", "postcalib_electron");

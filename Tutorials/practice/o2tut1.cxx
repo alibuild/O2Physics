@@ -22,6 +22,5 @@ struct myExampleTask {
 WorkflowSpec defineDataProcessing(ConfigContext const& cfgc)
 {
   return WorkflowSpec{
-    adaptAnalysisTask<myExampleTask>(cfgc)
-  };
+    adaptAnalysisTask<myExampleTask>(cfgc)};
 }

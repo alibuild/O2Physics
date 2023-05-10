@@ -8,8 +8,8 @@ using namespace o2::framework;
 
 struct configexample {
   // configurable for number of bins.
-    Configurable<int> nBinsEta{"nBinsEta", 100, "n bins in eta histogram"};
-    Configurable<int> binspt{"binspt", 100, "n bins in pt histogram"};
+  Configurable<int> nBinsEta{"nBinsEta", 100, "n bins in eta histogram"};
+  Configurable<int> binspt{"binspt", 100, "n bins in pt histogram"};
 
   OutputObj<TH1F> etaHistogram{"etaHistogram"}; // this is like prototype I think!!!
   OutputObj<TH1F> ptHistogram{"ptHistogram"};

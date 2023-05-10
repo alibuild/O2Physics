@@ -287,7 +287,7 @@ struct spectraf1 {
           return true;
         } else if (particle == 1 && std::abs(updatensigma) < ConfPIDCutsTPCF1Proton && std::abs(candidate.tofNSigmaKa()) < ConfPIDCutsTOFF1Proton) {
           return true;
-        } 
+        }
       } else if (std::abs(updatensigma) < ConfPIDCutsTPCF1Proton) {
         return true;
       }
@@ -338,7 +338,6 @@ struct spectraf1 {
     return true;
   }
 
-  
   std::vector<double> setValuesBB(o2::ccdb::CcdbApi& ccdbApi, aod::BCsWithTimestamps::iterator const& bunchCrossing, const std::string ccdbPath)
   {
     map<string, string> metadata;
@@ -390,10 +389,10 @@ struct spectraf1 {
 
   void processF1Proton(EventCandidates::iterator const& collision, aod::BCsWithTimestamps const&, PrimaryTrackCandidates const& tracks, ResoV0s const& V0s)
   {
-    //bool keepEventF1Proton = false;
+    // bool keepEventF1Proton = false;
     int numberF1 = 0;
     if (isSelectedEvent(collision)) {
-      //if (ConfUseManualPIDproton || ConfUseManualPIDkaon || ConfUseManualPIDpion) {
+      // if (ConfUseManualPIDproton || ConfUseManualPIDkaon || ConfUseManualPIDpion) {
       if (ConfUseManualPIDkaon || ConfUseManualPIDpion) {
         currentRunNumber = collision.bc_as<aod::BCsWithTimestamps>().runNumber();
         if (currentRunNumber != lastRunNumber) {
@@ -423,7 +422,7 @@ struct spectraf1 {
 
       // Prepare vectors for different species
       std::vector<ROOT::Math::PtEtaPhiMVector> protons, kaons, pions, kshorts;
- 
+
       for (auto& track : tracks) {
 
         if (!isSelectedTrack(track))
@@ -435,7 +434,7 @@ struct spectraf1 {
         double nTPCSigmaP[2]{track.tpcNSigmaPi(), track.tpcNSigmaKa()};
         double nTPCSigmaN[2]{track.tpcNSigmaPi(), track.tpcNSigmaKa()};
 
-	if (ConfUseManualPIDkaon) {
+        if (ConfUseManualPIDkaon) {
           auto bgScalingKaon = 1 / massKa; // momentum scaling?
           if (BBKaon.size() == 6)
             nTPCSigmaP[1] = updatePID(track, bgScalingKaon, BBKaon);
@@ -515,7 +514,6 @@ struct spectraf1 {
         KshortPosDaughIndex.push_back(postrack.globalIndex());
         KshortNegDaughIndex.push_back(negtrack.globalIndex());
       }
-    
 
       if (pions.size() != 0 && kaons.size() != 0 && kshorts.size() != 0) {
         for (auto ipion = pions.begin(); ipion != pions.end(); ++ipion) {
@@ -545,7 +543,6 @@ struct spectraf1 {
               }
               qaRegistry.fill(HIST("hInvMassf1"), F1Vector.M(), F1Vector.Pt());
               numberF1 = numberF1 + 1;
-
             }
           }
         }
@@ -562,4 +559,4 @@ struct spectraf1 {
 WorkflowSpec defineDataProcessing(ConfigContext const& cfg)
 {
   return WorkflowSpec{adaptAnalysisTask<spectraf1>(cfg)};
-} 
+}

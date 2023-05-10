@@ -13,7 +13,7 @@ struct histregistry {
     "registry",
     {{"etaHistogram", " pseudorapidity", {HistType::kTH1F, {{etabin, -1, 1}}}},
      {"ptHistogram", "transverse momentum", {HistType::kTH1F, {{ptbin, 0, 10}}}}}};
-     
+
   void process(aod::TracksIU const& tracks)
   {
     for (auto& track : tracks) {

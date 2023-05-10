@@ -20,8 +20,8 @@
 using namespace o2;
 using namespace o2::framework;
 
-//STEP 0
-//This is an empty analysis skeleton: the starting point! 
+// STEP 0
+// This is an empty analysis skeleton: the starting point!
 struct taskskeleton {
   // histogram created with OutputObj<TH1F>
   OutputObj<TH1F> etaHistogram{TH1F("etaHistogram", "etaHistogram", 200, -1., +1)};
@@ -37,6 +37,5 @@ struct taskskeleton {
 WorkflowSpec defineDataProcessing(ConfigContext const& cfgc)
 {
   return WorkflowSpec{
-    adaptAnalysisTask<taskskeleton>(cfgc)
-  };
+    adaptAnalysisTask<taskskeleton>(cfgc)};
 }

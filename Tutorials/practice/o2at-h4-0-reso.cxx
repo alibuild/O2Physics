@@ -54,7 +54,7 @@ using namespace o2::framework::expressions;
 using std::array;
 struct resonanceqa {
 
-  framework::Service<o2::ccdb::BasicCCDBManager> ccdb; /// Accessing the CCDB                                                                 
+  framework::Service<o2::ccdb::BasicCCDBManager> ccdb; /// Accessing the CCDB
 
   HistogramRegistry histos{"histos", {}, OutputObjHandlingPolicy::AnalysisObject};
   // events
@@ -80,12 +80,10 @@ struct resonanceqa {
     uint64_t now = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
     ccdb->setCreatedNotAfter(now);
 
-
-    AxisSpec multAxis = {3000,0,3000, "mult"};
+    AxisSpec multAxis = {3000, 0, 3000, "mult"};
     AxisSpec ptAxiss = {100, 0.0f, 10.0f, "#it{p}_{T}  (GeV/#it{c})"};
     AxisSpec invmassAxis = {90, 0.6, 1.5, "{M}_{#pion #K^{0}} (GeV/#it{c}^2)"};
     AxisSpec invmassAxisphi = {300, 0.9, 1.2, "{M}_{KK} (GeV/#it{c}^2)"};
-
 
     histos.add("hCentrality", "Centrality distribution", kTH1F, {{500, 0.0, 500.0}});
     histos.add("hVtxZ", "Vertex distribution in Z;Z (cm)", kTH1F, {{400, -20.0, 20.0}});
@@ -98,28 +96,20 @@ struct resonanceqa {
     histos.add("hNsigmaPionTPC", "NsigmaPion TPC distribution", kTH1F, {{100, -10.0f, 10.0f}});
     histos.add("hNsigmaPionTOF", "NsigmaPion TOF distribution", kTH1F, {{100, -10.0f, 10.0f}});
     if (cfgparticletype == 1 && !isMC) {
-      histos.add("h3PhiInvMassUnlikeSign", "Invariant mass of Phi meson Unlike Sign", kTHnSparseD, {multAxis,ptAxiss,invmassAxisphi});
-      histos.add("h3PhiInvMassLikeSignPP", "Invariant mass of Phi meson Like Sign positive", kTHnSparseD, {multAxis,ptAxiss,invmassAxisphi});
-      histos.add("h3PhiInvMassLikeSignMM", "Invariant mass of Phi meson Like Sign negative", kTHnSparseD, {multAxis,ptAxiss,invmassAxisphi});
-      histos.add("h3PhiInvMassRotational", "Invariant mass of Phi meson Rotational", kTHnSparseD, {multAxis,ptAxiss,invmassAxisphi});
-      histos.add("h3PhiInvMassMixed", "Invariant mass of Phi meson Mixed", kTHnSparseD, {multAxis,ptAxiss,invmassAxisphi});
+      histos.add("h3PhiInvMassUnlikeSign", "Invariant mass of Phi meson Unlike Sign", kTHnSparseD, {multAxis, ptAxiss, invmassAxisphi});
+      histos.add("h3PhiInvMassLikeSignPP", "Invariant mass of Phi meson Like Sign positive", kTHnSparseD, {multAxis, ptAxiss, invmassAxisphi});
+      histos.add("h3PhiInvMassLikeSignMM", "Invariant mass of Phi meson Like Sign negative", kTHnSparseD, {multAxis, ptAxiss, invmassAxisphi});
+      histos.add("h3PhiInvMassRotational", "Invariant mass of Phi meson Rotational", kTHnSparseD, {multAxis, ptAxiss, invmassAxisphi});
+      histos.add("h3PhiInvMassMixed", "Invariant mass of Phi meson Mixed", kTHnSparseD, {multAxis, ptAxiss, invmassAxisphi});
     } else if (cfgparticletype == 0 && !isMC) {
-      histos.add("h3KstarInvMassUnlikeSign", "Invariant mass of Kstar meson Unlike Sign", kTHnSparseD, {multAxis,ptAxiss,invmassAxis});
-      histos.add("h3KstarInvMassLikeSignPP", "Invariant mass of Kstar meson Like Sign positive", kTHnSparseD,{multAxis,ptAxiss,invmassAxis});
-      histos.add("h3KstarInvMassLikeSignMM", "Invariant mass of Kstar meson Like Sign negative", kTHnSparseD, {multAxis,ptAxiss,invmassAxis});
-      histos.add("h3KstarInvMassRotational", "Invariant mass of Kstar meson Rotational", kTHnSparseD, {multAxis,ptAxiss,invmassAxis});
-      histos.add("h3KstarInvMassMixed", "Invariant mass of Kstar meson Mixed", kTHnSparseD, {multAxis,ptAxiss,invmassAxis});
-    } 
+      histos.add("h3KstarInvMassUnlikeSign", "Invariant mass of Kstar meson Unlike Sign", kTHnSparseD, {multAxis, ptAxiss, invmassAxis});
+      histos.add("h3KstarInvMassLikeSignPP", "Invariant mass of Kstar meson Like Sign positive", kTHnSparseD, {multAxis, ptAxiss, invmassAxis});
+      histos.add("h3KstarInvMassLikeSignMM", "Invariant mass of Kstar meson Like Sign negative", kTHnSparseD, {multAxis, ptAxiss, invmassAxis});
+      histos.add("h3KstarInvMassRotational", "Invariant mass of Kstar meson Rotational", kTHnSparseD, {multAxis, ptAxiss, invmassAxis});
+      histos.add("h3KstarInvMassMixed", "Invariant mass of Kstar meson Mixed", kTHnSparseD, {multAxis, ptAxiss, invmassAxis});
+    }
   }
 
-
-
-
-
-  
-
-
-  
   double massPi = RecoDecay::getMassPDG(kPiPlus);
   double massKa = RecoDecay::getMassPDG(kKPlus);
   double massPr = 0.938272088f;
@@ -145,10 +135,8 @@ struct resonanceqa {
 
   //////////////////////////////////////////////////////////////
 
-
-
   /////////////////////////////////////////////////////////////
-  
+
   template <typename T>
   bool selectionPID(const T& candidate, int PID)
   {
@@ -157,23 +145,21 @@ struct resonanceqa {
         return true;
       } else if (PID == 1 && (candidate.tofNSigmaKa() * candidate.tofNSigmaKa() + candidate.tpcNSigmaKa() * candidate.tpcNSigmaKa()) < (2.0 * nsigmaCutCombined * nsigmaCutCombined)) {
         return true;
-      } 
-    }
-    else {
+      }
+    } else {
       if (PID == 0 && std::abs(candidate.tpcNSigmaPi()) < nsigmaCutTPC) {
         return true;
       } else if (PID == 1 && std::abs(candidate.tpcNSigmaKa()) < nsigmaCutTPC) {
         return true;
-      } 
+      }
     }
     return false;
   }
 
   /////////////////////////////////////////////////////////////
 
-
   ////////////////////////////////////////////////////////////
-  
+
   template <typename T1, typename T2>
   void FillinvMass(const T1& candidate1, const T2& candidate2, float multiplicity, bool unlike, bool mix, bool rotational, bool likesign, float massd1, float massd2)
   {
@@ -184,8 +170,8 @@ struct resonanceqa {
     auto arrMom_roat = array{pvec0, pvec1_roat};
     int track1Sign = candidate1.sign();
     int track2Sign = candidate2.sign();
-    mass = RecoDecay::m(arrMom, array{massd1, massd2}); //array of momentum and masses
-    mass_roat = RecoDecay::m(arrMom_roat, array{massd1, massd2}); //array of momentum and masses
+    mass = RecoDecay::m(arrMom, array{massd1, massd2});           // array of momentum and masses
+    mass_roat = RecoDecay::m(arrMom_roat, array{massd1, massd2}); // array of momentum and masses
     pT = RecoDecay::pt(array{candidate1.px() + candidate2.px(), candidate1.py() + candidate2.py()});
     pT_roat = RecoDecay::pt(array{candidate1.px() - candidate2.px(), candidate1.py() - candidate2.py()});
     rapidity = RecoDecay::y(array{candidate1.px() + candidate2.px(), candidate1.py() + candidate2.py(), candidate1.pz() + candidate2.pz()}, mass);
@@ -196,7 +182,7 @@ struct resonanceqa {
           histos.fill(HIST("h3KstarInvMassUnlikeSign"), multiplicity, pT, mass);
         } else if (cfgparticletype == 1) {
           histos.fill(HIST("h3PhiInvMassUnlikeSign"), multiplicity, pT, mass);
-        } 
+        }
       }
       if (track1Sign * track2Sign < 0 && mix) /// mix
       {
@@ -204,7 +190,7 @@ struct resonanceqa {
           histos.fill(HIST("h3KstarInvMassMixed"), multiplicity, pT, mass);
         } else if (cfgparticletype == 1) {
           histos.fill(HIST("h3PhiInvMassMixed"), multiplicity, pT, mass);
-        } 
+        }
       }
       if (track1Sign * track2Sign < 0 && rotational) // rotational
       {
@@ -212,7 +198,7 @@ struct resonanceqa {
           histos.fill(HIST("h3KstarInvMassRotational"), multiplicity, pT, mass_roat);
         } else if (cfgparticletype == 1) {
           histos.fill(HIST("h3PhiInvMassRotational"), multiplicity, pT, mass_roat);
-        } 
+        }
       }
       if (track1Sign * track2Sign > 0 && likesign) /// like sign
       {
@@ -221,20 +207,20 @@ struct resonanceqa {
             histos.fill(HIST("h3KstarInvMassLikeSignPP"), multiplicity, pT, mass);
           } else if (cfgparticletype == 1) {
             histos.fill(HIST("h3PhiInvMassLikeSignPP"), multiplicity, pT, mass);
-          } 
+          }
         } else {
           if (cfgparticletype == 0) {
             histos.fill(HIST("h3KstarInvMassLikeSignMM"), multiplicity, pT, mass);
           } else if (cfgparticletype == 1) {
             histos.fill(HIST("h3PhiInvMassLikeSignMM"), multiplicity, pT, mass);
-          } 
+          }
         }
       }
     }
   }
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  
+
   Filter collisionFilter = nabs(aod::collision::posZ) < cfgCutVertex;
   Filter acceptanceFilter = (nabs(aod::track::eta) < cfgCutEta && nabs(aod::track::pt) > cfgCutPT);
   Filter DCAcutFilter = (nabs(aod::track::dcaXY) < cfgCutDCAxy) && (nabs(aod::track::dcaZ) < cfgCutDCAz);
@@ -244,18 +230,13 @@ struct resonanceqa {
                                                   aod::pidTPCFullKa, aod::pidTOFFullKa,
                                                   aod::pidTPCFullPr, aod::pidTOFFullPr>>;
 
-
   ConfigurableAxis axisVertex{"axisVertex", {20, -10, 10}, "vertex axis for bin"};
   ConfigurableAxis axisMultiplicity{"axisMultiplicity", {VARIABLE_WIDTH, 0.0, 2.750, 5.250, 7.750, 12.750, 17.750, 22.750, 27.750, 32.750, 37.750, 42.750, 47.750, 52.750, 57.750, 62.750, 67.750, 72.750, 77.750, 82.750, 87.750, 92.750, 97.750, 250.1}, "multiplicity axis for histograms"};
 
-  
   using BinningType = ColumnBinningPolicy<aod::collision::PosZ, aod::mult::MultTPC>;
   BinningType binningOnPositions{{axisVertex, axisMultiplicity}, true}; // true is for 'ignore overflows' (true by default)
   SameKindPair<EventCandidates, TrackCandidates, BinningType> pair{binningOnPositions, cfgNoMixedEvents, -1};
 
-
-  
-  
   void processSameEvent(EventCandidates::iterator const& collision, TrackCandidates const& tracks, aod::BCs const&)
   {
     if (!collision.sel8()) {
@@ -304,7 +285,6 @@ struct resonanceqa {
     }
   }
 
-  
   PROCESS_SWITCH(resonanceqa, processSameEvent, "Process Same event", true);
 
   void processMixedEvent(EventCandidates const& collisions, TrackCandidates const& tracks)
@@ -338,13 +318,12 @@ struct resonanceqa {
           if (selectionPID(t1, 1) && selectionPID(t2, 1)) {
             FillinvMass(t1, t2, multiplicity, unlike, mix, rotational, likesign, massKa, massKa);
           }
-        } 
+        }
       }
     }
   }
 
   PROCESS_SWITCH(resonanceqa, processMixedEvent, "Process Mixed event", true);
-
 };
 
 WorkflowSpec defineDataProcessing(ConfigContext const& cfgc)

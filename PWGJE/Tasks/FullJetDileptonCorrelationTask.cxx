@@ -41,20 +41,21 @@ using selectedClusters = o2::soa::Filtered<o2::aod::EMCALClusters>;
 using filteredJets = o2::soa::Filtered<o2::aod::FullJets>;
 
 struct FullJetDileptonCorrelationTask {
-  //Define histogram registries here
+  // Define histogram registries here
   HistogramRegistry registry{"registry",
-                            {{"h_jet_pt", "jet pT;#it{p}_{T,jet} (GeV/#it{c});entries", {HistType::kTH1F, {{100, 0., 50.}}}},
-                             {"h_jet_eta", "jet #eta;#eta_{jet};entries", {HistType::kTH1F, {{30, -1.5, 1.5}}}},
-                             {"h_jet_phi", "jet #phi;#phi_{jet};entries", {HistType::kTH1F, {{140, -7.0, 7.}}}},
-                             {"h_full_jet_pt", "jet pT;#it{p}_{T,jet} (GeV/#it{c});entries", {HistType::kTH1F, {{100, 0., 50.}}}},
-                             {"h_full_jet_eta", "jet #eta;#eta_{jet};entries", {HistType::kTH1F, {{30, -1.5, 1.5}}}},
-                             {"h_full_jet_phi", "jet #phi;#phi{jet};entries", {HistType::kTH1F, {{140, -7.0, 7.}}}},
-                             {"h_full_jet_ntracks", "jet N tracks;N_{jet tracks};entries", {HistType::kTH1F, {{40, -0.5, 39.5}}}},
-                             {"h_full_jet_nclusters", "jet N clusters;N_{jet clusters};entries", {HistType::kTH1F, {{40, -0.5, 39.5}}}},
-                             {"h_full_jet_angularity", "jet angularity ;#lambda_{1};entries", {HistType::kTH1F, {{5, 0.0, 0.5}}}},
-                           }};
+                             {
+                               {"h_jet_pt", "jet pT;#it{p}_{T,jet} (GeV/#it{c});entries", {HistType::kTH1F, {{100, 0., 50.}}}},
+                               {"h_jet_eta", "jet #eta;#eta_{jet};entries", {HistType::kTH1F, {{30, -1.5, 1.5}}}},
+                               {"h_jet_phi", "jet #phi;#phi_{jet};entries", {HistType::kTH1F, {{140, -7.0, 7.}}}},
+                               {"h_full_jet_pt", "jet pT;#it{p}_{T,jet} (GeV/#it{c});entries", {HistType::kTH1F, {{100, 0., 50.}}}},
+                               {"h_full_jet_eta", "jet #eta;#eta_{jet};entries", {HistType::kTH1F, {{30, -1.5, 1.5}}}},
+                               {"h_full_jet_phi", "jet #phi;#phi{jet};entries", {HistType::kTH1F, {{140, -7.0, 7.}}}},
+                               {"h_full_jet_ntracks", "jet N tracks;N_{jet tracks};entries", {HistType::kTH1F, {{40, -0.5, 39.5}}}},
+                               {"h_full_jet_nclusters", "jet N clusters;N_{jet clusters};entries", {HistType::kTH1F, {{40, -0.5, 39.5}}}},
+                               {"h_full_jet_angularity", "jet angularity ;#lambda_{1};entries", {HistType::kTH1F, {{5, 0.0, 0.5}}}},
+                             }};
 
- //Define Configurables here
+  // Define Configurables here
   Configurable<float> f_jetPtMin{"f_jetPtMin", 0.0, "minimum jet pT cut"};
   Configurable<float> f_jetR{"f_jetR", 0.4, "jet resolution parameter that you have triggered on"};
   Configurable<float> f_PhiEmcalOrDcal{"f_PhiEmcalOrDcal", 4, "if cluster phi is less than this value, count it to be EMCAL"};
@@ -74,7 +75,7 @@ struct FullJetDileptonCorrelationTask {
 
   void init(InitContext const&) {}
 
-  void processDataFullSubstructure(soa::Filtered<soa::Join<aod::FullJets, aod::FullJetConstituents>>::iterator const& jet, aod::Tracks const& tracks) //EMCALClusters const& clusters)
+  void processDataFullSubstructure(soa::Filtered<soa::Join<aod::FullJets, aod::FullJetConstituents>>::iterator const& jet, aod::Tracks const& tracks) // EMCALClusters const& clusters)
   {
     registry.fill(HIST("h_full_jet_pt"), jet.pt());
     registry.fill(HIST("h_full_jet_eta"), jet.eta());
@@ -97,8 +98,8 @@ struct FullJetDileptonCorrelationTask {
   PROCESS_SWITCH(FullJetDileptonCorrelationTask, processDummy, "Dummy process function turned on by default", true);
 };
 
-WorkflowSpec defineDataProcessing(ConfigContext const& cfgc){
+WorkflowSpec defineDataProcessing(ConfigContext const& cfgc)
+{
   return WorkflowSpec{
-    adaptAnalysisTask<FullJetDileptonCorrelationTask>(cfgc, TaskName{"full-jet-dilepton-correlation"} )
-  };
+    adaptAnalysisTask<FullJetDileptonCorrelationTask>(cfgc, TaskName{"full-jet-dilepton-correlation"})};
 }

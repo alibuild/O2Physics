@@ -256,7 +256,7 @@ struct HfTreeCreatorD0ToKPi {
 
   template <typename T, typename U>
   auto fillLiteTable(const T& candidate, const U& prong0, const U& prong1, int candFlag, double invMassD0, double invMassD0bar, double ctsD0, double ctsD0bar,
-                 double nsigCombPi0, double nsigCombPi1, double nsigCombKa0, double nsigCombKa1, int8_t flagMc, int8_t origin)
+                     double nsigCombPi0, double nsigCombPi1, double nsigCombKa0, double nsigCombKa1, int8_t flagMc, int8_t origin)
   {
     rowCandidateLite(
       candFlag,

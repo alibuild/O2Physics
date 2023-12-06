@@ -31,10 +31,10 @@ namespace o2::aod
 /// Resonance Collisions
 namespace resocollision
 {
-DECLARE_SOA_COLUMN(MultV0M, multV0M, float);         //! V0M multiplicity percentile (run2: V0M, run3: FT0A/C/M)
-DECLARE_SOA_COLUMN(MultFT0, multFT0, int);           //! FT0 multiplicity
-DECLARE_SOA_COLUMN(Spherocity, spherocity, float);   //! Spherocity of the event
-DECLARE_SOA_COLUMN(BMagField, bMagField, float);     //! Magnetic field
+DECLARE_SOA_COLUMN(MultV0M, multV0M, float);       //! V0M multiplicity percentile (run2: V0M, run3: FT0A/C/M)
+DECLARE_SOA_COLUMN(MultFT0, multFT0, int);         //! FT0 multiplicity
+DECLARE_SOA_COLUMN(Spherocity, spherocity, float); //! Spherocity of the event
+DECLARE_SOA_COLUMN(BMagField, bMagField, float);   //! Magnetic field
 } // namespace resocollision
 DECLARE_SOA_TABLE(ResoCollisions, "AOD", "RESOCOL",
                   o2::soa::Index<>,
@@ -54,30 +54,30 @@ namespace resodaughter
 {
 
 DECLARE_SOA_INDEX_COLUMN(ResoCollision, resoCollision);
-DECLARE_SOA_COLUMN(Pt, pt, float);                                     //! p_T (GeV/c)
-DECLARE_SOA_COLUMN(Px, px, float);                                     //! p_x (GeV/c)
-DECLARE_SOA_COLUMN(Py, py, float);                                     //! p_y (GeV/c)
-DECLARE_SOA_COLUMN(Pz, pz, float);                                     //! p_z (GeV/c)
-DECLARE_SOA_COLUMN(Eta, eta, float);                                   //! Eta
-DECLARE_SOA_COLUMN(Phi, phi, float);                                   //! Phi
-DECLARE_SOA_COLUMN(PartType, partType, uint8_t);                       //! Type of the particle, according to resodaughter::ParticleType
-DECLARE_SOA_COLUMN(TempFitVar, tempFitVar, float);                     //! Observable for the template fitting (Track: DCA_xy, V0: CPA)
-DECLARE_SOA_COLUMN(Indices, indices, int[2]);                          //! Field for the track indices to remove auto-correlations
-DECLARE_SOA_COLUMN(Sign, sign, int8_t);                                //! Sign of the track charge
-DECLARE_SOA_COLUMN(TPCNClsCrossedRows, tpcNClsCrossedRows, uint8_t);   //! Number of TPC crossed rows
-DECLARE_SOA_COLUMN(IsGlobalTrackWoDCA, isGlobalTrackWoDCA, bool);      //! Is global track without DCA
-DECLARE_SOA_COLUMN(IsPrimaryTrack, isPrimaryTrack, bool);              //! Is primary track
-DECLARE_SOA_COLUMN(IsPVContributor, isPVContributor, bool);            //! Is primary vertex contributor
-DECLARE_SOA_COLUMN(HasTOF, hasTOF, bool);                              //! Has TOF
+DECLARE_SOA_COLUMN(Pt, pt, float);                                   //! p_T (GeV/c)
+DECLARE_SOA_COLUMN(Px, px, float);                                   //! p_x (GeV/c)
+DECLARE_SOA_COLUMN(Py, py, float);                                   //! p_y (GeV/c)
+DECLARE_SOA_COLUMN(Pz, pz, float);                                   //! p_z (GeV/c)
+DECLARE_SOA_COLUMN(Eta, eta, float);                                 //! Eta
+DECLARE_SOA_COLUMN(Phi, phi, float);                                 //! Phi
+DECLARE_SOA_COLUMN(PartType, partType, uint8_t);                     //! Type of the particle, according to resodaughter::ParticleType
+DECLARE_SOA_COLUMN(TempFitVar, tempFitVar, float);                   //! Observable for the template fitting (Track: DCA_xy, V0: CPA)
+DECLARE_SOA_COLUMN(Indices, indices, int[2]);                        //! Field for the track indices to remove auto-correlations
+DECLARE_SOA_COLUMN(Sign, sign, int8_t);                              //! Sign of the track charge
+DECLARE_SOA_COLUMN(TPCNClsCrossedRows, tpcNClsCrossedRows, uint8_t); //! Number of TPC crossed rows
+DECLARE_SOA_COLUMN(IsGlobalTrackWoDCA, isGlobalTrackWoDCA, bool);    //! Is global track without DCA
+DECLARE_SOA_COLUMN(IsPrimaryTrack, isPrimaryTrack, bool);            //! Is primary track
+DECLARE_SOA_COLUMN(IsPVContributor, isPVContributor, bool);          //! Is primary vertex contributor
+DECLARE_SOA_COLUMN(HasTOF, hasTOF, bool);                            //! Has TOF
 DECLARE_SOA_COLUMN(TPCCrossedRowsOverFindableCls, tpcCrossedRowsOverFindableCls, float);
-DECLARE_SOA_COLUMN(DaughDCA, daughDCA, float);               //! DCA between daughters
-DECLARE_SOA_COLUMN(CascDaughDCA, cascdaughDCA, float);       //! DCA between daughters from cascade
-DECLARE_SOA_COLUMN(V0CosPA, v0CosPA, float);                 //! V0 Cosine of Pointing Angle
-DECLARE_SOA_COLUMN(CascCosPA, cascCosPA, float);             //! Cascade Cosine of Pointing Angle
-DECLARE_SOA_COLUMN(MLambda, mLambda, float);                 //! The invariant mass of V0 candidate, assuming lambda
-DECLARE_SOA_COLUMN(MAntiLambda, mAntiLambda, float);         //! The invariant mass of V0 candidate, assuming antilambda
-DECLARE_SOA_COLUMN(MK0Short, mK0Short, float);               //! The invariant mass of V0 candidate, assuming k0short
-//DECLARE_SOA_COLUMN(MAntiK0s, mAntiK0s, float);               //! The invariant mass of V0 candidate, assuming antik0s
+DECLARE_SOA_COLUMN(DaughDCA, daughDCA, float);         //! DCA between daughters
+DECLARE_SOA_COLUMN(CascDaughDCA, cascdaughDCA, float); //! DCA between daughters from cascade
+DECLARE_SOA_COLUMN(V0CosPA, v0CosPA, float);           //! V0 Cosine of Pointing Angle
+DECLARE_SOA_COLUMN(CascCosPA, cascCosPA, float);       //! Cascade Cosine of Pointing Angle
+DECLARE_SOA_COLUMN(MLambda, mLambda, float);           //! The invariant mass of V0 candidate, assuming lambda
+DECLARE_SOA_COLUMN(MAntiLambda, mAntiLambda, float);   //! The invariant mass of V0 candidate, assuming antilambda
+DECLARE_SOA_COLUMN(MK0Short, mK0Short, float);         //! The invariant mass of V0 candidate, assuming k0short
+// DECLARE_SOA_COLUMN(MAntiK0s, mAntiK0s, float);               //! The invariant mass of V0 candidate, assuming antik0s
 DECLARE_SOA_COLUMN(MXi, mXi, float);                         //! The invariant mass of Xi candidate
 DECLARE_SOA_COLUMN(TransRadius, transRadius, float);         //! Transverse radius of the decay vertex
 DECLARE_SOA_COLUMN(CascTransRadius, casctransRadius, float); //! Transverse radius of the decay vertex from cascade
@@ -146,7 +146,7 @@ DECLARE_SOA_TABLE(ResoV0s, "AOD", "RESOV0S",
                   resodaughter::MLambda,
                   resodaughter::MAntiLambda,
                   resodaughter::MK0Short,
-                  //resodaughter::MAntiK0s,
+                  // resodaughter::MAntiK0s,
                   resodaughter::TransRadius,
                   resodaughter::DecayVtxX,
                   resodaughter::DecayVtxY,

@@ -470,7 +470,7 @@ struct GenericFramework {
     processCollision<kRaw>(collision, tracks, centrality);
   }
   PROCESS_SWITCH(GenericFramework, processReco, "Process analysis for MC reconstructed events", false);
-  
+
   void processGen(soa::Filtered<soa::Join<aod::Collisions, aod::CentFT0Cs, aod::McCollisionLabels>>::iterator const& collision, aod::McParticles const& particles)
   {
     if (collision.has_mcCollision()) {

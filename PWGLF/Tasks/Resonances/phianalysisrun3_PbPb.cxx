@@ -109,10 +109,10 @@ struct phianalysisrun3_PbPb {
     histos.add("hNsigmaKaonTOF", "NsigmaKaon TOF distribution", kTH1F, {{200, -10.0f, 10.0f}});
     if (!isMC) {
       histos.add("h3PhiInvMassUnlikeSign", "Invariant mass of Phi meson Unlike Sign", kTH3F, {centAxis, ptAxis, invMassAxis});
-      histos.add("h3PhiInvMassLikeSignPP", "Invariant mass of Phi meson Like Sign positive", kTH3F,  {centAxis, ptAxis, invMassAxis});
-      histos.add("h3PhiInvMassLikeSignMM", "Invariant mass of Phi meson Like Sign negative", kTH3F,  {centAxis, ptAxis, invMassAxis});
-      histos.add("h3PhiInvMassMixed", "Invariant mass of Phi meson Mixed", kTH3F,  {centAxis, ptAxis, invMassAxis});
-      histos.add("h3PhiInvMassRotation", "Invariant mass of Phi meson Rotation", kTH3F,  {centAxis, ptAxis, invMassAxis});
+      histos.add("h3PhiInvMassLikeSignPP", "Invariant mass of Phi meson Like Sign positive", kTH3F, {centAxis, ptAxis, invMassAxis});
+      histos.add("h3PhiInvMassLikeSignMM", "Invariant mass of Phi meson Like Sign negative", kTH3F, {centAxis, ptAxis, invMassAxis});
+      histos.add("h3PhiInvMassMixed", "Invariant mass of Phi meson Mixed", kTH3F, {centAxis, ptAxis, invMassAxis});
+      histos.add("h3PhiInvMassRotation", "Invariant mass of Phi meson Rotation", kTH3F, {centAxis, ptAxis, invMassAxis});
       if (isEtaAssym) {
         histos.add("h3PhiInvMassUnlikeSignAside", "Invariant mass of Phi meson Unlike Sign A side", kTH3F, {{200, 0.0, 200.0}, {200, 0.0f, 20.0f}, {200, 0.9, 1.1}});
         histos.add("h3PhiInvMassLikeSignAside", "Invariant mass of Phi meson Like Sign A side", kTH3F, {{200, 0.0, 200.0}, {200, 0.0f, 20.0f}, {200, 0.9, 1.1}});

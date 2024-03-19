@@ -34,10 +34,9 @@ static constexpr std::array<uint8_t, 3> ids = {idBkg, idPrompt, idNonPrompt};
 static constexpr float nSigTolerance = 0.1;
 static constexpr float nSigDummy = -999. + nSigTolerance;
 
-
-///Function to retrieve information from JSON in a vector<T>
-/// \param jsonEntry is the entry loaded from JSON
-/// \return vec a vector of type T
+/// Function to retrieve information from JSON in a vector<T>
+///  \param jsonEntry is the entry loaded from JSON
+///  \return vec a vector of type T
 template <typename T, typename TypeJsonEntry>
 const std::vector<T> getVectorFromJson(const TypeJsonEntry& jsonEntry)
 {
@@ -85,7 +84,7 @@ float combinePid(float nSigTpc, float nSigTof)
   bool hasTof = true ? nSigTof > nSigDummy : false;
 
   if (hasTpc && hasTof) { // TPC and TOF
-    return std::sqrt(0.5 * (nSigTpc*nSigTpc + nSigTof*nSigTof));
+    return std::sqrt(0.5 * (nSigTpc * nSigTpc + nSigTof * nSigTof));
   } else if (hasTpc) { // TPC only
     return std::abs(nSigTpc);
   } else if (hasTof) { // TOF only
@@ -106,12 +105,12 @@ std::vector<TString> getPathInputTrees(const T1& nameInputFiles, const T2& nameT
   const std::string delimiter = ";";
   std::vector<TString> pathInputTrees;
   for (const auto& nameFile : nameInputFiles) {
-    std::unique_ptr<TFile> myFile( TFile::Open(nameFile.data()) );
+    std::unique_ptr<TFile> myFile(TFile::Open(nameFile.data()));
     std::vector<std::string> nameDirs;
     for (const auto& key : *myFile->GetListOfKeys()) {
       std::string name = key->GetName();
       // fill vector only if DF in the dir name (no parent files dir)
-      if (name.find(nameDf) != std::string::npos ) {
+      if (name.find(nameDf) != std::string::npos) {
         nameDirs.emplace_back(name);
       }
     }
@@ -140,7 +139,7 @@ std::vector<TString> getPathInputTrees(const T1& nameInputFiles, const T2& nameT
 
 /// Main function
 /// \param nameCfgFile name of the JSON confifuration file
-void PrepareSamples(TString nameCfgFile="./config_preparation_DplusToPiKPi.json")
+void PrepareSamples(TString nameCfgFile = "./config_preparation_DplusToPiKPi.json")
 {
   // load configuration file
   FILE* configFile = fopen(nameCfgFile.Data(), "r");
@@ -246,8 +245,7 @@ void PrepareSamples(TString nameCfgFile="./config_preparation_DplusToPiKPi.json"
     // divide dataframe into classes and save them in flagged .root files
     for (const auto& id : ids) {
       if (id == idBkg) {
-        dfTot.Filter(TString::Format("fOriginMcRec == %d", id).Data()).Filter(invMassSideBands)
-          .Snapshot(nameOutputTree, TString::Format("%s/%s_%s.root", nameOutputDirs[counter_outdir].data(), labels[id].data(), channel.data()), colsToKeep);
+        dfTot.Filter(TString::Format("fOriginMcRec == %d", id).Data()).Filter(invMassSideBands).Snapshot(nameOutputTree, TString::Format("%s/%s_%s.root", nameOutputDirs[counter_outdir].data(), labels[id].data(), channel.data()), colsToKeep);
       } else {
         dfTot.Filter(TString::Format("fOriginMcRec == %d", id).Data())
           .Snapshot(nameOutputTree, TString::Format("%s/%s_%s.root", nameOutputDirs[counter_outdir].data(), labels[id].data(), channel.data()), colsToKeep);

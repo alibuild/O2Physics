@@ -380,7 +380,7 @@ struct kstarpbpb {
         if (ispTdepPID && (!selectionPIDpTdependent(track1, 0) && !selectionPIDpTdependent(track1, 1) && !selectionPIDpTdependent(track2, 0) && !selectionPIDpTdependent(track2, 1))) {
           continue;
         }
-    
+
         if (selectionPIDpTdependent(track1, 1)) {
           track1pion = true;
         } else if (selectionPIDpTdependent(track1, 0)) {

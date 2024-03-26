@@ -20,4 +20,4 @@
 #pragma link C++ class o2::analysis::PWGCF::FlowJSPCAnalysis + ;
 #pragma link C++ class o2::analysis::PWGCF::FlowJSPCObservables + ;
 
-#endif  // PWGCF_FLOW_CORE_PWGCFFLOWLINKDEF_H_
+#endif // PWGCF_FLOW_CORE_PWGCFFLOWLINKDEF_H_

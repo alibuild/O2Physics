@@ -55,7 +55,7 @@ using namespace o2::framework::expressions;
 struct phosElId {
 
   using SelCollisions = soa::Join<aod::Collisions, aod::EvSels>;
-  using tracks = soa::Join<aod::Tracks, aod::TracksExtra, aod::TracksDCA>; 
+  using tracks = soa::Join<aod::Tracks, aod::TracksExtra, aod::TracksDCA>;
 
   Configurable<float> mMinE{"mMinCluE", 0.3, "Minimum cluster energy for analysis"};
 
@@ -77,9 +77,9 @@ struct phosElId {
   void init(InitContext const&)
   {
     LOG(info) << "Initializing PHOS electron identification analysis task ...";
-    
-    std::vector<double> momentum_binning = {0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.8, 0.85, 0.9, 0.95, 1.0, 
-                                            1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0, 2.2, 2.4, 2.6, 2.8, 3.0, 3.2, 3.4, 3.6, 3.8, 4.0, 
+
+    std::vector<double> momentum_binning = {0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.8, 0.85, 0.9, 0.95, 1.0,
+                                            1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0, 2.2, 2.4, 2.6, 2.8, 3.0, 3.2, 3.4, 3.6, 3.8, 4.0,
                                             4.5, 5.0, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 10.};
     const AxisSpec
       axisP{momentum_binning, "p (GeV/c)"},
@@ -94,7 +94,7 @@ struct phosElId {
     mHistManager.add("hDeltaXNeg_v_p", "negative trackX - clusterX_v_p", HistType::kTH2F, {axisdX, axisP});
     mHistManager.add("hDeltaZ_v_p", "trackZ - clusterZ_v_p", HistType::kTH2F, {axisdZ, axisP});
     mHistManager.add("hEp_v_p", "E/p ratio_v_p", HistType::kTH2F, {axisEp, axisP});
-     geomPHOS = std::make_unique<o2::phos::Geometry>("PHOS");
+    geomPHOS = std::make_unique<o2::phos::Geometry>("PHOS");
   }
   void process(soa::Join<aod::Collisions, aod::EvSels>::iterator const& collision,
                aod::CaloClusters& clusters,
@@ -115,17 +115,20 @@ struct phosElId {
       runNumber = bc.runNumber();
     }
 
-    if (clusters.size() == 0) return; // Nothing to process
+    if (clusters.size() == 0)
+      return; // Nothing to process
 
-    for(auto const& track : tracks)
-    {
-      if (!track.has_collision()) continue;
-      if (std::abs(track.collision_as<SelCollisions>().posZ()) > 10.f) continue;
+    for (auto const& track : tracks) {
+      if (!track.has_collision())
+        continue;
+      if (std::abs(track.collision_as<SelCollisions>().posZ()) > 10.f)
+        continue;
 
       // calculate coordinate in PHOS plane
-      if (std::abs(track.eta()) > 0.3) continue;
+      if (std::abs(track.eta()) > 0.3)
+        continue;
       int16_t module;
-      float trackX = 999., trackZ = 999.;//, deltaX = 999., deltaZ = 999.;
+      float trackX = 999., trackZ = 999.; //, deltaX = 999., deltaZ = 999.;
 
       auto trackPar = getTrackPar(track);
       if (!impactOnPHOS(trackPar, track.trackEtaEmcal(), track.trackPhiEmcal(), track.collision_as<SelCollisions>().posZ(), module, trackX, trackZ)) {
@@ -133,14 +136,17 @@ struct phosElId {
       }
 
       float trackMom = track.p();
-      for(const auto& clu : clusters)
-      {
-        if (clu.e() < mMinE) continue;
-        if(module != clu.mod()) continue;
+      for (const auto& clu : clusters) {
+        if (clu.e() < mMinE)
+          continue;
+        if (module != clu.mod())
+          continue;
         float posX = clu.x(), posZ = clu.z();
 
-        if (track.sign() > 0) mHistManager.fill(HIST("hDeltaXPos_v_p"), trackX - posX, trackMom);
-        else mHistManager.fill(HIST("hDeltaXNeg_v_p"), trackX - posX, trackMom);
+        if (track.sign() > 0)
+          mHistManager.fill(HIST("hDeltaXPos_v_p"), trackX - posX, trackMom);
+        else
+          mHistManager.fill(HIST("hDeltaXNeg_v_p"), trackX - posX, trackMom);
         mHistManager.fill(HIST("hDeltaZ_v_p"), trackZ - posZ, trackMom);
         mHistManager.fill(HIST("hEp_v_p"), clu.e() / trackMom, trackMom);
       }
@@ -220,7 +226,6 @@ struct phosElId {
 WorkflowSpec defineDataProcessing(ConfigContext const& cfgc)
 {
   auto workflow = WorkflowSpec{
-    adaptAnalysisTask<phosElId>(cfgc)
-  };
+    adaptAnalysisTask<phosElId>(cfgc)};
   return workflow;
 }

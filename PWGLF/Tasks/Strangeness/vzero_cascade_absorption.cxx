@@ -426,7 +426,7 @@ struct vzero_cascade_absorption {
       }
 
     } // end loop on V0s
-  } // end processData
+  }   // end processData
   PROCESS_SWITCH(vzero_cascade_absorption, processData, "Process data", true);
 
   Preslice<aod::V0Datas> perCollision = o2::aod::v0data::collisionId;

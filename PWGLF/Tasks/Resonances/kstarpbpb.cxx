@@ -421,8 +421,8 @@ struct kstarpbpb {
             histos.fill(HIST("QAafter/trkDCAzpi"), track2.dcaZ());
           }
           daughter1 = ROOT::Math::PxPyPzMVector(track1.px(), track1.py(), track1.pz(), massKa);
-         daughter2 = ROOT::Math::PxPyPzMVector(track2.px(), track2.py(), track2.pz(), massPi);
-        } else if (track1pion && track2kaon) { 
+          daughter2 = ROOT::Math::PxPyPzMVector(track2.px(), track2.py(), track2.pz(), massPi);
+        } else if (track1pion && track2kaon) {
           daughter1 = ROOT::Math::PxPyPzMVector(track1.px(), track1.py(), track1.pz(), massPi);
           daughter2 = ROOT::Math::PxPyPzMVector(track2.px(), track2.py(), track2.pz(), massKa);
         } else {
@@ -441,22 +441,22 @@ struct kstarpbpb {
         for (int nrotbkg = 1; nrotbkg < nBkgRotations; nrotbkg++) {
           auto anglestep = nrotbkg * (2.0 * TMath::Pi() / nBkgRotations);
           if (track1kaon && track2pion) {
-          auto rotkaonPx = track1.px() * std::cos(anglestep) - track1.py() * std::sin(anglestep);
-          auto rotkaonPy = track1.px() * std::sin(anglestep) + track1.py() * std::cos(anglestep);
-          kaonrot = ROOT::Math::PxPyPzMVector(rotkaonPx, rotkaonPy, track1.pz(), massKa);
-          daughter2 = ROOT::Math::PxPyPzMVector(track2.px(), track2.py(), track2.pz(), massPi);
-          } else if (track1pion && track2kaon) { 
-          auto rotkaonPx = track2.px() * std::cos(anglestep) - track2.py() * std::sin(anglestep);
-          auto rotkaonPy = track2.px() * std::sin(anglestep) + track2.py() * std::cos(anglestep);
-          kaonrot = ROOT::Math::PxPyPzMVector(rotkaonPx, rotkaonPy, track2.pz(), massKa);
-          daughter2 = ROOT::Math::PxPyPzMVector(track1.px(), track1.py(), track1.pz(), massPi);
+            auto rotkaonPx = track1.px() * std::cos(anglestep) - track1.py() * std::sin(anglestep);
+            auto rotkaonPy = track1.px() * std::sin(anglestep) + track1.py() * std::cos(anglestep);
+            kaonrot = ROOT::Math::PxPyPzMVector(rotkaonPx, rotkaonPy, track1.pz(), massKa);
+            daughter2 = ROOT::Math::PxPyPzMVector(track2.px(), track2.py(), track2.pz(), massPi);
+          } else if (track1pion && track2kaon) {
+            auto rotkaonPx = track2.px() * std::cos(anglestep) - track2.py() * std::sin(anglestep);
+            auto rotkaonPy = track2.px() * std::sin(anglestep) + track2.py() * std::cos(anglestep);
+            kaonrot = ROOT::Math::PxPyPzMVector(rotkaonPx, rotkaonPy, track2.pz(), massKa);
+            daughter2 = ROOT::Math::PxPyPzMVector(track1.px(), track1.py(), track1.pz(), massPi);
           } else {
-          continue;
-        }
-          kstarrot = kaonrot +  daughter2;
+            continue;
+          }
+          kstarrot = kaonrot + daughter2;
           auto phiminuspsiRot = GetPhiInRange(kstarrot.Phi() - psiFT0C);
           auto v2Rot = TMath::Cos(2.0 * phiminuspsiRot);
-         histos.fill(HIST("hSparseV2SASameEventRotational_V2"), kstarrot.M(), kstarrot.Pt(), v2Rot, centrality);
+          histos.fill(HIST("hSparseV2SASameEventRotational_V2"), kstarrot.M(), kstarrot.Pt(), v2Rot, centrality);
         }
       }
     }

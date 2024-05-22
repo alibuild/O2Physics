@@ -45,20 +45,28 @@ using std::array;
 using SelectedCollisions = soa::Join<aod::Collisions, aod::EvSels>;
 
 using FullTracks =
-    soa::Join<aod::Tracks, aod::TracksExtra, aod::TrackSelection,
-              aod::TrackSelectionExtension, aod::TracksDCA, aod::pidTPCFullPi,
-              aod::pidTPCFullKa, aod::pidTPCFullPr, aod::pidTOFFullPi,
-              aod::pidTOFFullKa, aod::pidTOFFullPr>;
+  soa::Join<aod::Tracks, aod::TracksExtra, aod::TrackSelection,
+            aod::TrackSelectionExtension, aod::TracksDCA, aod::pidTPCFullPi,
+            aod::pidTPCFullKa, aod::pidTPCFullPr, aod::pidTOFFullPi,
+            aod::pidTOFFullKa, aod::pidTOFFullPr>;
 
 struct strangeness_in_jets {
 
   // QC Histograms
   HistogramRegistry registryQC{
-      "registryQC", {}, OutputObjHandlingPolicy::AnalysisObject, true, true};
+    "registryQC",
+    {},
+    OutputObjHandlingPolicy::AnalysisObject,
+    true,
+    true};
 
   // Analysis Histograms: Data
   HistogramRegistry registryData{
-      "registryData", {}, OutputObjHandlingPolicy::AnalysisObject, true, true};
+    "registryData",
+    {},
+    OutputObjHandlingPolicy::AnalysisObject,
+    true,
+    true};
 
   // Global Parameters
   Configurable<float> ptLeadingMin{"ptLeadingMin", 5.0f, "pt leading min"};
@@ -107,7 +115,8 @@ struct strangeness_in_jets {
   Configurable<float> dcaV0DaughtersMax{"dcaV0DaughtersMax", 0.5f,
                                         "Maximum DCA Daughters"};
 
-  void init(InitContext const &) {
+  void init(InitContext const&)
+  {
 
     // Global Properties and QC
     registryQC.add("number_of_events_data", "number of events in data",
@@ -136,7 +145,9 @@ struct strangeness_in_jets {
                       {200, 1.09, 1.14, "m_{p#pi} (GeV/#it{c}^{2})"}});
   }
 
-  template <typename T> bool passedTrackSelectionForJets(const T &track) {
+  template <typename T>
+  bool passedTrackSelectionForJets(const T& track)
+  {
 
     if (!track.hasITS())
       return false;
@@ -165,8 +176,9 @@ struct strangeness_in_jets {
 
   // Lambda Selections
   template <typename V, typename T1, typename T2, typename C>
-  bool passedLambdaSelection(const V &v0, const T1 &ptrack, const T2 &ntrack,
-                             const C &collision) {
+  bool passedLambdaSelection(const V& v0, const T1& ptrack, const T2& ntrack,
+                             const C& collision)
+  {
     // Single-Track Selections
     if (!passedSingleTrackSelection(ptrack))
       return false;
@@ -227,8 +239,9 @@ struct strangeness_in_jets {
 
   // AntiLambda Selections
   template <typename V, typename T1, typename T2, typename C>
-  bool passedAntiLambdaSelection(const V &v0, const T1 &ptrack,
-                                 const T2 &ntrack, const C &collision) {
+  bool passedAntiLambdaSelection(const V& v0, const T1& ptrack,
+                                 const T2& ntrack, const C& collision)
+  {
     // Single-Track Selections
     if (!passedSingleTrackSelection(ptrack))
       return false;
@@ -288,7 +301,9 @@ struct strangeness_in_jets {
   }
 
   // Single-Track Selection
-  template <typename T> bool passedSingleTrackSelection(const T &track) {
+  template <typename T>
+  bool passedSingleTrackSelection(const T& track)
+  {
     if (requireITS && (!track.hasITS()))
       return false;
     if (requireITS && track.itsNCls() < minITSnCls)
@@ -308,7 +323,8 @@ struct strangeness_in_jets {
     return true;
   }
 
-  float Minimum(float x1, float x2) {
+  float Minimum(float x1, float x2)
+  {
     float x_min(x1);
     if (x1 < x2)
       x_min = x1;
@@ -318,7 +334,8 @@ struct strangeness_in_jets {
     return x_min;
   }
 
-  double GetDeltaPhi(double a1, double a2) {
+  double GetDeltaPhi(double a1, double a2)
+  {
 
     double delta_phi(0);
 
@@ -334,7 +351,8 @@ struct strangeness_in_jets {
     return delta_phi;
   }
 
-  void get_perpendicular_cone(TVector3 p, TVector3 &u, float sign) {
+  void get_perpendicular_cone(TVector3 p, TVector3& u, float sign)
+  {
 
     // Initialization
     float ux(0), uy(0), uz(0);
@@ -383,8 +401,9 @@ struct strangeness_in_jets {
     return;
   }
 
-  void processData(SelectedCollisions::iterator const &collision,
-                   aod::V0Datas const &fullV0s, FullTracks const &tracks) {
+  void processData(SelectedCollisions::iterator const& collision,
+                   aod::V0Datas const& fullV0s, FullTracks const& tracks)
+  {
 
     registryQC.fill(HIST("number_of_events_data"), 0.5);
     if (!collision.sel8())
@@ -423,7 +442,7 @@ struct strangeness_in_jets {
       return;
     registryQC.fill(HIST("number_of_events_data"), 3.5);
 
-    auto const &leading_track = tracks.iteratorAt(leading_ID);
+    auto const& leading_track = tracks.iteratorAt(leading_ID);
     TVector3 p_leading(leading_track.px(), leading_track.py(),
                        leading_track.pz());
 
@@ -533,7 +552,7 @@ struct strangeness_in_jets {
       float deltaEta_jet = pTrack.Eta() - jet_axis.Eta();
       float deltaPhi_jet = GetDeltaPhi(pTrack.Phi(), jet_axis.Phi());
       float deltaR_jet =
-          sqrt(deltaEta_jet * deltaEta_jet + deltaPhi_jet * deltaPhi_jet);
+        sqrt(deltaEta_jet * deltaEta_jet + deltaPhi_jet * deltaPhi_jet);
       if (deltaR_jet < Rmax)
         mult_jet++;
 
@@ -541,11 +560,11 @@ struct strangeness_in_jets {
       float deltaEta_ue1 = pTrack.Eta() - ue_axis1.Eta();
       float deltaPhi_ue1 = GetDeltaPhi(pTrack.Phi(), ue_axis1.Phi());
       float deltaR_ue1 =
-          sqrt(deltaEta_ue1 * deltaEta_ue1 + deltaPhi_ue1 * deltaPhi_ue1);
+        sqrt(deltaEta_ue1 * deltaEta_ue1 + deltaPhi_ue1 * deltaPhi_ue1);
       float deltaEta_ue2 = pTrack.Eta() - ue_axis2.Eta();
       float deltaPhi_ue2 = GetDeltaPhi(pTrack.Phi(), ue_axis2.Phi());
       float deltaR_ue2 =
-          sqrt(deltaEta_ue2 * deltaEta_ue2 + deltaPhi_ue2 * deltaPhi_ue2);
+        sqrt(deltaEta_ue2 * deltaEta_ue2 + deltaPhi_ue2 * deltaPhi_ue2);
 
       if (deltaR_ue1 < Rmax || deltaR_ue2 < Rmax)
         mult_ue++;
@@ -553,10 +572,10 @@ struct strangeness_in_jets {
 
     mult_jet = mult_jet - 2.0 * mult_ue;
 
-    for (auto &v0 : fullV0s) {
+    for (auto& v0 : fullV0s) {
 
-      const auto &pos = v0.posTrack_as<FullTracks>();
-      const auto &neg = v0.negTrack_as<FullTracks>();
+      const auto& pos = v0.posTrack_as<FullTracks>();
+      const auto& neg = v0.negTrack_as<FullTracks>();
       if (!pos.passedTPCRefit())
         continue;
       if (!neg.passedTPCRefit())
@@ -568,17 +587,17 @@ struct strangeness_in_jets {
       float deltaEta_jet = v0dir.Eta() - jet_axis.Eta();
       float deltaPhi_jet = GetDeltaPhi(v0dir.Phi(), jet_axis.Phi());
       float deltaR_jet =
-          sqrt(deltaEta_jet * deltaEta_jet + deltaPhi_jet * deltaPhi_jet);
+        sqrt(deltaEta_jet * deltaEta_jet + deltaPhi_jet * deltaPhi_jet);
 
       float deltaEta_ue1 = v0dir.Eta() - ue_axis1.Eta();
       float deltaPhi_ue1 = GetDeltaPhi(v0dir.Phi(), ue_axis1.Phi());
       float deltaR_ue1 =
-          sqrt(deltaEta_ue1 * deltaEta_ue1 + deltaPhi_ue1 * deltaPhi_ue1);
+        sqrt(deltaEta_ue1 * deltaEta_ue1 + deltaPhi_ue1 * deltaPhi_ue1);
 
       float deltaEta_ue2 = v0dir.Eta() - ue_axis2.Eta();
       float deltaPhi_ue2 = GetDeltaPhi(v0dir.Phi(), ue_axis2.Phi());
       float deltaR_ue2 =
-          sqrt(deltaEta_ue2 * deltaEta_ue2 + deltaPhi_ue2 * deltaPhi_ue2);
+        sqrt(deltaEta_ue2 * deltaEta_ue2 + deltaPhi_ue2 * deltaPhi_ue2);
 
       // Lambda
       if (passedLambdaSelection(v0, pos, neg, collision)) {
@@ -608,6 +627,7 @@ struct strangeness_in_jets {
   PROCESS_SWITCH(strangeness_in_jets, processData, "Process data", true);
 };
 
-WorkflowSpec defineDataProcessing(ConfigContext const &cfgc) {
+WorkflowSpec defineDataProcessing(ConfigContext const& cfgc)
+{
   return WorkflowSpec{adaptAnalysisTask<strangeness_in_jets>(cfgc)};
 }

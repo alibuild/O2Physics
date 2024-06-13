@@ -87,16 +87,16 @@ class CollisonCuts
       mHistogramRegistry->get<TH1>(HIST("CollCutCounts"))->GetXaxis()->SetBinLabel(7, "NoSameBunchPileup)");
       mHistogramRegistry->get<TH1>(HIST("CollCutCounts"))->GetXaxis()->SetBinLabel(8, "NoITSROFrameBorder)");
 =======
-      
+
       mHistogramRegistry->add("CollCutCounts", "; ; Entries", kTH1F, {{10, 0., 10.}});
-      mHistogramRegistry->get<TH1>(HIST("CollCutCounts"))->GetXaxis()->SetBinLabel(1, "all"); //label
-      mHistogramRegistry->get<TH1>(HIST("CollCutCounts"))->GetXaxis()->SetBinLabel(2, "sel8"); //label
-      mHistogramRegistry->get<TH1>(HIST("CollCutCounts"))->GetXaxis()->SetBinLabel(3, "IsTriggerTVX"); //label
-      mHistogramRegistry->get<TH1>(HIST("CollCutCounts"))->GetXaxis()->SetBinLabel(4, "NoTimeFrameBorder"); //label
-      mHistogramRegistry->get<TH1>(HIST("CollCutCounts"))->GetXaxis()->SetBinLabel(5, "IsVertexITSTPC"); //label
-      mHistogramRegistry->get<TH1>(HIST("CollCutCounts"))->GetXaxis()->SetBinLabel(6, "IsGoodZvtxFT0vsPV)"); //label
-      mHistogramRegistry->get<TH1>(HIST("CollCutCounts"))->GetXaxis()->SetBinLabel(7, "NoSameBunchPileup)"); //label
-      mHistogramRegistry->get<TH1>(HIST("CollCutCounts"))->GetXaxis()->SetBinLabel(8, "NoITSROFrameBorder)"); //label
+      mHistogramRegistry->get<TH1>(HIST("CollCutCounts"))->GetXaxis()->SetBinLabel(1, "all");                 // label
+      mHistogramRegistry->get<TH1>(HIST("CollCutCounts"))->GetXaxis()->SetBinLabel(2, "sel8");                // label
+      mHistogramRegistry->get<TH1>(HIST("CollCutCounts"))->GetXaxis()->SetBinLabel(3, "IsTriggerTVX");        // label
+      mHistogramRegistry->get<TH1>(HIST("CollCutCounts"))->GetXaxis()->SetBinLabel(4, "NoTimeFrameBorder");   // label
+      mHistogramRegistry->get<TH1>(HIST("CollCutCounts"))->GetXaxis()->SetBinLabel(5, "IsVertexITSTPC");      // label
+      mHistogramRegistry->get<TH1>(HIST("CollCutCounts"))->GetXaxis()->SetBinLabel(6, "IsGoodZvtxFT0vsPV)");  // label
+      mHistogramRegistry->get<TH1>(HIST("CollCutCounts"))->GetXaxis()->SetBinLabel(7, "NoSameBunchPileup)");  // label
+      mHistogramRegistry->get<TH1>(HIST("CollCutCounts"))->GetXaxis()->SetBinLabel(8, "NoITSROFrameBorder)"); // label
 
 >>>>>>> d67e9cfe3d94a7bed0a06a0f67aeedc52fb0c94b
     } else {

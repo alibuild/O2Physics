@@ -173,7 +173,7 @@ struct phianalysisrun3_PbPb {
     }
     return true;
   }
-   ROOT::Math::PxPyPzMVector  daughter1, daughter2, phirot ;
+  ROOT::Math::PxPyPzMVector daughter1, daughter2, phirot;
   template <typename T1, typename T2>
   void FillinvMass(const T1& candidate1, const T2& candidate2, float multiplicity, bool unlike, bool mix, bool likesign, bool rotation, float massd1, float massd2)
   {
@@ -215,20 +215,20 @@ struct phianalysisrun3_PbPb {
       if (mix) {
         histos.fill(HIST("h3PhiInvMassMixed"), multiplicity, pT, mass);
       }
-     
-        if (fillRotation) {
-          for (int nrotbkg = 0; nrotbkg < nBkgRotations; nrotbkg++) {
-            auto anglestart = confMinRot;
-            auto angleend = confMaxRot;
-            auto anglestep = (angleend - anglestart) / (1.0 * (nBkgRotations - 1));
-            auto rotangle = anglestart + nrotbkg * anglestep;
-             auto rotPx = candidate1.px() * std::cos(rotangle) - candidate1.py() * std::sin(rotangle);
-              auto rotPy = candidate1.px() * std::sin(rotangle) + candidate1.py() * std::cos(rotangle);
-              daughter1 = ROOT::Math::PxPyPzMVector(rotPx, rotPy, candidate1.pz(), massKa);
-               daughter2 = ROOT::Math::PxPyPzMVector(candidate2.px(), candidate2.py(), candidate2.pz(), massKa);
-                phirot = daughter1 + daughter2;
-        histos.fill(HIST("h3PhiInvMassRotation"), multiplicity, phirot.Pt(),  phirot.M());
-          }
+
+      if (fillRotation) {
+        for (int nrotbkg = 0; nrotbkg < nBkgRotations; nrotbkg++) {
+          auto anglestart = confMinRot;
+          auto angleend = confMaxRot;
+          auto anglestep = (angleend - anglestart) / (1.0 * (nBkgRotations - 1));
+          auto rotangle = anglestart + nrotbkg * anglestep;
+          auto rotPx = candidate1.px() * std::cos(rotangle) - candidate1.py() * std::sin(rotangle);
+          auto rotPy = candidate1.px() * std::sin(rotangle) + candidate1.py() * std::cos(rotangle);
+          daughter1 = ROOT::Math::PxPyPzMVector(rotPx, rotPy, candidate1.pz(), massKa);
+          daughter2 = ROOT::Math::PxPyPzMVector(candidate2.px(), candidate2.py(), candidate2.pz(), massKa);
+          phirot = daughter1 + daughter2;
+          histos.fill(HIST("h3PhiInvMassRotation"), multiplicity, phirot.Pt(), phirot.M());
+        }
       }
     }
     if (std::abs(rapidity) < 0.5 && !isEtaAssym && track1Sign * track2Sign > 0 && likesign) {

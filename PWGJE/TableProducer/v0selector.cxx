@@ -66,7 +66,8 @@ struct V0SelectorTask {
   Configurable<std::vector<double>> AntiLambdaCMCVals{"AntiLambdaCMCVals", {10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0}, "AntiLambda competing mass cut values (MeV)"};
 
   void init(InitContext const&)
-  {}
+  {
+  }
 
   template <typename T, typename U>
   bool K0SCuts(T const& collision, U const& v0)

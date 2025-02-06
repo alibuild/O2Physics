@@ -85,7 +85,7 @@ struct DedxAnalysis {
   Configurable<bool> calibrationMode{"calibrationMode", true, "calibration mode"};
   // Histograms names
   static constexpr std::string_view kDedxvsMomentumPos[4] = {"dEdx_vs_Momentum_all_Pos", "dEdx_vs_Momentum_Pi_v0_Pos", "dEdx_vs_Momentum_Pr_v0_Pos", "dEdx_vs_Momentum_El_v0_Pos"};
-    static constexpr std::string_view kDedxvsMomentumNeg[4] = {"dEdx_vs_Momentum_all_Neg", "dEdx_vs_Momentum_Pi_v0_Neg", "dEdx_vs_Momentum_Pr_v0_Neg", "dEdx_vs_Momentum_El_v0_Neg"};
+  static constexpr std::string_view kDedxvsMomentumNeg[4] = {"dEdx_vs_Momentum_all_Neg", "dEdx_vs_Momentum_Pi_v0_Neg", "dEdx_vs_Momentum_Pr_v0_Neg", "dEdx_vs_Momentum_El_v0_Neg"};
   static constexpr double EtaCut[9] = {-0.8, -0.6, -0.4, -0.2, 0.0, 0.2, 0.4, 0.6, 0.8};
   static constexpr double Correction[8] = {54.5281, 54.6548, 54.6513, 54.6781, 54.6167, 54.7384, 55.0047, 54.9592};
 <<<<<<< HEAD
@@ -107,8 +107,8 @@ struct DedxAnalysis {
         {{100, 0.0, 6.4, "#phi"}, {100, 0.0, 600.0, "dE/dx MIP (a. u.)"}});
 
     } else {
-        AxisSpec pAxis = {binP, "#it{p}/Z (GeV/c)"};
-        
+      AxisSpec pAxis = {binP, "#it{p}/Z (GeV/c)"};
+
       registryDeDx.add(
         "hdEdxMIP_vs_eta_calibrated", "dE/dx", HistType::kTH2F,
         {{8, -0.8, 0.8, "#eta"}, {10, 30.0, 70.0, "dE/dx MIP (a. u.)"}});
@@ -125,7 +125,7 @@ struct DedxAnalysis {
         registryDeDx.add(kDedxvsMomentumPos[i].data(), "dE/dx", HistType::kTH3F,
                          {{pAxis}, {100, 0.0, 600.0, "dE/dx (a. u.)"}, {8, -0.8, 0.8, "#eta"}});
         registryDeDx.add(kDedxvsMomentumNeg[i].data(), "dE/dx", HistType::kTH3F,
-                           {{pAxis}, {100, 0.0, 600.0, "dE/dx (a. u.)"}, {8, -0.8, 0.8, "#eta"}});
+                         {{pAxis}, {100, 0.0, 600.0, "dE/dx (a. u.)"}, {8, -0.8, 0.8, "#eta"}});
 >>>>>>> c200e0ce0 (AxisSpec was moved inside init())
       }
     }
@@ -336,11 +336,11 @@ struct DedxAnalysis {
       if (!calibrationMode) {
         for (int i = 0; i < 8; ++i) {
           if (trk.eta() > EtaCut[i] && trk.eta() < EtaCut[i + 1]) {
-              if (signedP > 0) {
-                  registryDeDx.fill(HIST(kDedxvsMomentumPos[0]), signedP, trk.tpcSignal() * 50 / Correction[i], trk.eta());
-              }else{
-                  registryDeDx.fill(HIST(kDedxvsMomentumNeg[0]), std::abs(signedP), trk.tpcSignal() * 50 / Correction[i], trk.eta());
-              }
+            if (signedP > 0) {
+              registryDeDx.fill(HIST(kDedxvsMomentumPos[0]), signedP, trk.tpcSignal() * 50 / Correction[i], trk.eta());
+            } else {
+              registryDeDx.fill(HIST(kDedxvsMomentumNeg[0]), std::abs(signedP), trk.tpcSignal() * 50 / Correction[i], trk.eta());
+            }
           }
         }
       }

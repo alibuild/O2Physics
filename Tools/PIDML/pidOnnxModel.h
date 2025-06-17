@@ -17,26 +17,28 @@
 #ifndef TOOLS_PIDML_PIDONNXMODEL_H_
 #define TOOLS_PIDML_PIDONNXMODEL_H_
 
+#include "Tools/PIDML/pidUtils.h"
+
+#include "CCDB/CcdbApi.h"
 #include <Framework/ASoA.h>
-#include <array>
-#include <algorithm>
-#include <cstdint>
-#include <cstring>
-#include <cstdio>
-#include <limits>
-#include <optional>
-#include <string>
-#include <map>
-#include <type_traits>
-#include <utility>
-#include <memory>
-#include <vector>
-#include <onnxruntime_cxx_api.h>
 
 #include "rapidjson/document.h"
 #include "rapidjson/filereadstream.h"
-#include "CCDB/CcdbApi.h"
-#include "Tools/PIDML/pidUtils.h"
+#include <onnxruntime_cxx_api.h>
+
+#include <algorithm>
+#include <array>
+#include <cstdint>
+#include <cstdio>
+#include <cstring>
+#include <limits>
+#include <map>
+#include <memory>
+#include <optional>
+#include <string>
+#include <type_traits>
+#include <utility>
+#include <vector>
 
 enum PidMLDetector {
   kTPCOnly = 0,

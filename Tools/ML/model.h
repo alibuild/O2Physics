@@ -22,11 +22,12 @@
 
 // C++ and system includes
 #include <onnxruntime_cxx_api.h>
-#include <vector>
-#include <string>
-#include <memory>
-#include <map>
+
 #include <algorithm>
+#include <map>
+#include <memory>
+#include <string>
+#include <vector>
 
 // ROOT includes
 #include "TSystem.h"

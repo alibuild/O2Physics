@@ -13,30 +13,32 @@
 /// \brief Tasks processing derived data for Cascade analysis in PbPb collisions
 /// \author Lucia Anna Tarasovicova (lucia.anna.husova@cern.ch)
 
-#include <string>
-#include <vector>
-#include "Framework/runDataProcessing.h"
-#include "Framework/AnalysisTask.h"
-#include "Framework/AnalysisDataModel.h"
-#include "Framework/O2DatabasePDGPlugin.h"
-#include "Common/Core/RecoDecay.h"
-#include "Common/CCDB/ctpRateFetcher.h"
-#include "PWGLF/DataModel/LFStrangenessTables.h"
 #include "PWGLF/DataModel/LFStrangenessPIDTables.h"
-#include "Framework/StaticFor.h"
+#include "PWGLF/DataModel/LFStrangenessTables.h"
 
 #include "Common/CCDB/EventSelectionParams.h"
 #include "Common/CCDB/TriggerAliases.h"
+#include "Common/CCDB/ctpRateFetcher.h"
+#include "Common/Core/RecoDecay.h"
+
 #include "CCDB/BasicCCDBManager.h"
+#include "Framework/AnalysisDataModel.h"
+#include "Framework/AnalysisTask.h"
 #include "Framework/HistogramRegistry.h"
+#include "Framework/O2DatabasePDGPlugin.h"
+#include "Framework/StaticFor.h"
+#include "Framework/runDataProcessing.h"
 #include <Framework/Configurable.h>
 #include <Framework/HistogramSpec.h>
 
 #include <TFile.h>
 #include <TH2F.h>
-#include <TProfile.h>
 #include <TLorentzVector.h>
 #include <TPDGCode.h>
+#include <TProfile.h>
+
+#include <string>
+#include <vector>
 
 // constants
 const float ctauxiPDG = 4.91;     // from PDG
@@ -178,8 +180,8 @@ struct Derivedcascadeanalysis {
     Configurable<bool> doAtLeastOneTrackAB{"doAtLeastOneTrackAB", false, "require that at least one of the daughter tracks is from Afterburner"};
     Configurable<bool> doBachelorITSTracking{"doBachelorITSTracking", false, "require that the bachelor track is from the ITS tracking"};
     Configurable<bool> doAllTracksMinITSClusters{"doAllTracksMinITSClusters", false, "require that all daughter tracks have minimal ITS hits"};
-    Configurable<bool> useBachelorITSStandAlone{"useBachelorITSStandAlone",false, "if enabled, the bachelor track is required to be ITS only track"};
-    Configurable<bool> useMesonDaughterITSStandAlone{"useMesonDaughterITSStandAlone",false, "if enabled, the meson daughter track is required to be ITS only track"};
+    Configurable<bool> useBachelorITSStandAlone{"useBachelorITSStandAlone", false, "if enabled, the bachelor track is required to be ITS only track"};
+    Configurable<bool> useMesonDaughterITSStandAlone{"useMesonDaughterITSStandAlone", false, "if enabled, the meson daughter track is required to be ITS only track"};
   } candidateSelectionFlags;
 
   struct : ConfigurableGroup {
@@ -225,7 +227,7 @@ struct Derivedcascadeanalysis {
     Configurable<float> maxRapCut{"maxRapCut", 0.155, "maximal rapidity acceptance in case of p--o"};
     Configurable<float> etaDauCut{"etaDauCut", 0.8, "Pseudorapidity acceptance of the cascade daughters"};
     Configurable<int> minITSclusters{"minITSclusters", 3, "minimal number of ITS hits for the daughter tracks"};
-    Configurable<int> maxTPCCrossedRows{"maxTPCCrossedRows",1,"maximal number of TPC crossed rows is ITS only tracks are requierd"};
+    Configurable<int> maxTPCCrossedRows{"maxTPCCrossedRows", 1, "maximal number of TPC crossed rows is ITS only tracks are requierd"};
   } candidateSelectionValues;
 
   o2::ccdb::CcdbApi ccdbApi;
@@ -323,9 +325,9 @@ struct Derivedcascadeanalysis {
     histos.add("hCandidate", "hCandidate", HistType::kTH1D, {{24, -0.5, 23.5}});
     histos.add("hCutValue", "hCutValue", HistType::kTH2D, {{24, -0.5, 23.5}, {300, 0, 3.1}});
 
-    if(qaFlags.doITSclusterCheck){
-      histos.add("hBachelorITSclusters","hBachelorITSclusters", HistType::kTH1F, {{7,-0.5,6.6}});
-      histos.add("hMesonDaughterITSclusters","hMesonDaughterITSclusters", HistType::kTH1F, {{7,-0.5,6.6}});
+    if (qaFlags.doITSclusterCheck) {
+      histos.add("hBachelorITSclusters", "hBachelorITSclusters", HistType::kTH1F, {{7, -0.5, 6.6}});
+      histos.add("hMesonDaughterITSclusters", "hMesonDaughterITSclusters", HistType::kTH1F, {{7, -0.5, 6.6}});
     }
     if (qaFlags.doFillNsigmaTPCHistProton) {
       histos.add("hNsigmaProton", "hNsigmaProton", HistType::kTH3D, {{280, -7, 7}, {nPtBinsForNsigmaTPC, 0, 6}, {100, 0, 100}});
@@ -353,7 +355,7 @@ struct Derivedcascadeanalysis {
         histos.add("hNsigmaTOFBachelorKaon", "", HistType::kTH3D, {{70, -7, 7}, {100, 0, 10}, {100, 0, 100}});
     }
 
-    TString cutLabel[24] = {"All", "MassWin", "y", "DCACascDau", "DCAV0Dau", "rCasc", "rCascMax", "rV0", "rV0Max", "LambdaMass", "Bach-baryon", "V0CosPA", "CompDecayMass", "DCADauToPV", "EtaDau", "CascCosPA", "DCAV0ToPV", "nSigmaTPCV0Dau", "NTPCrows", "OOBRej", "nSigmaTPCbachelor", "ctau", "bachelor ITS only","meson ITS only"};
+    TString cutLabel[24] = {"All", "MassWin", "y", "DCACascDau", "DCAV0Dau", "rCasc", "rCascMax", "rV0", "rV0Max", "LambdaMass", "Bach-baryon", "V0CosPA", "CompDecayMass", "DCADauToPV", "EtaDau", "CascCosPA", "DCAV0ToPV", "nSigmaTPCV0Dau", "NTPCrows", "OOBRej", "nSigmaTPCbachelor", "ctau", "bachelor ITS only", "meson ITS only"};
     for (int i = 1; i <= histos.get<TH1>(HIST("hCandidate"))->GetNbinsX(); i++) {
       histos.get<TH1>(HIST("hCandidate"))->GetXaxis()->SetBinLabel(i, cutLabel[i - 1]);
       histos.get<TH2>(HIST("hCutValue"))->GetXaxis()->SetBinLabel(i, cutLabel[i - 1]);
@@ -1229,9 +1231,9 @@ struct Derivedcascadeanalysis {
 
       if (isNegative) {
         if (candidateSelectionFlags.doNTPCSigmaCut) {
-          if(!candidateSelectionFlags.useMesonDaughterITSStandAlone && std::abs(negExtra.tpcNSigmaPi()) > candidateSelectionValues.nsigmatpcPi)
+          if (!candidateSelectionFlags.useMesonDaughterITSStandAlone && std::abs(negExtra.tpcNSigmaPi()) > candidateSelectionValues.nsigmatpcPi)
             continue;
-          if (std::abs(posExtra.tpcNSigmaPr()) > candidateSelectionValues.nsigmatpcPr) //proton should be always identified
+          if (std::abs(posExtra.tpcNSigmaPr()) > candidateSelectionValues.nsigmatpcPr) // proton should be always identified
             continue;
           histos.fill(HIST("hCandidate"), ++counter);
         } else {
@@ -1239,9 +1241,9 @@ struct Derivedcascadeanalysis {
         }
       } else {
         if (candidateSelectionFlags.doNTPCSigmaCut) {
-          if(!candidateSelectionFlags.useMesonDaughterITSStandAlone && std::abs(posExtra.tpcNSigmaPi()) > candidateSelectionValues.nsigmatpcPi)
+          if (!candidateSelectionFlags.useMesonDaughterITSStandAlone && std::abs(posExtra.tpcNSigmaPi()) > candidateSelectionValues.nsigmatpcPi)
             continue;
-          if (std::abs(negExtra.tpcNSigmaPr()) > candidateSelectionValues.nsigmatpcPr) //proton should be always identified
+          if (std::abs(negExtra.tpcNSigmaPr()) > candidateSelectionValues.nsigmatpcPr) // proton should be always identified
             continue;
           histos.fill(HIST("hCandidate"), ++counter);
         } else {
@@ -1283,15 +1285,15 @@ struct Derivedcascadeanalysis {
             histos.fill(HIST("histITSTPCmatchBachTrack"), ptBachelor, centrality, 2.5);
         }
       }
-      if(!candidateSelectionFlags.useBachelorITSStandAlone && std::abs(bachExtra.tpcCrossedRows()) < candidateSelectionValues.mintpccrrows)
+      if (!candidateSelectionFlags.useBachelorITSStandAlone && std::abs(bachExtra.tpcCrossedRows()) < candidateSelectionValues.mintpccrrows)
         continue;
-      if(!candidateSelectionFlags.useMesonDaughterITSStandAlone && isPositive && std::abs(posExtra.tpcCrossedRows()) < candidateSelectionValues.mintpccrrows) 
+      if (!candidateSelectionFlags.useMesonDaughterITSStandAlone && isPositive && std::abs(posExtra.tpcCrossedRows()) < candidateSelectionValues.mintpccrrows)
         continue;
-      if(!candidateSelectionFlags.useMesonDaughterITSStandAlone && isNegative && std::abs(negExtra.tpcCrossedRows()) < candidateSelectionValues.mintpccrrows)
-        continue;  
+      if (!candidateSelectionFlags.useMesonDaughterITSStandAlone && isNegative && std::abs(negExtra.tpcCrossedRows()) < candidateSelectionValues.mintpccrrows)
+        continue;
       if (isNegative && std::abs(posExtra.tpcCrossedRows()) < candidateSelectionValues.mintpccrrows) // proton is always required to be TPC track
         continue;
-      if(isPositive && std::abs(negExtra.tpcCrossedRows()) < candidateSelectionValues.mintpccrrows) // proton is always required to be TPC track
+      if (isPositive && std::abs(negExtra.tpcCrossedRows()) < candidateSelectionValues.mintpccrrows) // proton is always required to be TPC track
         continue;
       histos.fill(HIST("hCandidate"), ++counter);
 
@@ -1409,23 +1411,23 @@ struct Derivedcascadeanalysis {
           ++counter;
         }
       }
-      if(candidateSelectionFlags.useBachelorITSStandAlone && std::abs(bachExtra.tpcCrossedRows()) < candidateSelectionValues.mintpccrrows && std::abs(bachExtra.tpcCrossedRows()) > candidateSelectionValues.maxTPCCrossedRows)
+      if (candidateSelectionFlags.useBachelorITSStandAlone && std::abs(bachExtra.tpcCrossedRows()) < candidateSelectionValues.mintpccrrows && std::abs(bachExtra.tpcCrossedRows()) > candidateSelectionValues.maxTPCCrossedRows)
         continue;
       histos.fill(HIST("hCandidate"), ++counter);
 
-      if(candidateSelectionFlags.useMesonDaughterITSStandAlone && isPositive && posExtra.tpcCrossedRows() > candidateSelectionValues.maxTPCCrossedRows)
+      if (candidateSelectionFlags.useMesonDaughterITSStandAlone && isPositive && posExtra.tpcCrossedRows() > candidateSelectionValues.maxTPCCrossedRows)
         continue;
-      if(candidateSelectionFlags.useMesonDaughterITSStandAlone && isNegative && negExtra.tpcCrossedRows() > candidateSelectionValues.maxTPCCrossedRows)
+      if (candidateSelectionFlags.useMesonDaughterITSStandAlone && isNegative && negExtra.tpcCrossedRows() > candidateSelectionValues.maxTPCCrossedRows)
         continue;
       histos.fill(HIST("hCandidate"), ++counter);
 
-      if(qaFlags.doITSclusterCheck){
-        if(candidateSelectionFlags.useBachelorITSStandAlone) 
-          histos.fill(HIST("hBachelorITSclusters"),bachExtra.itsNCls());
-        if(candidateSelectionFlags.useMesonDaughterITSStandAlone && isPositive)
-          histos.fill(HIST("hMesonDaughterITSclusters"),posExtra.itsNCls());
-        if(candidateSelectionFlags.useMesonDaughterITSStandAlone && isNegative)
-          histos.fill(HIST("hMesonDaughterITSclusters"),negExtra.itsNCls());
+      if (qaFlags.doITSclusterCheck) {
+        if (candidateSelectionFlags.useBachelorITSStandAlone)
+          histos.fill(HIST("hBachelorITSclusters"), bachExtra.itsNCls());
+        if (candidateSelectionFlags.useMesonDaughterITSStandAlone && isPositive)
+          histos.fill(HIST("hMesonDaughterITSclusters"), posExtra.itsNCls());
+        if (candidateSelectionFlags.useMesonDaughterITSStandAlone && isNegative)
+          histos.fill(HIST("hMesonDaughterITSclusters"), negExtra.itsNCls());
       }
       histos.fill(HIST("hPseudorapPosDaughter"), poseta);
       histos.fill(HIST("hPseudorapNegDaughter"), negeta);

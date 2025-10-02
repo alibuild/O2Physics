@@ -104,7 +104,7 @@ struct antinucleiTask {
       return false;
     if (track.tpcChi2NCl() > maxChi2TPC)
       return false;
-     if (track.tpcChi2NCl() < minChi2TPC)
+    if (track.tpcChi2NCl() < minChi2TPC)
       return false;
     if (track.itsChi2NCl() > chi2ITS)
       return false;

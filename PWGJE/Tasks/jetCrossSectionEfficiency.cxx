@@ -85,22 +85,22 @@ struct JetCrossSectionEfficiency {
   const char* getStageLabel(int bit)
   {
     switch (bit) {
-    case jetderiveddatautilities::JCollisionSel::selTVX:
-      return "kTVX";
-    case jetderiveddatautilities::JCollisionSel::selNoTimeFrameBorder:
-      return "kTFBorder";
-    case jetderiveddatautilities::JCollisionSel::selNoITSROFrameBorder:
-      return "kITSROFBorder";
-    case jetderiveddatautilities::JCollisionSel::selNoSameBunchPileup:
-      return "NoSameBunchPileup";
-    case jetderiveddatautilities::JCollisionSel::selIsGoodZvtxFT0vsPV:
-      return "IsGoodZvtxFT0vsPV";
-    case jetderiveddatautilities::JCollisionSel::selNoCollInTimeRangeStandard:
-      return "NoCollInTimeRangeStd";
-    case jetderiveddatautilities::JCollisionSel::selNoCollInRofStandard:
-      return "NoCollInRofStd";
-    default:
-      return nullptr;
+      case jetderiveddatautilities::JCollisionSel::selTVX:
+        return "kTVX";
+      case jetderiveddatautilities::JCollisionSel::selNoTimeFrameBorder:
+        return "kTFBorder";
+      case jetderiveddatautilities::JCollisionSel::selNoITSROFrameBorder:
+        return "kITSROFBorder";
+      case jetderiveddatautilities::JCollisionSel::selNoSameBunchPileup:
+        return "NoSameBunchPileup";
+      case jetderiveddatautilities::JCollisionSel::selIsGoodZvtxFT0vsPV:
+        return "IsGoodZvtxFT0vsPV";
+      case jetderiveddatautilities::JCollisionSel::selNoCollInTimeRangeStandard:
+        return "NoCollInTimeRangeStd";
+      case jetderiveddatautilities::JCollisionSel::selNoCollInRofStandard:
+        return "NoCollInRofStd";
+      default:
+        return nullptr;
     }
   }
 
@@ -135,8 +135,7 @@ struct JetCrossSectionEfficiency {
     std::vector<std::pair<int, std::vector<int>>> compositeSelections = {
       {jetderiveddatautilities::JCollisionSel::sel8, {jetderiveddatautilities::JCollisionSel::selTVX, jetderiveddatautilities::JCollisionSel::selNoTimeFrameBorder, jetderiveddatautilities::JCollisionSel::selNoITSROFrameBorder}},
       {jetderiveddatautilities::JCollisionSel::sel7, {jetderiveddatautilities::JCollisionSel::selTVX, jetderiveddatautilities::JCollisionSel::selNoTimeFrameBorder, jetderiveddatautilities::JCollisionSel::selNoITSROFrameBorder}},
-      {jetderiveddatautilities::JCollisionSel::selKINT7, {jetderiveddatautilities::JCollisionSel::selTVX, jetderiveddatautilities::JCollisionSel::selNoTimeFrameBorder, jetderiveddatautilities::JCollisionSel::selNoITSROFrameBorder}}
-    };
+      {jetderiveddatautilities::JCollisionSel::selKINT7, {jetderiveddatautilities::JCollisionSel::selTVX, jetderiveddatautilities::JCollisionSel::selNoTimeFrameBorder, jetderiveddatautilities::JCollisionSel::selNoITSROFrameBorder}}};
 
     for (auto const& [compositeBit, subBits] : compositeSelections) {
       if (hasBit(compositeBit)) {
@@ -153,8 +152,7 @@ struct JetCrossSectionEfficiency {
       jetderiveddatautilities::JCollisionSel::selNoSameBunchPileup,
       jetderiveddatautilities::JCollisionSel::selIsGoodZvtxFT0vsPV,
       jetderiveddatautilities::JCollisionSel::selNoCollInTimeRangeStandard,
-      jetderiveddatautilities::JCollisionSel::selNoCollInRofStandard
-    };
+      jetderiveddatautilities::JCollisionSel::selNoCollInRofStandard};
 
     for (auto bit : allPossibleBits) {
       if (hasBit(bit)) {
@@ -272,7 +270,7 @@ struct JetCrossSectionEfficiency {
         for (std::size_t i = 0; i < activeStages.size(); ++i) {
           if (collision.eventSel() & (1 << activeStages[i].bit)) {
             stagePassed[i] = true;
-        }
+          }
         }
         if (jetderiveddatautilities::selectCollision(collision, eventSelectionBits, skipMBGapEvents)) {
           hasCustomEventSel = true;
@@ -289,7 +287,7 @@ struct JetCrossSectionEfficiency {
         for (std::size_t i = 0; i < activeStages.size(); ++i) {
           if (collision.eventSel() & (1 << activeStages[i].bit)) {
             stagePassed[i] = true;
-        }
+          }
         }
         if (jetderiveddatautilities::selectCollision(collision, eventSelectionBits, skipMBGapEvents)) {
           hasCustomEventSel = true;
@@ -380,8 +378,7 @@ struct JetCrossSectionEfficiency {
       }
       registry.fill(HIST("h2_jet_pt_part_eventselection"), jet.pt(), static_cast<double>(binOccupancy));
 
-    nextJetUnweighted:
-      ;
+    nextJetUnweighted:;
     }
   }
   PROCESS_SWITCH(JetCrossSectionEfficiency, processCrossSectionEfficiency, "jet spectra QC for MC particle level with step-by-step cuts", false);
@@ -406,7 +403,7 @@ struct JetCrossSectionEfficiency {
         for (std::size_t i = 0; i < activeStages.size(); ++i) {
           if (collision.eventSel() & (1 << activeStages[i].bit)) {
             stagePassed[i] = true;
-        }
+          }
         }
         if (jetderiveddatautilities::selectCollision(collision, eventSelectionBits, skipMBGapEvents)) {
           hasCustomEventSel = true;
@@ -423,7 +420,7 @@ struct JetCrossSectionEfficiency {
         for (std::size_t i = 0; i < activeStages.size(); ++i) {
           if (collision.eventSel() & (1 << activeStages[i].bit)) {
             stagePassed[i] = true;
-        }
+          }
         }
         if (jetderiveddatautilities::selectCollision(collision, eventSelectionBits, skipMBGapEvents)) {
           hasCustomEventSel = true;
@@ -516,8 +513,7 @@ struct JetCrossSectionEfficiency {
       }
       registry.fill(HIST("h2_jet_pt_part_eventselection"), jet.pt(), static_cast<double>(binOccupancy), eventWeight);
 
-    nextJetWeighted:
-      ;
+    nextJetWeighted:;
     }
   }
   PROCESS_SWITCH(JetCrossSectionEfficiency, processCrossSectionEfficiencyWeighted, "jet spectra QC for MC particle level with step-by-step cuts (weighted)", false);
@@ -527,3 +523,4 @@ WorkflowSpec defineDataProcessing(ConfigContext const& cfgc)
 {
   return WorkflowSpec{adaptAnalysisTask<JetCrossSectionEfficiency>(cfgc)};
 }
+ 

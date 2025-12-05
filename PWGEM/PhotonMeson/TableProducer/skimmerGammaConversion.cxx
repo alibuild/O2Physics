@@ -44,11 +44,11 @@
 
 #include "CCDB/BasicCCDBManager.h"
 #include "CommonConstants/PhysicsConstants.h"
-#include "ReconstructionDataFormats/HelixHelper.h"
 #include "DataFormatsParameters/GRPMagField.h"
 #include "DataFormatsParameters/GRPObject.h"
 #include "DetectorsBase/GeometryManager.h"
 #include "DetectorsBase/Propagator.h"
+#include "ReconstructionDataFormats/HelixHelper.h"
 #include "ReconstructionDataFormats/TrackFwd.h"
 
 #include "Math/Vector4D.h"

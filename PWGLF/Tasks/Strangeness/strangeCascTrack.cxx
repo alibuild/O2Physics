@@ -77,8 +77,8 @@ struct StrangeCascTrack {
 
   Configurable<bool> doApplyEventCuts{"doApplyEventCuts", true, "apply general event cuts"}; // event filter - PVz, sel8, INEL>0
   // Xi selections
-  Configurable<bool> doApplyPtCutsXi{"doApplyPtCutsXi", true, "apply pt cuts (Xi)"};           // ignore particles with extremely low efficiencies
-  Configurable<bool> doApplyGenCutsXi{"doApplyGenCutsXi", true, "apply general cuts (Xi)"};    // general cascade cuts - cosPA, TPC hits etc.
+  Configurable<bool> doApplyPtCutsXi{"doApplyPtCutsXi", true, "apply pt cuts (Xi)"};        // ignore particles with extremely low efficiencies
+  Configurable<bool> doApplyGenCutsXi{"doApplyGenCutsXi", true, "apply general cuts (Xi)"}; // general cascade cuts - cosPA, TPC hits etc.
   Configurable<bool> doApplyTPCPIDXi{"doApplyTPCPIDXi", true, "apply tpc pid to dau tracks (Xi)"};
   Configurable<bool> doApplyTOFPIDXi{"doApplyTOFPIDXi", true, "apply tof pid to dau tracks (Xi)"};
   // Omega selections
@@ -1000,9 +1000,9 @@ struct StrangeCascTrack {
     });
     // for MC-specific processing
     histos.add("MC/Gen/EvCounter", "Event Counter", kTH1F, {{1, 0, 1}});
-    histos.add("MC/Gen/Xi", "Xi", kTH2F, {axesConfig.axisPt, axesConfig.axisMult});                        // generated Xis
-    histos.add("MC/Gen/Omega", "Omega", kTH2F, {axesConfig.axisPt, axesConfig.axisMult});                  // generated Omegas
-    histos.add("MC/Gen/PrimaryXi", "Xi primaries", kTH2F, {axesConfig.axisPt, axesConfig.axisMult});       // generated primary Xis
+    histos.add("MC/Gen/Xi", "Xi", kTH2F, {axesConfig.axisPt, axesConfig.axisMult});                                       // generated Xis
+    histos.add("MC/Gen/Omega", "Omega", kTH2F, {axesConfig.axisPt, axesConfig.axisMult});                                 // generated Omegas
+    histos.add("MC/Gen/PrimaryXi", "Xi primaries", kTH2F, {axesConfig.axisPt, axesConfig.axisMult});                      // generated primary Xis
     histos.add("MC/Gen/PrimaryOmega", "Omega primaries in |y|", kTH2F, {axesConfig.axisPt, axesConfig.axisMult});         // generated primary Omegas
     histos.add("MC/Gen/PrimaryXiRapidity", "Xi primaries", kTH2F, {axesConfig.axisPt, axesConfig.axisMult});              // generated primary Xis in selected rapidity range
     histos.add("MC/Gen/PrimaryOmegaRapidity", "Omega primaries in |y|", kTH2F, {axesConfig.axisPt, axesConfig.axisMult}); // generated primary Omegas in selected rapidity range

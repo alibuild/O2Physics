@@ -82,7 +82,7 @@ struct lambdaCandidate {
   float v0Radius = -1.f;          // V0 radius
   float protonNSigmaTPC = -999.f; // Proton TPC nSigma
   float pionNSigmaTPC = -999.f;   // Pion TPC nSigma
-  int8_t sign = 0; // Charge sign of the Lambda candidate
+  int8_t sign = 0;                // Charge sign of the Lambda candidate
 };
 
 #endif // PWGLF_DATAMODEL_LFSLIMNUCLEITABLES_H_

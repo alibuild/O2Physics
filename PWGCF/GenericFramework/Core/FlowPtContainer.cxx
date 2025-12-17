@@ -16,8 +16,8 @@
 #include "FlowPtContainer.h"
 
 #include <algorithm>
-#include <vector>
 #include <string>
+#include <vector>
 
 FlowPtContainer::FlowPtContainer() : fCMTermList(0),
                                      fCorrList(0),

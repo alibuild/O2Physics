@@ -14,6 +14,7 @@
 /// \author Emil Gorm Nielsen, NBI, emil.gorm.nielsen@cern.ch
 
 #include "FlowPtContainer.h"
+
 #include <algorithm>
 #include <vector>
 
@@ -381,10 +382,10 @@ void FlowPtContainer::initialise(int nbinsx, double xlow, double xhigh, const in
   }
   LOGF(info, "Container %s initialized with m = %i\n", this->GetName(), mpar);
 };
-void FlowPtContainer::initialiseSubevent(const o2::framework::AxisSpec axis, const int& m, const int &nsubev, const int& nsub)
+void FlowPtContainer::initialiseSubevent(const o2::framework::AxisSpec axis, const int& m, const int& nsubev, const int& nsub)
 {
-  if(nsubev < 1){
-    LOGF(fatal,"Need at least one subevent");
+  if (nsubev < 1) {
+    LOGF(fatal, "Need at least one subevent");
     return;
   }
   nSubevents = nsubev;
@@ -404,26 +405,26 @@ void FlowPtContainer::initialiseSubevent(const o2::framework::AxisSpec axis, con
   fSubList = new TList();
   fSubList->SetOwner(kTRUE);
 
-  //Get all possible subevent combinations given m particles and nsubev subevents - also considering not using all m particles, e.g. all lower orders
+  // Get all possible subevent combinations given m particles and nsubev subevents - also considering not using all m particles, e.g. all lower orders
   std::vector<int> current;
-  getSubevents(m,nsubev+1,current,subevents);
-  //remove unused "extra" subevent
-  for(auto& subevent:subevents) subevent.pop_back();
-  subevents.erase(subevents.begin(),subevents.begin()+1);
-
+  getSubevents(m, nsubev + 1, current, subevents);
+  // remove unused "extra" subevent
+  for (auto& subevent : subevents)
+    subevent.pop_back();
+  subevents.erase(subevents.begin(), subevents.begin() + 1);
 
   std::vector<std::string> histnames;
-  for(auto subevent : subevents){
+  for (auto subevent : subevents) {
     std::string outstr = "ptptsub";
     int index = 0;
-    for(auto particles : subevent) {
+    for (auto particles : subevent) {
       outstr += "_" + std::to_string(particles) +
-              "sub" + std::to_string(index + 1);
+                "sub" + std::to_string(index + 1);
       ++index;
     }
     histnames.push_back(outstr);
   }
-  for(const auto& name : histnames)
+  for (const auto& name : histnames)
     fSubList->Add(new BootstrapProfile(name.c_str(), this->GetTitle(), nMultiBins, &multiBins[0]));
 
   if (fSubCMList)
@@ -460,10 +461,10 @@ void FlowPtContainer::initialiseSubevent(const o2::framework::AxisSpec axis, con
   }
   LOGF(info, "Container %s initialized Subevents and %i subsamples", this->GetName(), nsub);
 }
-void FlowPtContainer::initialiseSubevent(int nbinsx, double* xbins, const int& m, const int &nsubev, const int& nsub)
+void FlowPtContainer::initialiseSubevent(int nbinsx, double* xbins, const int& m, const int& nsubev, const int& nsub)
 {
-  if(nsubev < 1){
-    LOGF(fatal,"Need at least one subevent");
+  if (nsubev < 1) {
+    LOGF(fatal, "Need at least one subevent");
     return;
   }
   nSubevents = nsubev;
@@ -475,25 +476,26 @@ void FlowPtContainer::initialiseSubevent(int nbinsx, double* xbins, const int& m
   fSubList = new TList();
   fSubList->SetOwner(kTRUE);
 
-  //Get all possible subevent combinations given m particles and nsubev subevents - also considering not using all m particles, e.g. all lower orders
+  // Get all possible subevent combinations given m particles and nsubev subevents - also considering not using all m particles, e.g. all lower orders
   std::vector<int> current;
-  getSubevents(m,nsubev+1,current,subevents);
-  //remove unused "extra" subevent
-  for(auto& subevent:subevents) subevent.pop_back();
-  subevents.erase(subevents.begin(),subevents.begin()+1);
+  getSubevents(m, nsubev + 1, current, subevents);
+  // remove unused "extra" subevent
+  for (auto& subevent : subevents)
+    subevent.pop_back();
+  subevents.erase(subevents.begin(), subevents.begin() + 1);
 
   std::vector<std::string> histnames;
-  for(auto subevent : subevents){
+  for (auto subevent : subevents) {
     std::string outstr = "ptptsub";
     int index = 0;
-    for(auto particles : subevent) {
+    for (auto particles : subevent) {
       outstr += "_" + std::to_string(particles) +
-              "sub" + std::to_string(index + 1);
+                "sub" + std::to_string(index + 1);
       ++index;
     }
     histnames.push_back(outstr);
   }
-  for(const auto& name : histnames)
+  for (const auto& name : histnames)
     fSubList->Add(new BootstrapProfile(name.c_str(), this->GetTitle(), nbinsx, xbins));
 
   if (fSubCMList)
@@ -530,13 +532,13 @@ void FlowPtContainer::initialiseSubevent(int nbinsx, double* xbins, const int& m
   }
   LOGF(info, "Container %s initialized Subevents and %i subsamples", this->GetName(), nsub);
 }
-void FlowPtContainer::initialiseSubevent(int nbinsx, double xlow, double xhigh, const int& m, const int &nsubev, const int& nsub)
+void FlowPtContainer::initialiseSubevent(int nbinsx, double xlow, double xhigh, const int& m, const int& nsubev, const int& nsub)
 {
-  if(nsubev < 1){
-    LOGF(fatal,"Need at least one subevent");
+  if (nsubev < 1) {
+    LOGF(fatal, "Need at least one subevent");
     return;
   }
-  nSubevents = nsubev;  
+  nSubevents = nsubev;
   if (!mpar)
     mpar = m;
   if (fSubList)
@@ -544,25 +546,26 @@ void FlowPtContainer::initialiseSubevent(int nbinsx, double xlow, double xhigh, 
   fSubList = new TList();
   fSubList->SetOwner(kTRUE);
 
-  //Get all possible subevent combinations given m particles and nsubev subevents - also considering not using all m particles, e.g. all lower orders
+  // Get all possible subevent combinations given m particles and nsubev subevents - also considering not using all m particles, e.g. all lower orders
   std::vector<int> current;
-  getSubevents(mpar,nsubev+1,current,subevents);
-  //remove unused "extra" subevent
-  for(auto& subevent:subevents) subevent.pop_back();
-  subevents.erase(subevents.begin(),subevents.begin()+1);
+  getSubevents(mpar, nsubev + 1, current, subevents);
+  // remove unused "extra" subevent
+  for (auto& subevent : subevents)
+    subevent.pop_back();
+  subevents.erase(subevents.begin(), subevents.begin() + 1);
 
   std::vector<std::string> histnames;
-  for(auto subevent : subevents){
+  for (auto subevent : subevents) {
     std::string outstr = "ptptsub";
     int index = 0;
-    for(auto particles : subevent) {
+    for (auto particles : subevent) {
       outstr += "_" + std::to_string(particles) +
-              "sub" + std::to_string(index + 1);
+                "sub" + std::to_string(index + 1);
       ++index;
     }
     histnames.push_back(outstr);
   }
-  for(const auto& name : histnames)
+  for (const auto& name : histnames)
     fSubList->Add(new BootstrapProfile(name.c_str(), this->GetTitle(), nbinsx, xlow, xhigh));
 
   if (fSubCMList)
@@ -605,9 +608,10 @@ void FlowPtContainer::fill(const double& w, const double& pt)
   }
   return;
 }
-void FlowPtContainer::fillSub(const double& w, const double& pt, int subIndex){
-    for (size_t i = 0; i < insub[subIndex].size(); ++i) {
-      insub[subIndex][i] += std::pow(w, i % (mpar + 1)) * std::pow(pt, i / (mpar + 1));
+void FlowPtContainer::fillSub(const double& w, const double& pt, int subIndex)
+{
+  for (size_t i = 0; i < insub[subIndex].size(); ++i) {
+    insub[subIndex][i] += std::pow(w, i % (mpar + 1)) * std::pow(pt, i / (mpar + 1));
   }
 }
 void FlowPtContainer::calculateCorrelations()
@@ -640,14 +644,14 @@ void FlowPtContainer::calculateCorrelations()
 void FlowPtContainer::calculateSubeventCorrelations()
 {
   corrNumSub.clear();
-  corrNumSub.resize(nSubevents,std::vector<double>(mpar + 1, 0));
-  for(auto &corrnum : corrNumSub) 
+  corrNumSub.resize(nSubevents, std::vector<double>(mpar + 1, 0));
+  for (auto& corrnum : corrNumSub)
     corrnum[0] = 1.0;
-  corrDenSub.resize(nSubevents,std::vector<double>(mpar + 1, 0));
-  for(auto &corrden : corrDenSub) 
+  corrDenSub.resize(nSubevents, std::vector<double>(mpar + 1, 0));
+  for (auto& corrden : corrDenSub)
     corrden[0] = 1.0;
 
-  for(int subIndex = 0; subIndex < nSubevents; ++subIndex){
+  for (int subIndex = 0; subIndex < nSubevents; ++subIndex) {
     double sumNum = 0.0;
     double sumDenum = 0.0;
     std::vector<double> valNum;
@@ -679,23 +683,22 @@ void FlowPtContainer::fillPtProfiles(const double& centmult, const double& rn)
 void FlowPtContainer::fillSubeventPtProfiles(const double& centmult, const double& rn)
 {
   int histCounter = 0;
-  for(const auto& subevent : subevents) {
+  for (const auto& subevent : subevents) {
     double val = 1.0;
     double dn = 1.0;
     int subIndex = 0;
     bool valid = true;
-    for(auto m : subevent) {
-      if(corrDenSub[subIndex][m] == 0) {
+    for (auto m : subevent) {
+      if (corrDenSub[subIndex][m] == 0) {
         valid = false;
         break;
-      }
-      else {
-        val *= corrNumSub[subIndex][m]/corrDenSub[subIndex][m];
+      } else {
+        val *= corrNumSub[subIndex][m] / corrDenSub[subIndex][m];
         dn *= corrDenSub[subIndex][m];
-      }      
+      }
       ++subIndex;
     }
-    if(valid)
+    if (valid)
       dynamic_cast<BootstrapProfile*>(fSubList->At(histCounter))->FillProfile(centmult, val, (fEventWeight == EventWeight::UnityWeight) ? 1.0 : dn, rn);
     ++histCounter;
   }
@@ -896,7 +899,7 @@ void FlowPtContainer::fillCMSubeventProfiles(const double& centmult, const doubl
   // do I need to add an extra return statement here to match fillCMProfiles?
   if (mpar < 1)
     return;
-  if(nSubevents<2)
+  if (nSubevents < 2)
     return;
 
   int indOffset = 0;
@@ -906,26 +909,26 @@ void FlowPtContainer::fillCMSubeventProfiles(const double& centmult, const doubl
   // 0th order correlation
   cmDenSub[0].push_back(1.);
   cmValSub[0].push_back(1.);
-  cmDenSub[nSubevents-1].push_back(1.);
-  cmValSub[nSubevents-1].push_back(1.);
+  cmDenSub[nSubevents - 1].push_back(1.);
+  cmValSub[nSubevents - 1].push_back(1.);
 
   cmDenSub[0].push_back(insub[0][getVectorIndex(1, 0)]);
   cmDenSub[0].push_back(insub[0][getVectorIndex(1, 0)] * insub[0][getVectorIndex(1, 0)] - insub[0][getVectorIndex(2, 0)]);
   cmDenSub[0].push_back(insub[0][getVectorIndex(1, 0)] * insub[0][getVectorIndex(1, 0)] * insub[0][getVectorIndex(1, 0)] - 3 * insub[0][getVectorIndex(2, 0)] * insub[0][getVectorIndex(1, 0)] + 2 * insub[0][getVectorIndex(3, 0)]);
   cmDenSub[0].push_back(insub[0][getVectorIndex(1, 0)] * insub[0][getVectorIndex(1, 0)] * insub[0][getVectorIndex(1, 0)] * insub[0][getVectorIndex(1, 0)] - 6 * insub[0][getVectorIndex(2, 0)] * insub[0][getVectorIndex(1, 0)] * insub[0][getVectorIndex(1, 0)] + 8 * insub[0][getVectorIndex(1, 0)] * insub[0][getVectorIndex(3, 0)] + 3 * insub[0][getVectorIndex(2, 0)] * insub[0][getVectorIndex(2, 0)] - 6 * insub[0][getVectorIndex(4, 0)]);
 
-  cmDenSub[nSubevents-1].push_back(insub[nSubevents-1][getVectorIndex(1, 0)]);
-  cmDenSub[nSubevents-1].push_back(insub[nSubevents-1][getVectorIndex(1, 0)] * insub[nSubevents-1][getVectorIndex(1, 0)] - insub[nSubevents-1][getVectorIndex(2, 0)]);
-  cmDenSub[nSubevents-1].push_back(insub[nSubevents-1][getVectorIndex(1, 0)] * insub[nSubevents-1][getVectorIndex(1, 0)] * insub[nSubevents-1][getVectorIndex(1, 0)] - 3 * insub[nSubevents-1][getVectorIndex(2, 0)] * insub[nSubevents-1][getVectorIndex(1, 0)] + 2 * insub[nSubevents-1][getVectorIndex(3, 0)]);
-  cmDenSub[nSubevents-1].push_back(insub[nSubevents-1][getVectorIndex(1, 0)] * insub[nSubevents-1][getVectorIndex(1, 0)] * insub[nSubevents-1][getVectorIndex(1, 0)] * insub[nSubevents-1][getVectorIndex(1, 0)] - 6 * insub[nSubevents-1][getVectorIndex(2, 0)] * insub[nSubevents-1][getVectorIndex(1, 0)] * insub[nSubevents-1][getVectorIndex(1, 0)] + 8 * insub[nSubevents-1][getVectorIndex(1, 0)] * insub[nSubevents-1][getVectorIndex(3, 0)] + 3 * insub[nSubevents-1][getVectorIndex(2, 0)] * insub[nSubevents-1][getVectorIndex(2, 0)] - 6 * insub[nSubevents-1][getVectorIndex(4, 0)]);
+  cmDenSub[nSubevents - 1].push_back(insub[nSubevents - 1][getVectorIndex(1, 0)]);
+  cmDenSub[nSubevents - 1].push_back(insub[nSubevents - 1][getVectorIndex(1, 0)] * insub[nSubevents - 1][getVectorIndex(1, 0)] - insub[nSubevents - 1][getVectorIndex(2, 0)]);
+  cmDenSub[nSubevents - 1].push_back(insub[nSubevents - 1][getVectorIndex(1, 0)] * insub[nSubevents - 1][getVectorIndex(1, 0)] * insub[nSubevents - 1][getVectorIndex(1, 0)] - 3 * insub[nSubevents - 1][getVectorIndex(2, 0)] * insub[nSubevents - 1][getVectorIndex(1, 0)] + 2 * insub[nSubevents - 1][getVectorIndex(3, 0)]);
+  cmDenSub[nSubevents - 1].push_back(insub[nSubevents - 1][getVectorIndex(1, 0)] * insub[nSubevents - 1][getVectorIndex(1, 0)] * insub[nSubevents - 1][getVectorIndex(1, 0)] * insub[nSubevents - 1][getVectorIndex(1, 0)] - 6 * insub[nSubevents - 1][getVectorIndex(2, 0)] * insub[nSubevents - 1][getVectorIndex(1, 0)] * insub[nSubevents - 1][getVectorIndex(1, 0)] + 8 * insub[nSubevents - 1][getVectorIndex(1, 0)] * insub[nSubevents - 1][getVectorIndex(3, 0)] + 3 * insub[nSubevents - 1][getVectorIndex(2, 0)] * insub[nSubevents - 1][getVectorIndex(2, 0)] - 6 * insub[nSubevents - 1][getVectorIndex(4, 0)]);
 
   if (cmDenSub[0][1] != 0) {
     cmValSub[0].push_back(insub[0][getVectorIndex(1, 1)] / cmDenSub[0][1]);
     dynamic_cast<BootstrapProfile*>(fSubCMList->At(0))->FillProfile(centmult, cmValSub[0][1], (fEventWeight == EventWeight::UnityWeight) ? 1.0 : cmDenSub[0][1], rn);
   }
-  if (cmDenSub[nSubevents-1][1] != 0) {
-    cmValSub[nSubevents-1].push_back(insub[nSubevents-1][getVectorIndex(1, 1)] / cmDenSub[nSubevents-1][1]);
-    dynamic_cast<BootstrapProfile*>(fSubCMList->At(indOffset + 0))->FillProfile(centmult, cmValSub[nSubevents-1][1], (fEventWeight == EventWeight::UnityWeight) ? 1.0 : cmDenSub[nSubevents-1][1], rn);
+  if (cmDenSub[nSubevents - 1][1] != 0) {
+    cmValSub[nSubevents - 1].push_back(insub[nSubevents - 1][getVectorIndex(1, 1)] / cmDenSub[nSubevents - 1][1]);
+    dynamic_cast<BootstrapProfile*>(fSubCMList->At(indOffset + 0))->FillProfile(centmult, cmValSub[nSubevents - 1][1], (fEventWeight == EventWeight::UnityWeight) ? 1.0 : cmDenSub[nSubevents - 1][1], rn);
   }
 
   if (mpar < 2)
@@ -936,11 +939,11 @@ void FlowPtContainer::fillCMSubeventProfiles(const double& centmult, const doubl
     cmValSub[0].push_back(1 / cmDenSub[0][2] * (insub[0][getVectorIndex(1, 0)] * insub[0][getVectorIndex(1, 1)] - insub[0][getVectorIndex(2, 1)]));
     dynamic_cast<BootstrapProfile*>(fSubCMList->At(2))->FillProfile(centmult, cmValSub[0][3], (fEventWeight == EventWeight::UnityWeight) ? 1.0 : cmDenSub[0][2], rn);
   }
-  if (insub[nSubevents-1][getVectorIndex(2, 0)] != 0 && cmDenSub[nSubevents-1][2] != 0) {
-    cmValSub[nSubevents-1].push_back(1 / cmDenSub[nSubevents-1][2] * (insub[nSubevents-1][getVectorIndex(1, 1)] * insub[nSubevents-1][getVectorIndex(1, 1)] - insub[nSubevents-1][getVectorIndex(2, 2)]));
-    dynamic_cast<BootstrapProfile*>(fSubCMList->At(indOffset + 1))->FillProfile(centmult, cmValSub[nSubevents-1][2], (fEventWeight == EventWeight::UnityWeight) ? 1.0 : cmDenSub[nSubevents-1][2], rn);
-    cmValSub[nSubevents-1].push_back(1 / cmDenSub[nSubevents-1][2] * (insub[nSubevents-1][getVectorIndex(1, 0)] * insub[nSubevents-1][getVectorIndex(1, 1)] - insub[nSubevents-1][getVectorIndex(2, 1)]));
-    dynamic_cast<BootstrapProfile*>(fSubCMList->At(indOffset + 2))->FillProfile(centmult, cmValSub[nSubevents-1][3], (fEventWeight == EventWeight::UnityWeight) ? 1.0 : cmDenSub[nSubevents-1][2], rn);
+  if (insub[nSubevents - 1][getVectorIndex(2, 0)] != 0 && cmDenSub[nSubevents - 1][2] != 0) {
+    cmValSub[nSubevents - 1].push_back(1 / cmDenSub[nSubevents - 1][2] * (insub[nSubevents - 1][getVectorIndex(1, 1)] * insub[nSubevents - 1][getVectorIndex(1, 1)] - insub[nSubevents - 1][getVectorIndex(2, 2)]));
+    dynamic_cast<BootstrapProfile*>(fSubCMList->At(indOffset + 1))->FillProfile(centmult, cmValSub[nSubevents - 1][2], (fEventWeight == EventWeight::UnityWeight) ? 1.0 : cmDenSub[nSubevents - 1][2], rn);
+    cmValSub[nSubevents - 1].push_back(1 / cmDenSub[nSubevents - 1][2] * (insub[nSubevents - 1][getVectorIndex(1, 0)] * insub[nSubevents - 1][getVectorIndex(1, 1)] - insub[nSubevents - 1][getVectorIndex(2, 1)]));
+    dynamic_cast<BootstrapProfile*>(fSubCMList->At(indOffset + 2))->FillProfile(centmult, cmValSub[nSubevents - 1][3], (fEventWeight == EventWeight::UnityWeight) ? 1.0 : cmDenSub[nSubevents - 1][2], rn);
   }
 
   if (mpar < 3)
@@ -953,13 +956,13 @@ void FlowPtContainer::fillCMSubeventProfiles(const double& centmult, const doubl
     cmValSub[0].push_back(1 / cmDenSub[0][3] * (insub[0][getVectorIndex(1, 1)] * insub[0][getVectorIndex(1, 0)] * insub[0][getVectorIndex(1, 0)] - 2 * insub[0][getVectorIndex(2, 1)] * insub[0][getVectorIndex(1, 0)] + 2 * insub[0][getVectorIndex(3, 1)] - insub[0][getVectorIndex(1, 1)] * insub[0][getVectorIndex(2, 0)]));
     dynamic_cast<BootstrapProfile*>(fSubCMList->At(5))->FillProfile(centmult, cmValSub[0][6], (fEventWeight == EventWeight::UnityWeight) ? 1.0 : cmDenSub[0][3], rn);
   }
-  if (insub[nSubevents-1][getVectorIndex(3, 0)] != 0 && cmDenSub[nSubevents-1][3] != 0) {
-    cmValSub[nSubevents-1].push_back(1 / cmDenSub[nSubevents-1][3] * (insub[nSubevents-1][getVectorIndex(1, 1)] * insub[nSubevents-1][getVectorIndex(1, 1)] * insub[nSubevents-1][getVectorIndex(1, 1)] - 3 * insub[nSubevents-1][getVectorIndex(2, 2)] * insub[nSubevents-1][getVectorIndex(1, 1)] + 2 * insub[nSubevents-1][getVectorIndex(3, 3)]));
-    dynamic_cast<BootstrapProfile*>(fSubCMList->At(indOffset + 3))->FillProfile(centmult, cmValSub[nSubevents-1][4], (fEventWeight == EventWeight::UnityWeight) ? 1.0 : cmDenSub[nSubevents-1][3], rn);
-    cmValSub[nSubevents-1].push_back(1 / cmDenSub[nSubevents-1][3] * (insub[nSubevents-1][getVectorIndex(1, 1)] * insub[nSubevents-1][getVectorIndex(1, 1)] * insub[nSubevents-1][getVectorIndex(1, 0)] - 2 * insub[nSubevents-1][getVectorIndex(2, 1)] * insub[nSubevents-1][getVectorIndex(1, 1)] + 2 * insub[nSubevents-1][getVectorIndex(3, 2)] - insub[nSubevents-1][getVectorIndex(2, 2)] * insub[nSubevents-1][getVectorIndex(1, 0)]));
-    dynamic_cast<BootstrapProfile*>(fSubCMList->At(indOffset + 4))->FillProfile(centmult, cmValSub[nSubevents-1][5], (fEventWeight == EventWeight::UnityWeight) ? 1.0 : cmDenSub[nSubevents-1][3], rn);
-    cmValSub[nSubevents-1].push_back(1 / cmDenSub[nSubevents-1][3] * (insub[nSubevents-1][getVectorIndex(1, 1)] * insub[nSubevents-1][getVectorIndex(1, 0)] * insub[nSubevents-1][getVectorIndex(1, 0)] - 2 * insub[nSubevents-1][getVectorIndex(2, 1)] * insub[nSubevents-1][getVectorIndex(1, 0)] + 2 * insub[nSubevents-1][getVectorIndex(3, 1)] - insub[nSubevents-1][getVectorIndex(1, 1)] * insub[nSubevents-1][getVectorIndex(2, 0)]));
-    dynamic_cast<BootstrapProfile*>(fSubCMList->At(indOffset + 5))->FillProfile(centmult, cmValSub[nSubevents-1][6], (fEventWeight == EventWeight::UnityWeight) ? 1.0 : cmDenSub[nSubevents-1][3], rn);
+  if (insub[nSubevents - 1][getVectorIndex(3, 0)] != 0 && cmDenSub[nSubevents - 1][3] != 0) {
+    cmValSub[nSubevents - 1].push_back(1 / cmDenSub[nSubevents - 1][3] * (insub[nSubevents - 1][getVectorIndex(1, 1)] * insub[nSubevents - 1][getVectorIndex(1, 1)] * insub[nSubevents - 1][getVectorIndex(1, 1)] - 3 * insub[nSubevents - 1][getVectorIndex(2, 2)] * insub[nSubevents - 1][getVectorIndex(1, 1)] + 2 * insub[nSubevents - 1][getVectorIndex(3, 3)]));
+    dynamic_cast<BootstrapProfile*>(fSubCMList->At(indOffset + 3))->FillProfile(centmult, cmValSub[nSubevents - 1][4], (fEventWeight == EventWeight::UnityWeight) ? 1.0 : cmDenSub[nSubevents - 1][3], rn);
+    cmValSub[nSubevents - 1].push_back(1 / cmDenSub[nSubevents - 1][3] * (insub[nSubevents - 1][getVectorIndex(1, 1)] * insub[nSubevents - 1][getVectorIndex(1, 1)] * insub[nSubevents - 1][getVectorIndex(1, 0)] - 2 * insub[nSubevents - 1][getVectorIndex(2, 1)] * insub[nSubevents - 1][getVectorIndex(1, 1)] + 2 * insub[nSubevents - 1][getVectorIndex(3, 2)] - insub[nSubevents - 1][getVectorIndex(2, 2)] * insub[nSubevents - 1][getVectorIndex(1, 0)]));
+    dynamic_cast<BootstrapProfile*>(fSubCMList->At(indOffset + 4))->FillProfile(centmult, cmValSub[nSubevents - 1][5], (fEventWeight == EventWeight::UnityWeight) ? 1.0 : cmDenSub[nSubevents - 1][3], rn);
+    cmValSub[nSubevents - 1].push_back(1 / cmDenSub[nSubevents - 1][3] * (insub[nSubevents - 1][getVectorIndex(1, 1)] * insub[nSubevents - 1][getVectorIndex(1, 0)] * insub[nSubevents - 1][getVectorIndex(1, 0)] - 2 * insub[nSubevents - 1][getVectorIndex(2, 1)] * insub[nSubevents - 1][getVectorIndex(1, 0)] + 2 * insub[nSubevents - 1][getVectorIndex(3, 1)] - insub[nSubevents - 1][getVectorIndex(1, 1)] * insub[nSubevents - 1][getVectorIndex(2, 0)]));
+    dynamic_cast<BootstrapProfile*>(fSubCMList->At(indOffset + 5))->FillProfile(centmult, cmValSub[nSubevents - 1][6], (fEventWeight == EventWeight::UnityWeight) ? 1.0 : cmDenSub[nSubevents - 1][3], rn);
   }
 
   if (mpar < 4)
@@ -974,15 +977,15 @@ void FlowPtContainer::fillCMSubeventProfiles(const double& centmult, const doubl
     cmValSub[0].push_back(1 / cmDenSub[0][4] * (insub[0][getVectorIndex(1, 1)] * insub[0][getVectorIndex(1, 0)] * insub[0][getVectorIndex(1, 0)] * insub[0][getVectorIndex(1, 0)] - 3 * insub[0][getVectorIndex(2, 1)] * insub[0][getVectorIndex(1, 0)] * insub[0][getVectorIndex(1, 0)] - 3 * insub[0][getVectorIndex(1, 1)] * insub[0][getVectorIndex(2, 0)] * insub[0][getVectorIndex(1, 0)] + 3 * insub[0][getVectorIndex(2, 1)] * insub[0][getVectorIndex(2, 0)] + 2 * insub[0][getVectorIndex(1, 1)] * insub[0][getVectorIndex(3, 0)] + 6 * insub[0][getVectorIndex(3, 1)] * insub[0][getVectorIndex(1, 0)] - 6 * insub[0][getVectorIndex(4, 1)]));
     dynamic_cast<BootstrapProfile*>(fSubCMList->At(9))->FillProfile(centmult, cmValSub[0][10], (fEventWeight == EventWeight::UnityWeight) ? 1.0 : cmDenSub[0][4], rn);
   }
-  if (insub[nSubevents-1][getVectorIndex(4, 0)] != 0 && cmDenSub[nSubevents-1][4] != 0) {
-    cmValSub[nSubevents-1].push_back(1 / cmDenSub[nSubevents-1][4] * (insub[nSubevents-1][getVectorIndex(1, 1)] * insub[nSubevents-1][getVectorIndex(1, 1)] * insub[nSubevents-1][getVectorIndex(1, 1)] * insub[nSubevents-1][getVectorIndex(1, 1)] - 6 * insub[nSubevents-1][getVectorIndex(2, 2)] * insub[nSubevents-1][getVectorIndex(1, 1)] * insub[nSubevents-1][getVectorIndex(1, 1)] + 3 * insub[nSubevents-1][getVectorIndex(2, 2)] * insub[nSubevents-1][getVectorIndex(2, 2)] + 8 * insub[nSubevents-1][getVectorIndex(3, 3)] * insub[nSubevents-1][getVectorIndex(1, 1)] - 6 * insub[nSubevents-1][getVectorIndex(4, 4)]));
-    dynamic_cast<BootstrapProfile*>(fSubCMList->At(indOffset + 6))->FillProfile(centmult, cmValSub[nSubevents-1][7], (fEventWeight == EventWeight::UnityWeight) ? 1.0 : cmDenSub[nSubevents-1][4], rn);
-    cmValSub[nSubevents-1].push_back(1 / cmDenSub[nSubevents-1][4] * (insub[nSubevents-1][getVectorIndex(1, 1)] * insub[nSubevents-1][getVectorIndex(1, 1)] * insub[nSubevents-1][getVectorIndex(1, 1)] * insub[nSubevents-1][getVectorIndex(1, 0)] - 3 * insub[nSubevents-1][getVectorIndex(2, 2)] * insub[nSubevents-1][getVectorIndex(1, 1)] * insub[nSubevents-1][getVectorIndex(1, 0)] - 3 * insub[nSubevents-1][getVectorIndex(1, 1)] * insub[nSubevents-1][getVectorIndex(1, 1)] * insub[nSubevents-1][getVectorIndex(2, 1)] + 3 * insub[nSubevents-1][getVectorIndex(2, 2)] * insub[nSubevents-1][getVectorIndex(2, 1)] + 6 * insub[nSubevents-1][getVectorIndex(1, 1)] * insub[nSubevents-1][getVectorIndex(3, 2)] - 6 * insub[nSubevents-1][getVectorIndex(4, 3)]));
-    dynamic_cast<BootstrapProfile*>(fSubCMList->At(indOffset + 7))->FillProfile(centmult, cmValSub[nSubevents-1][8], (fEventWeight == EventWeight::UnityWeight) ? 1.0 : cmDenSub[nSubevents-1][4], rn);
-    cmValSub[nSubevents-1].push_back(1 / cmDenSub[nSubevents-1][4] * (insub[nSubevents-1][getVectorIndex(1, 1)] * insub[nSubevents-1][getVectorIndex(1, 1)] * insub[nSubevents-1][getVectorIndex(1, 0)] * insub[nSubevents-1][getVectorIndex(1, 0)] - insub[nSubevents-1][getVectorIndex(2, 2)] * insub[nSubevents-1][getVectorIndex(1, 0)] * insub[nSubevents-1][getVectorIndex(1, 0)] - insub[nSubevents-1][getVectorIndex(2, 0)] * insub[nSubevents-1][getVectorIndex(1, 1)] * insub[nSubevents-1][getVectorIndex(1, 1)] + insub[nSubevents-1][getVectorIndex(2, 0)] * insub[nSubevents-1][getVectorIndex(2, 2)] - 4 * insub[nSubevents-1][getVectorIndex(2, 1)] * insub[nSubevents-1][getVectorIndex(1, 1)] * insub[nSubevents-1][getVectorIndex(1, 0)] + 4 * insub[nSubevents-1][getVectorIndex(3, 2)] * insub[nSubevents-1][getVectorIndex(1, 0)] + 4 * insub[nSubevents-1][getVectorIndex(3, 1)] * insub[nSubevents-1][getVectorIndex(1, 1)] + 2 * insub[nSubevents-1][getVectorIndex(2, 1)] * insub[nSubevents-1][getVectorIndex(2, 1)] - 6 * insub[nSubevents-1][getVectorIndex(4, 2)]));
-    dynamic_cast<BootstrapProfile*>(fSubCMList->At(indOffset + 8))->FillProfile(centmult, cmValSub[nSubevents-1][9], (fEventWeight == EventWeight::UnityWeight) ? 1.0 : cmDenSub[nSubevents-1][4], rn);
-    cmValSub[nSubevents-1].push_back(1 / cmDenSub[nSubevents-1][4] * (insub[nSubevents-1][getVectorIndex(1, 1)] * insub[nSubevents-1][getVectorIndex(1, 0)] * insub[nSubevents-1][getVectorIndex(1, 0)] * insub[nSubevents-1][getVectorIndex(1, 0)] - 3 * insub[nSubevents-1][getVectorIndex(2, 1)] * insub[nSubevents-1][getVectorIndex(1, 0)] * insub[nSubevents-1][getVectorIndex(1, 0)] - 3 * insub[nSubevents-1][getVectorIndex(1, 1)] * insub[nSubevents-1][getVectorIndex(2, 0)] * insub[nSubevents-1][getVectorIndex(1, 0)] + 3 * insub[nSubevents-1][getVectorIndex(2, 1)] * insub[nSubevents-1][getVectorIndex(2, 0)] + 2 * insub[nSubevents-1][getVectorIndex(1, 1)] * insub[nSubevents-1][getVectorIndex(3, 0)] + 6 * insub[nSubevents-1][getVectorIndex(3, 1)] * insub[nSubevents-1][getVectorIndex(1, 0)] - 6 * insub[nSubevents-1][getVectorIndex(4, 1)]));
-    dynamic_cast<BootstrapProfile*>(fSubCMList->At(indOffset + 9))->FillProfile(centmult, cmValSub[nSubevents-1][10], (fEventWeight == EventWeight::UnityWeight) ? 1.0 : cmDenSub[nSubevents-1][4], rn);
+  if (insub[nSubevents - 1][getVectorIndex(4, 0)] != 0 && cmDenSub[nSubevents - 1][4] != 0) {
+    cmValSub[nSubevents - 1].push_back(1 / cmDenSub[nSubevents - 1][4] * (insub[nSubevents - 1][getVectorIndex(1, 1)] * insub[nSubevents - 1][getVectorIndex(1, 1)] * insub[nSubevents - 1][getVectorIndex(1, 1)] * insub[nSubevents - 1][getVectorIndex(1, 1)] - 6 * insub[nSubevents - 1][getVectorIndex(2, 2)] * insub[nSubevents - 1][getVectorIndex(1, 1)] * insub[nSubevents - 1][getVectorIndex(1, 1)] + 3 * insub[nSubevents - 1][getVectorIndex(2, 2)] * insub[nSubevents - 1][getVectorIndex(2, 2)] + 8 * insub[nSubevents - 1][getVectorIndex(3, 3)] * insub[nSubevents - 1][getVectorIndex(1, 1)] - 6 * insub[nSubevents - 1][getVectorIndex(4, 4)]));
+    dynamic_cast<BootstrapProfile*>(fSubCMList->At(indOffset + 6))->FillProfile(centmult, cmValSub[nSubevents - 1][7], (fEventWeight == EventWeight::UnityWeight) ? 1.0 : cmDenSub[nSubevents - 1][4], rn);
+    cmValSub[nSubevents - 1].push_back(1 / cmDenSub[nSubevents - 1][4] * (insub[nSubevents - 1][getVectorIndex(1, 1)] * insub[nSubevents - 1][getVectorIndex(1, 1)] * insub[nSubevents - 1][getVectorIndex(1, 1)] * insub[nSubevents - 1][getVectorIndex(1, 0)] - 3 * insub[nSubevents - 1][getVectorIndex(2, 2)] * insub[nSubevents - 1][getVectorIndex(1, 1)] * insub[nSubevents - 1][getVectorIndex(1, 0)] - 3 * insub[nSubevents - 1][getVectorIndex(1, 1)] * insub[nSubevents - 1][getVectorIndex(1, 1)] * insub[nSubevents - 1][getVectorIndex(2, 1)] + 3 * insub[nSubevents - 1][getVectorIndex(2, 2)] * insub[nSubevents - 1][getVectorIndex(2, 1)] + 6 * insub[nSubevents - 1][getVectorIndex(1, 1)] * insub[nSubevents - 1][getVectorIndex(3, 2)] - 6 * insub[nSubevents - 1][getVectorIndex(4, 3)]));
+    dynamic_cast<BootstrapProfile*>(fSubCMList->At(indOffset + 7))->FillProfile(centmult, cmValSub[nSubevents - 1][8], (fEventWeight == EventWeight::UnityWeight) ? 1.0 : cmDenSub[nSubevents - 1][4], rn);
+    cmValSub[nSubevents - 1].push_back(1 / cmDenSub[nSubevents - 1][4] * (insub[nSubevents - 1][getVectorIndex(1, 1)] * insub[nSubevents - 1][getVectorIndex(1, 1)] * insub[nSubevents - 1][getVectorIndex(1, 0)] * insub[nSubevents - 1][getVectorIndex(1, 0)] - insub[nSubevents - 1][getVectorIndex(2, 2)] * insub[nSubevents - 1][getVectorIndex(1, 0)] * insub[nSubevents - 1][getVectorIndex(1, 0)] - insub[nSubevents - 1][getVectorIndex(2, 0)] * insub[nSubevents - 1][getVectorIndex(1, 1)] * insub[nSubevents - 1][getVectorIndex(1, 1)] + insub[nSubevents - 1][getVectorIndex(2, 0)] * insub[nSubevents - 1][getVectorIndex(2, 2)] - 4 * insub[nSubevents - 1][getVectorIndex(2, 1)] * insub[nSubevents - 1][getVectorIndex(1, 1)] * insub[nSubevents - 1][getVectorIndex(1, 0)] + 4 * insub[nSubevents - 1][getVectorIndex(3, 2)] * insub[nSubevents - 1][getVectorIndex(1, 0)] + 4 * insub[nSubevents - 1][getVectorIndex(3, 1)] * insub[nSubevents - 1][getVectorIndex(1, 1)] + 2 * insub[nSubevents - 1][getVectorIndex(2, 1)] * insub[nSubevents - 1][getVectorIndex(2, 1)] - 6 * insub[nSubevents - 1][getVectorIndex(4, 2)]));
+    dynamic_cast<BootstrapProfile*>(fSubCMList->At(indOffset + 8))->FillProfile(centmult, cmValSub[nSubevents - 1][9], (fEventWeight == EventWeight::UnityWeight) ? 1.0 : cmDenSub[nSubevents - 1][4], rn);
+    cmValSub[nSubevents - 1].push_back(1 / cmDenSub[nSubevents - 1][4] * (insub[nSubevents - 1][getVectorIndex(1, 1)] * insub[nSubevents - 1][getVectorIndex(1, 0)] * insub[nSubevents - 1][getVectorIndex(1, 0)] * insub[nSubevents - 1][getVectorIndex(1, 0)] - 3 * insub[nSubevents - 1][getVectorIndex(2, 1)] * insub[nSubevents - 1][getVectorIndex(1, 0)] * insub[nSubevents - 1][getVectorIndex(1, 0)] - 3 * insub[nSubevents - 1][getVectorIndex(1, 1)] * insub[nSubevents - 1][getVectorIndex(2, 0)] * insub[nSubevents - 1][getVectorIndex(1, 0)] + 3 * insub[nSubevents - 1][getVectorIndex(2, 1)] * insub[nSubevents - 1][getVectorIndex(2, 0)] + 2 * insub[nSubevents - 1][getVectorIndex(1, 1)] * insub[nSubevents - 1][getVectorIndex(3, 0)] + 6 * insub[nSubevents - 1][getVectorIndex(3, 1)] * insub[nSubevents - 1][getVectorIndex(1, 0)] - 6 * insub[nSubevents - 1][getVectorIndex(4, 1)]));
+    dynamic_cast<BootstrapProfile*>(fSubCMList->At(indOffset + 9))->FillProfile(centmult, cmValSub[nSubevents - 1][10], (fEventWeight == EventWeight::UnityWeight) ? 1.0 : cmDenSub[nSubevents - 1][4], rn);
   }
 
   // Fill cross terms
@@ -995,8 +998,8 @@ void FlowPtContainer::fillCMSubeventProfiles(const double& centmult, const doubl
         for (int third = 1; third < m; ++third) {
           if (third > fourth)
             continue;
-          if (insub[0][getVectorIndex(m, 0)] != 0 && insub[nSubevents-1][getVectorIndex(m, 0)] != 0 && cmDenSub[0][m] * cmDenSub[nSubevents-1][m] != 0)
-            dynamic_cast<BootstrapProfile*>(fSubCMList->FindObject(Form("cm%i_%i%isub1_%i%isub2", m, first, second, third, fourth)))->FillProfile(centmult, cmValSub[0][second * (second - 1) / 2 + second - first + 1] * cmValSub[nSubevents-1][fourth * (fourth - 1) / 2 + fourth - third + 1], (fEventWeight == EventWeight::UnityWeight) ? 1.0 : cmDenSub[0][m] * cmDenSub[nSubevents-1][m], rn);
+          if (insub[0][getVectorIndex(m, 0)] != 0 && insub[nSubevents - 1][getVectorIndex(m, 0)] != 0 && cmDenSub[0][m] * cmDenSub[nSubevents - 1][m] != 0)
+            dynamic_cast<BootstrapProfile*>(fSubCMList->FindObject(Form("cm%i_%i%isub1_%i%isub2", m, first, second, third, fourth)))->FillProfile(centmult, cmValSub[0][second * (second - 1) / 2 + second - first + 1] * cmValSub[nSubevents - 1][fourth * (fourth - 1) / 2 + fourth - third + 1], (fEventWeight == EventWeight::UnityWeight) ? 1.0 : cmDenSub[0][m] * cmDenSub[nSubevents - 1][m], rn);
         }
       }
     }
@@ -1871,18 +1874,19 @@ TH1* FlowPtContainer::raiseHistToPower(TH1* inh, double p)
   }
   return reth;
 }
-void FlowPtContainer::getSubevents(int k, int n, std::vector<int>& current, std::vector<std::vector<int>>& subevents) {
-    if (n == 1) {
-        // Last box gets all remaining objects
-        current.push_back(k);
-        subevents.push_back(current);
-        current.pop_back();
-        return;
-    }
+void FlowPtContainer::getSubevents(int k, int n, std::vector<int>& current, std::vector<std::vector<int>>& subevents)
+{
+  if (n == 1) {
+    // Last box gets all remaining objects
+    current.push_back(k);
+    subevents.push_back(current);
+    current.pop_back();
+    return;
+  }
 
-    for (int i = 0; i <= k; ++i) {
-        current.push_back(i);
-        getSubevents(k - i, n - 1, current, subevents);
-        current.pop_back();
-    }
+  for (int i = 0; i <= k; ++i) {
+    current.push_back(i);
+    getSubevents(k - i, n - 1, current, subevents);
+    current.pop_back();
+  }
 }

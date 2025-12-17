@@ -56,8 +56,8 @@ class FlowPtContainer : public TNamed
   void initialiseSubevent(int nbinsx, double xlow, double xhigh, const int& m, const int& nsubev = 2, const int& nsub = 10);
   void fill(const double& w, const double& pt);
   void fillSub(const double& w, const double& pt, int subIndex);
-  void fillSub1(const double& w, const double& pt) { fillSub(w,pt,0); }
-  void fillSub2(const double& w, const double& pt) { fillSub(w,pt,nSubevents-1); }
+  void fillSub1(const double& w, const double& pt) { fillSub(w, pt, 0); }
+  void fillSub2(const double& w, const double& pt) { fillSub(w, pt, nSubevents - 1); }
   void fillArray(FillType a, FillType b, double c, double d);
   int getVectorIndex(const int i, const int j) { return j * (mpar + 1) + i; }                                              // index for 2d array for storing pt correlations
   int getVectorIndex(const int i, const int j, const int k, const int l) { return i + j * 3 + k * 3 * 3 + l * 3 * 3 * 5; } // index for 4d array for std vnpt correlation - size 3x3x3x3
@@ -136,7 +136,7 @@ class FlowPtContainer : public TNamed
     sumP.clear();
     sumP.resize((mpar + 1) * (mpar + 1));
     insub.clear();
-    insub.resize(nSubevents,std::vector<double>((mpar + 1) * (mpar + 1)));
+    insub.resize(nSubevents, std::vector<double>((mpar + 1) * (mpar + 1)));
     cmVal.clear();
     cmValSub.clear();
     cmValSub.resize(nSubevents);
@@ -159,7 +159,7 @@ class FlowPtContainer : public TNamed
   TList* fCentralMomentList;
 
   int mpar;
-  int nSubevents; //!
+  int nSubevents;            //!
   int fillCounter;           //!
   unsigned int fEventWeight; //!
   bool fUseCentralMoments;
@@ -171,11 +171,11 @@ class FlowPtContainer : public TNamed
   std::vector<double> corrNum;           //!
   std::vector<std::vector<double>> corrNumSub; //!
   std::vector<double> corrDen;           //!
-  std::vector<std::vector<double>> corrDenSub;          //!
+  std::vector<std::vector<double>> corrDenSub; //!
   std::vector<double> cmVal;             //!
-  std::vector<std::vector<double>> cmValSub;            //!
+  std::vector<std::vector<double>> cmValSub; //!
   std::vector<double> cmDen;             //!
-  std::vector<std::vector<double>> cmDenSub;            //!
+  std::vector<std::vector<double>> cmDenSub; //!
   std::vector<std::complex<double>> arr; //!
   std::vector<double> warr;              //!
   std::vector<int> fCovFirstIndex;       //!

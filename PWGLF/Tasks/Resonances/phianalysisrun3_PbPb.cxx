@@ -22,7 +22,6 @@
 #include "Common/DataModel/PIDResponse.h"
 #include "Common/DataModel/TrackSelectionTables.h"
 
-
 #include "CCDB/BasicCCDBManager.h"
 #include "CommonConstants/PhysicsConstants.h"
 #include "DataFormatsParameters/GRPMagField.h"
@@ -75,28 +74,28 @@ struct phianalysisrun3_PbPb {
   HistogramRegistry histos{"histos", {}, OutputObjHandlingPolicy::AnalysisObject};
   HistogramRegistry registry{"registry"};
   struct : ConfigurableGroup {
-  // events
-  Configurable<float> cfgCutVertex{"cfgCutVertex", 10.0f, "Accepted z-vertex range"};
-  // track
-  Configurable<float> cfgCutPT{"cfgCutPT", 0.2, "PT cut on daughter track"};
-  Configurable<float> cfgCutEta{"cfgCutEta", 0.8, "Eta cut on daughter track"};
-  Configurable<float> cfgCutDCAxy{"cfgCutDCAxy", 2.0f, "DCAxy range for tracks"};
-  Configurable<float> cfgCutDCAz{"cfgCutDCAz", 2.0f, "DCAz range for tracks"};
-  Configurable<float> nsigmacutTPC{"nsigmacutTPC", 2.0f, "Value of the TPC Nsigma cut"};
-  Configurable<float> nsigmacutTOF{"nsigmacutTOF", 2.0f, "Value of the TOF Nsigma cut"};
-  Configurable<float> nsigmaCutCombined{"nsigmaCutCombined", 3.0, "Value of the TOF Nsigma cut"};
-  Configurable<int> cfgNoMixedEvents{"cfgNoMixedEvents", 5, "Number of mixed events per event"};
-  Configurable<bool> fillOccupancy{"fillOccupancy", true, "fill Occupancy"};
-  Configurable<bool> isNoTOF{"isNoTOF", false, "isNoTOF"};
-  Configurable<bool> additionalEvSel1{"additionalEvSel1", true, "Additional evsel1"};
-  Configurable<bool> additionalEvSel2{"additionalEvSel2", true, "Additional evsel2"};
-  Configurable<bool> additionalEvSel3{"additionalEvSel3", true, "Additional evsel3"};
-  Configurable<bool> additionalEvSel4{"additionalEvSel4", true, "Additional evsel4"};
-  Configurable<bool> additionalEvSel5{"additionalEvSel5", true, "Additional evsel5"};
-  Configurable<bool> additionalEvSel6{"additionalEvSel6", true, "Additional evsel6"};
-  }selectionConfig;
+    // events
+    Configurable<float> cfgCutVertex{"cfgCutVertex", 10.0f, "Accepted z-vertex range"};
+    // track
+    Configurable<float> cfgCutPT{"cfgCutPT", 0.2, "PT cut on daughter track"};
+    Configurable<float> cfgCutEta{"cfgCutEta", 0.8, "Eta cut on daughter track"};
+    Configurable<float> cfgCutDCAxy{"cfgCutDCAxy", 2.0f, "DCAxy range for tracks"};
+    Configurable<float> cfgCutDCAz{"cfgCutDCAz", 2.0f, "DCAz range for tracks"};
+    Configurable<float> nsigmacutTPC{"nsigmacutTPC", 2.0f, "Value of the TPC Nsigma cut"};
+    Configurable<float> nsigmacutTOF{"nsigmacutTOF", 2.0f, "Value of the TOF Nsigma cut"};
+    Configurable<float> nsigmaCutCombined{"nsigmaCutCombined", 3.0, "Value of the TOF Nsigma cut"};
+    Configurable<int> cfgNoMixedEvents{"cfgNoMixedEvents", 5, "Number of mixed events per event"};
+    Configurable<bool> fillOccupancy{"fillOccupancy", true, "fill Occupancy"};
+    Configurable<bool> isNoTOF{"isNoTOF", false, "isNoTOF"};
+    Configurable<bool> additionalEvSel1{"additionalEvSel1", true, "Additional evsel1"};
+    Configurable<bool> additionalEvSel2{"additionalEvSel2", true, "Additional evsel2"};
+    Configurable<bool> additionalEvSel3{"additionalEvSel3", true, "Additional evsel3"};
+    Configurable<bool> additionalEvSel4{"additionalEvSel4", true, "Additional evsel4"};
+    Configurable<bool> additionalEvSel5{"additionalEvSel5", true, "Additional evsel5"};
+    Configurable<bool> additionalEvSel6{"additionalEvSel6", true, "Additional evsel6"};
+  } selectionConfig;
   Configurable<bool> cfgMultFT0{"cfgMultFT0", true, "cfgMultFT0"};
-   Configurable<int> pid{"pid", 0, "pid"};
+  Configurable<int> pid{"pid", 0, "pid"};
   Configurable<float> cfgCutTOFBeta{"cfgCutTOFBeta", 0.0, "cut TOF beta"};
   Configurable<bool> useGlobalTrack{"useGlobalTrack", false, "use Global track"};
   Configurable<bool> iscustomDCAcut{"iscustomDCAcut", false, "iscustomDCAcut"};
@@ -142,8 +141,8 @@ struct phianalysisrun3_PbPb {
     AxisSpec impactParAxis = {binsImpactPar, "Impact Parameter"};
     AxisSpec ptAxis = {binsPt, "#it{p}_{T} (GeV/#it{c})"};
     AxisSpec centAxis = {binsCent, "V0M (%)"};
-     AxisSpec multAxis = {binsMult, "Multiplicity #eta<0.5"};
-     AxisSpec axisEvent = {10, 0.5, 10.5, "#Event", "EventAxis"};
+    AxisSpec multAxis = {binsMult, "Multiplicity #eta<0.5"};
+    AxisSpec axisEvent = {10, 0.5, 10.5, "#Event", "EventAxis"};
     if (!isMC) {
       histos.add("hCentrality", "Centrality distribution", kTH1F, {centAxisphi});
       histos.add("hVtxZ", "Vertex distribution in Z;Z (cm)", kTH1F, {{400, -20.0, 20.0}});
@@ -271,31 +270,31 @@ struct phianalysisrun3_PbPb {
         histos.add("QAevent/phigenAfterEvtSel", "phi after event selections", kTH2F, {ptAxis, impactParAxis});
       }
       if (doprocessEvtLossSigLossMC1) {
-      histos.add("MCEventHist", "MCEventHist", kTH1F, {axisEvent}, false);
-      auto hstat = histos.get<TH1>(HIST("MCEventHist"));
-      auto* x = hstat->GetXaxis();
-      x->SetBinLabel(1, "All MC events");
-      x->SetBinLabel(2, "MC events with reco event after event selection");
-      x->SetBinLabel(3, "MC events with no reco events");
-      histos.add("hImpactParameterGenwithNoreco", "Impact parameter of generated MC events, with no recoevent", kTH1F, {impactParAxis});
-      histos.add("hImpactParameterGen1", "Impact parameter of generated MC events", kTH1F, {impactParAxis});
-      histos.add("hImpactParameterRec1", "Impact parameter of selected MC events", kTH1F, {impactParAxis});
-      histos.add("hImpactParvsCentrRec", "Impact parameter of selected MC events vs centrality", kTH2F, {centAxis, impactParAxis});
-      histos.add("hMultEta05GenwithNoreco", "multiplicity in eta<0.5 of generated MC events, with no recoevent", kTH1F, {multAxis});
-      histos.add("hMultEta05Gen", "multiplicity in eta<0.5 of generated MC events", kTH1F, {multAxis});
-      histos.add("hMultEta05Rec", "multiplicity in eta<0.5 of selected MC events", kTH1F, {multAxis});
-      histos.add("hMultEta05vsCentrRec", "multiplicity in eta<0.5 of selected MC events vs centrality", kTH2F, {centAxis, multAxis});
-      histos.add("hMultGen", "multiplicity of generated MC events", kTH1F, {centAxisphi});
-      histos.add("hMultRec", "multiplicity of selected MC events", kTH1F, {centAxisphi});
-      histos.add("hMultvsCentrRec", "multiplicity of selected MC events vs centrality", kTH2F, {centAxisphi, multAxis});
-      histos.add("hgendndetaVsMultEta05BeforeEvtSel", "hgendndetaBeforeEvtSel vs multiplicity in eta<0.5", kTH2F, {ptAxis, multAxis});
-      histos.add("hgendndetaVsMultEta05AfterEvtSel", "hgendndetaAfterEvtSel vs multiplicity in eta<0.5", kTH2F, {ptAxis, multAxis});  
-      histos.add("hgendndetaVsMultBeforeEvtSel", "hgendndetaBeforeEvtSel vs multiplicity", kTH2F, {ptAxis, multAxis});
-      histos.add("hgendndetaVsMultAfterEvtSel", "hgendndetaAfterEvtSel vs multiplicity", kTH2F, {ptAxis, multAxis});  
-      histos.add("hgendndetaBeforeEvtSel", "Eta of all generated particles", kTH1F, {ptAxis});
-      histos.add("hgendndetaAfterEvtSel", "Eta of generated particles after EvtSel", kTH1F, {ptAxis});
-      histos.add("hgendndetaVscentBeforeEvtSel", "hgendndetaBeforeEvtSel vs centrality", kTH2F, {ptAxis, impactParAxis});
-      histos.add("hgendndetaVscentAfterEvtSel", "hgendndetaAfterEvtSel vs centrality", kTH2F, {ptAxis, impactParAxis});
+        histos.add("MCEventHist", "MCEventHist", kTH1F, {axisEvent}, false);
+        auto hstat = histos.get<TH1>(HIST("MCEventHist"));
+        auto* x = hstat->GetXaxis();
+        x->SetBinLabel(1, "All MC events");
+        x->SetBinLabel(2, "MC events with reco event after event selection");
+        x->SetBinLabel(3, "MC events with no reco events");
+        histos.add("hImpactParameterGenwithNoreco", "Impact parameter of generated MC events, with no recoevent", kTH1F, {impactParAxis});
+        histos.add("hImpactParameterGen1", "Impact parameter of generated MC events", kTH1F, {impactParAxis});
+        histos.add("hImpactParameterRec1", "Impact parameter of selected MC events", kTH1F, {impactParAxis});
+        histos.add("hImpactParvsCentrRec", "Impact parameter of selected MC events vs centrality", kTH2F, {centAxis, impactParAxis});
+        histos.add("hMultEta05GenwithNoreco", "multiplicity in eta<0.5 of generated MC events, with no recoevent", kTH1F, {multAxis});
+        histos.add("hMultEta05Gen", "multiplicity in eta<0.5 of generated MC events", kTH1F, {multAxis});
+        histos.add("hMultEta05Rec", "multiplicity in eta<0.5 of selected MC events", kTH1F, {multAxis});
+        histos.add("hMultEta05vsCentrRec", "multiplicity in eta<0.5 of selected MC events vs centrality", kTH2F, {centAxis, multAxis});
+        histos.add("hMultGen", "multiplicity of generated MC events", kTH1F, {centAxisphi});
+        histos.add("hMultRec", "multiplicity of selected MC events", kTH1F, {centAxisphi});
+        histos.add("hMultvsCentrRec", "multiplicity of selected MC events vs centrality", kTH2F, {centAxisphi, multAxis});
+        histos.add("hgendndetaVsMultEta05BeforeEvtSel", "hgendndetaBeforeEvtSel vs multiplicity in eta<0.5", kTH2F, {ptAxis, multAxis});
+        histos.add("hgendndetaVsMultEta05AfterEvtSel", "hgendndetaAfterEvtSel vs multiplicity in eta<0.5", kTH2F, {ptAxis, multAxis});
+        histos.add("hgendndetaVsMultBeforeEvtSel", "hgendndetaBeforeEvtSel vs multiplicity", kTH2F, {ptAxis, multAxis});
+        histos.add("hgendndetaVsMultAfterEvtSel", "hgendndetaAfterEvtSel vs multiplicity", kTH2F, {ptAxis, multAxis});
+        histos.add("hgendndetaBeforeEvtSel", "Eta of all generated particles", kTH1F, {ptAxis});
+        histos.add("hgendndetaAfterEvtSel", "Eta of generated particles after EvtSel", kTH1F, {ptAxis});
+        histos.add("hgendndetaVscentBeforeEvtSel", "hgendndetaBeforeEvtSel vs centrality", kTH2F, {ptAxis, impactParAxis});
+        histos.add("hgendndetaVscentAfterEvtSel", "hgendndetaAfterEvtSel vs centrality", kTH2F, {ptAxis, impactParAxis});
       }
     }
   }
@@ -412,7 +411,7 @@ struct phianalysisrun3_PbPb {
     }
     return cent;
   }
-template <typename CheckColCent>
+  template <typename CheckColCent>
   float selColCent(CheckColCent const& col)
   {
     auto cent = -1;
@@ -424,7 +423,6 @@ template <typename CheckColCent>
     }
     return cent;
   }
-
 
   // deep angle cut on pair to remove photon conversion
   template <typename T1, typename T2>
@@ -2011,13 +2009,13 @@ template <typename CheckColCent>
   PROCESS_SWITCH(phianalysisrun3_PbPb, processFactors, "Process Signal Loss, Event Loss", false);
   void processEvtLossSigLossMC1(McCollisionMults::iterator const& mcCollision, soa::SmallGroups<EventCandidatesMC> const& collisions, aod::McParticles const& GenParticles)
   {
-   if (std::abs(mcCollision.posZ()) > selectionConfig.cfgCutVertex)
+    if (std::abs(mcCollision.posZ()) > selectionConfig.cfgCutVertex)
       return;
-       // All generated events
+    // All generated events
     histos.fill(HIST("MCEventHist"), 1);
     histos.fill(HIST("hImpactParameterGen1"), mcCollision.impactParameter());
     histos.fill(HIST("hMultEta05Gen"), mcCollision.multMCNParticlesEta05());
-  histos.fill(HIST("hMultGen"), selColMultMC(mcCollision));
+    histos.fill(HIST("hMultGen"), selColMultMC(mcCollision));
 
     if (collisions.size() == 0) {
       histos.fill(HIST("MCEventHist"), 3);
@@ -2026,7 +2024,7 @@ template <typename CheckColCent>
     }
     bool atLeastOne = false;
     auto centrality = -999.;
-     for (auto const& collision : collisions) {
+    for (auto const& collision : collisions) {
       if (!myEventSelections(collision))
         continue;
       centrality = selColCent(collision);
@@ -2040,55 +2038,53 @@ template <typename CheckColCent>
       histos.fill(HIST("hMultRec"), selColMultMC(mcCollision));
       histos.fill(HIST("hImpactParvsCentrRec"), centrality, mcCollision.impactParameter());
       histos.fill(HIST("hMultEta05vsCentrRec"), centrality, mcCollision.multMCNParticlesEta05());
-     histos.fill(HIST("hMultvsCentrRec"), centrality, selColMultMC(mcCollision));
+      histos.fill(HIST("hMultvsCentrRec"), centrality, selColMultMC(mcCollision));
     }
-     for (const auto& particle : GenParticles) {
+    for (const auto& particle : GenParticles) {
 
-  if (std::abs(particle.y()) > confRapidity)
-    continue;
+      if (std::abs(particle.y()) > confRapidity)
+        continue;
 
-  if (particle.pdgCode() != o2::constants::physics::kPhi)
-    continue;
+      if (particle.pdgCode() != o2::constants::physics::kPhi)
+        continue;
 
-  auto daughters = particle.daughters_as<aod::McParticles>();
-  static constexpr int kPhiNDaughters = 2;
-  if (daughters.size() != kPhiNDaughters)
-    continue;
+      auto daughters = particle.daughters_as<aod::McParticles>();
+      static constexpr int kPhiNDaughters = 2;
+      if (daughters.size() != kPhiNDaughters)
+        continue;
 
-  bool daup = false, daun = false;
+      bool daup = false, daun = false;
 
-  for (const auto& dau : daughters) {
-    if (dau.pdgCode() == PDG_t::kKPlus) {
-      daup = true;
-      d1 = ROOT::Math::PxPyPzMVector(dau.px(), dau.py(), dau.pz(), massKa);
-    } else if (dau.pdgCode() == PDG_t::kKMinus) {
-      daun = true;
-      d2 = ROOT::Math::PxPyPzMVector(dau.px(), dau.py(), dau.pz(), massKa);
+      for (const auto& dau : daughters) {
+        if (dau.pdgCode() == PDG_t::kKPlus) {
+          daup = true;
+          d1 = ROOT::Math::PxPyPzMVector(dau.px(), dau.py(), dau.pz(), massKa);
+        } else if (dau.pdgCode() == PDG_t::kKMinus) {
+          daun = true;
+          d2 = ROOT::Math::PxPyPzMVector(dau.px(), dau.py(), dau.pz(), massKa);
+        }
+      }
+
+      if (!daup || !daun)
+        continue;
+
+      mother = d1 + d2;
+
+      histos.fill(HIST("hgendndetaBeforeEvtSel"), mother.Pt());
+      histos.fill(HIST("hgendndetaVscentBeforeEvtSel"), mother.Pt(), mcCollision.impactParameter());
+      histos.fill(HIST("hgendndetaVsMultEta05BeforeEvtSel"), mother.Pt(), mcCollision.multMCNParticlesEta05());
+      histos.fill(HIST("hgendndetaVsMultBeforeEvtSel"), mother.Pt(), selColMultMC(mcCollision));
+
+      if (atLeastOne) {
+
+        histos.fill(HIST("hgendndetaAfterEvtSel"), mother.Pt());
+        histos.fill(HIST("hgendndetaVscentAfterEvtSel"), mother.Pt(), mcCollision.impactParameter());
+        histos.fill(HIST("hgendndetaVsMultEta05AfterEvtSel"), mother.Pt(), mcCollision.multMCNParticlesEta05());
+        histos.fill(HIST("hgendndetaVsMultAfterEvtSel"), mother.Pt(), selColMultMC(mcCollision));
+      }
     }
   }
-
-  if (!daup || !daun)
-    continue;
-
-  mother = d1 + d2;
-
- 
-  histos.fill(HIST("hgendndetaBeforeEvtSel"), mother.Pt());
-  histos.fill(HIST("hgendndetaVscentBeforeEvtSel"), mother.Pt(), mcCollision.impactParameter());
-  histos.fill(HIST("hgendndetaVsMultEta05BeforeEvtSel"), mother.Pt(), mcCollision.multMCNParticlesEta05());
-  histos.fill(HIST("hgendndetaVsMultBeforeEvtSel"), mother.Pt(), selColMultMC(mcCollision));
-
-  if (atLeastOne) {
-  
-    histos.fill(HIST("hgendndetaAfterEvtSel"), mother.Pt());
-    histos.fill(HIST("hgendndetaVscentAfterEvtSel"), mother.Pt(), mcCollision.impactParameter());
-    histos.fill(HIST("hgendndetaVsMultEta05AfterEvtSel"), mother.Pt(), mcCollision.multMCNParticlesEta05());
-    histos.fill(HIST("hgendndetaVsMultAfterEvtSel"), mother.Pt(), selColMultMC(mcCollision));
-  }
-}
-
-  }
- PROCESS_SWITCH(phianalysisrun3_PbPb, processEvtLossSigLossMC1, "Process Signal Loss, Event Loss", false);
+  PROCESS_SWITCH(phianalysisrun3_PbPb, processEvtLossSigLossMC1, "Process Signal Loss, Event Loss", false);
 };
 WorkflowSpec defineDataProcessing(ConfigContext const& cfgc)
 {

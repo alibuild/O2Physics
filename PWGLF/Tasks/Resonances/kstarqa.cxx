@@ -1865,66 +1865,66 @@ struct Kstarqa {
 =======
     hInvMass.fill(HIST("CorrFactors/hMultiplicityVsMultMC"), multiplicity, multiplicityNch);
 >>>>>>> c669bd852 (corrected event loss histograms)
-    hInvMass.fill(HIST("CorrFactors/hNrecInGen"), collisions.size());
-    hInvMass.fill(HIST("CorrFactors/MultiplicityGen"), multiplicityNch);
-    if (isSelectedEvent) {
+      hInvMass.fill(HIST("CorrFactors/hNrecInGen"), collisions.size());
+      hInvMass.fill(HIST("CorrFactors/MultiplicityGen"), multiplicityNch);
+      if (isSelectedEvent) {
 <<<<<<< HEAD
-      hInvMass.fill(HIST("CorrFactors/MultiplicityRec2D"), multiplicity, mcCollision.multMCNParticlesEta08());
+        hInvMass.fill(HIST("CorrFactors/MultiplicityRec2D"), multiplicity, mcCollision.multMCNParticlesEta08());
 >>>>>>> 2ddf06887 (minor fix to code)
 =======
       hInvMass.fill(HIST("CorrFactors/MultiplicityRec"), multiplicityNch);
 >>>>>>> c669bd852 (corrected event loss histograms)
-    }
+      }
 
-    for (const auto& mcParticle : mcParticles) {
+      for (const auto& mcParticle : mcParticles) {
 
-      if (std::abs(mcParticle.y()) >= selectionConfig.rapidityMotherData)
-        continue;
-
-      if (std::abs(mcParticle.pdgCode()) == o2::constants::physics::kK0Star892) {
-
-        auto kDaughters = mcParticle.daughters_as<aod::McParticles>();
-        if (kDaughters.size() != selectionConfig.noOfDaughters) {
+        if (std::abs(mcParticle.y()) >= selectionConfig.rapidityMotherData)
           continue;
-        }
 
-        bool hasPos = false;
-        bool hasNeg = false;
+        if (std::abs(mcParticle.pdgCode()) == o2::constants::physics::kK0Star892) {
 
-        auto passkaon = false;
-        auto passpion = false;
-        for (const auto& kCurrentDaughter : kDaughters) {
-          // if (!kCurrentDaughter.isPhysicalPrimary())
-          //   continue;
-
-          int pdgDau = kCurrentDaughter.pdgCode();
-          int sign = (pdgDau > 0) - (pdgDau < 0);
-
-          if (sign > 0)
-            hasPos = true;
-          if (sign < 0)
-            hasNeg = true;
-
-          if (std::abs(kCurrentDaughter.pdgCode()) == PDG_t::kKPlus) {
-            passkaon = true;
-            daughter1 = ROOT::Math::PxPyPzMVector(kCurrentDaughter.px(), kCurrentDaughter.py(), kCurrentDaughter.pz(), massKa);
-
-          } else if (std::abs(kCurrentDaughter.pdgCode()) == PDG_t::kPiPlus) {
-            passpion = true;
-            daughter2 = ROOT::Math::PxPyPzMVector(kCurrentDaughter.px(), kCurrentDaughter.py(), kCurrentDaughter.pz(), massPi);
+          auto kDaughters = mcParticle.daughters_as<aod::McParticles>();
+          if (kDaughters.size() != selectionConfig.noOfDaughters) {
+            continue;
           }
-        }
 
-        if ((passkaon && passpion) && (hasPos && hasNeg)) {
-          mother = daughter1 + daughter2; // Kstar meson
+          bool hasPos = false;
+          bool hasNeg = false;
 
-          hInvMass.fill(HIST("CorrFactors/h2dGenKstar"), multiplicity, mother.Pt());
+          auto passkaon = false;
+          auto passpion = false;
+          for (const auto& kCurrentDaughter : kDaughters) {
+            // if (!kCurrentDaughter.isPhysicalPrimary())
+            //   continue;
+
+            int pdgDau = kCurrentDaughter.pdgCode();
+            int sign = (pdgDau > 0) - (pdgDau < 0);
+
+            if (sign > 0)
+              hasPos = true;
+            if (sign < 0)
+              hasNeg = true;
+
+            if (std::abs(kCurrentDaughter.pdgCode()) == PDG_t::kKPlus) {
+              passkaon = true;
+              daughter1 = ROOT::Math::PxPyPzMVector(kCurrentDaughter.px(), kCurrentDaughter.py(), kCurrentDaughter.pz(), massKa);
+
+            } else if (std::abs(kCurrentDaughter.pdgCode()) == PDG_t::kPiPlus) {
+              passpion = true;
+              daughter2 = ROOT::Math::PxPyPzMVector(kCurrentDaughter.px(), kCurrentDaughter.py(), kCurrentDaughter.pz(), massPi);
+            }
+          }
+
+          if ((passkaon && passpion) && (hasPos && hasNeg)) {
+            mother = daughter1 + daughter2; // Kstar meson
+
+            hInvMass.fill(HIST("CorrFactors/h2dGenKstar"), multiplicity, mother.Pt());
 <<<<<<< HEAD
 <<<<<<< HEAD
-          hInvMass.fill(HIST("CorrFactors/h3dGenKstarVsMultMCVsMultiplicity"), multiplicityNch, multiplicity, mother.Pt());
-          hInvMass.fill(HIST("CorrFactors/hSignalLossDenominator"), mother.pt(), multiplicityNch);
-          if (isSelectedEvent) {
-            hInvMass.fill(HIST("CorrFactors/hSignalLossNumerator"), mother.pt(), multiplicityNch);
+            hInvMass.fill(HIST("CorrFactors/h3dGenKstarVsMultMCVsMultiplicity"), multiplicityNch, multiplicity, mother.Pt());
+            hInvMass.fill(HIST("CorrFactors/hSignalLossDenominator"), mother.pt(), multiplicityNch);
+            if (isSelectedEvent) {
+              hInvMass.fill(HIST("CorrFactors/hSignalLossNumerator"), mother.pt(), multiplicityNch);
 =======
           hInvMass.fill(HIST("CorrFactors/h3dGenKstarVsMultMCVsMultiplicity"), mcCollision.multMCNParticlesEta08(), multiplicity, mother.Pt());
           hInvMass.fill(HIST("CorrFactors/hSignalLossDenominator3D"), mother.pt(), multiplicity, mcCollision.multMCNParticlesEta08());
@@ -1933,7 +1933,7 @@ struct Kstarqa {
             hInvMass.fill(HIST("CorrFactors/hSignalLossNumerator"), mother.pt(), multiplicity);
 >>>>>>> 087e3b03d (different event/signal loss method)
 =======
-            hInvMass.fill(HIST("CorrFactors/hSignalLossNumerator3D"), mother.pt(), multiplicity, mcCollision.multMCNParticlesEta08());
+          hInvMass.fill(HIST("CorrFactors/hSignalLossNumerator3D"), mother.pt(), multiplicity, mcCollision.multMCNParticlesEta08());
 >>>>>>> 2ddf06887 (minor fix to code)
 =======
           hInvMass.fill(HIST("CorrFactors/h3dGenKstarVsMultMCVsMultiplicity"), multiplicityNch, multiplicity, mother.Pt());
@@ -1941,15 +1941,15 @@ struct Kstarqa {
           if (isSelectedEvent) {
             hInvMass.fill(HIST("CorrFactors/hSignalLossNumerator"), mother.pt(), multiplicityNch);
 >>>>>>> c669bd852 (corrected event loss histograms)
+            }
           }
         }
       }
-    }
 
-    if (collisions.size() == 0)
-      return;
+      if (collisions.size() == 0)
+        return;
 
-    hInvMass.fill(HIST("CorrFactors/hGenEvents"), multiplicityNch, 3.5);
+      hInvMass.fill(HIST("CorrFactors/hGenEvents"), multiplicityNch, 3.5);
   }
   PROCESS_SWITCH(Kstarqa, processEvSigLossFactors, "Process Event and Signal loss", false);
 

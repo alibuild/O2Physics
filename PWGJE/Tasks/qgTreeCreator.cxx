@@ -180,7 +180,7 @@ struct QGTreeCreator {
           qg = 1;
         } else if (std::abs(pdg) >= kQuarkMin && std::abs(pdg) <= kQuarkMax) {
           qg = 0;
-      }
+        }
 
         break;
       }

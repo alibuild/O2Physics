@@ -210,7 +210,7 @@ DECLARE_SOA_COLUMN(Pt, pt, float);                                              
 DECLARE_SOA_COLUMN(Eta, eta, float);                                                //! Pseudorapidity
 DECLARE_SOA_COLUMN(Phi, phi, float);                                                //! Phi angle
 DECLARE_SOA_COLUMN(InvMass, invMass, float);                                        //! Invariant mass
-                                             // DECLARE_SOA_COLUMN(Decay, decay, uint8_t);                                           //! Mixed-phi type
+                                                                                    // DECLARE_SOA_COLUMN(Decay, decay, uint8_t);                                           //! Mixed-phi type
 /*enum ParticleDecay {
 PhiFromMixed
 };*/

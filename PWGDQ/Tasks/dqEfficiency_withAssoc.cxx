@@ -184,20 +184,20 @@ DECLARE_SOA_COLUMN(AmbiguousInBunchPairs, AmbiguousJpsiPairsInBunch, bool);
 DECLARE_SOA_COLUMN(AmbiguousOutOfBunchPairs, AmbiguousJpsiPairsOutOfBunch, bool);
 DECLARE_SOA_COLUMN(Corrassoc, corrassoc, bool);
 // Additional columns for prompt-non-prompt JPsi separation (BDT training), identical to tableReader_withAssoc
-DECLARE_SOA_COLUMN(PairFilter, pairFilter, uint32_t);                //! twoTrackFilter (cut bits + ambiguity bits 28-31)
-DECLARE_SOA_COLUMN(McDecision, mcDecision, uint32_t);                //! MC signal bits, 0 in data
-DECLARE_SOA_COLUMN(TauxyeeErr, tauxyeeErr, float);                   //! kVertexingTauxyErr: in ns (not cm) and with the reconstructed mass
-DECLARE_SOA_COLUMN(TauzeeErr, tauzeeErr, float);                     //! kVertexingTauzErr: in ns (not cm) and with the reconstructed mass
-DECLARE_SOA_COLUMN(LxyeeProjected, lxyeeProjected, float);           //! kVertexingLxyProjected
-DECLARE_SOA_COLUMN(LxyeeOverErr, lxyeeOverErr, float);               //! kVertexingLxy / kVertexingLxyErr (computed in the task)
-DECLARE_SOA_COLUMN(Lxyzee, lxyzee, float);                           //! kVertexingLxyz
-DECLARE_SOA_COLUMN(LxyzeeOverErr, lxyzeeOverErr, float);             //! kVertexingLxyz / kVertexingLxyzErr (computed in the task)
-DECLARE_SOA_COLUMN(Chi2PCAee, chi2PCAee, float);                     //! kVertexingChi2PCA
-DECLARE_SOA_COLUMN(CosPAee, cosPAee, float);                         //! kCosPointingAngle
-DECLARE_SOA_COLUMN(DcaSigXY1, dcaSigXY1, float);                     //! leg-1 DCAxy / sqrt(cYY), computed in the task
-DECLARE_SOA_COLUMN(DcaSigZ1, dcaSigZ1, float);                       //! leg-1 DCAz / sqrt(cZZ), computed in the task
-DECLARE_SOA_COLUMN(DcaSigXY2, dcaSigXY2, float);                     //! leg-2 DCAxy / sqrt(cYY), computed in the task
-DECLARE_SOA_COLUMN(DcaSigZ2, dcaSigZ2, float);                       //! leg-2 DCAz / sqrt(cZZ), computed in the task
+DECLARE_SOA_COLUMN(PairFilter, pairFilter, uint32_t);      //! twoTrackFilter (cut bits + ambiguity bits 28-31)
+DECLARE_SOA_COLUMN(McDecision, mcDecision, uint32_t);      //! MC signal bits, 0 in data
+DECLARE_SOA_COLUMN(TauxyeeErr, tauxyeeErr, float);         //! kVertexingTauxyErr: in ns (not cm) and with the reconstructed mass
+DECLARE_SOA_COLUMN(TauzeeErr, tauzeeErr, float);           //! kVertexingTauzErr: in ns (not cm) and with the reconstructed mass
+DECLARE_SOA_COLUMN(LxyeeProjected, lxyeeProjected, float); //! kVertexingLxyProjected
+DECLARE_SOA_COLUMN(LxyeeOverErr, lxyeeOverErr, float);     //! kVertexingLxy / kVertexingLxyErr (computed in the task)
+DECLARE_SOA_COLUMN(Lxyzee, lxyzee, float);                 //! kVertexingLxyz
+DECLARE_SOA_COLUMN(LxyzeeOverErr, lxyzeeOverErr, float);   //! kVertexingLxyz / kVertexingLxyzErr (computed in the task)
+DECLARE_SOA_COLUMN(Chi2PCAee, chi2PCAee, float);           //! kVertexingChi2PCA
+DECLARE_SOA_COLUMN(CosPAee, cosPAee, float);               //! kCosPointingAngle
+DECLARE_SOA_COLUMN(DcaSigXY1, dcaSigXY1, float);           //! leg-1 DCAxy / sqrt(cYY), computed in the task
+DECLARE_SOA_COLUMN(DcaSigZ1, dcaSigZ1, float);             //! leg-1 DCAz / sqrt(cZZ), computed in the task
+DECLARE_SOA_COLUMN(DcaSigXY2, dcaSigXY2, float);           //! leg-2 DCAxy / sqrt(cYY), computed in the task
+DECLARE_SOA_COLUMN(DcaSigZ2, dcaSigZ2, float);             //! leg-2 DCAz / sqrt(cZZ), computed in the task
 DECLARE_SOA_COLUMN(DeltaEta, deltaEta, float);
 DECLARE_SOA_COLUMN(DeltaPhi, deltaPhi, float);
 // Candidate columns efficiency calculation for prompt-non-prompt JPsi separation
